@@ -9,11 +9,10 @@
     Let \(A = \{a,b,c\}\).
     Try to design a context-free grammar with a variable that derives the language 
     \[
-        L = \{a^nb^nc^n \mid n \in \mathbb N\}
+        L_{abc} = \{a^nb^nc^n \mid n \in \mathbb N\}
     \]
+    No really, give it a good go.
     What got in your way?
-    Now design the simplest algorithm you can for deciding whether a given word \(w \in A^*\) is in \(L\).
-    What kinds of things did you need in the algorithm?
 </div>
 
 <p>
@@ -24,3 +23,118 @@
     <img src="../imgs/Chomsky_Heirarchy_2.svg" />
 </p>
 
+<p>
+    But don't take my word for it. 
+    We are going to spend today developing a technique for proving that a given language is <i>not</i> context-free.
+    Taking some inspiration from the last time we showed that a language was not in a particular family, 
+    we are going to establish a property that every context-free language satisfies but \(L_{abc}\) does not.
+    In fact, the property itself looks a lot like the previous one, too.
+    Not every context-free language has a <i>pumping length</i> (for eg., \(\{a^nb^n \mid \mathbb N\}\))... but what about a <i>double pumping length</i>?
+</p>
+
+<div class="definition">
+    <b>(Double Pumping Length)</b>
+    Let \(L \subseteq A^*\) be any language. 
+    A <i>double pumping length for \(L\)</i> is a number \(\ell \in \mathbb N\) such that for any word \(w \in L\) with \(|w| \ge \ell\), there exist five words \(u_1, u_2, u_3, p_1, p_2 \in A^*\) that satisfy the following properties:
+    <ol>
+        <li>\(w = u_1 p_1 u_2 p_2 u_3\) (\(w\) breaks up into \(u_1, u_2, u_3, p_1, p_2\))</li>
+        <li>either \(p_1 \neq \varepsilon\) or \(p_2 \neq \varepsilon\) (at least one of the <i>pumps</i> is nonempty)</li>
+        <li>\(|p_1 u_2 p_2| \le \ell\) (the middle section has at most \(\ell\) letters)</li>
+        <li>for any \(k \in \mathbb N\), \(u_1p_1^k u_2p_2^k u_3 \in L\) (\(p_1\) and \(p_2\) can be simultaneously pumped)</li>
+    </ol>
+</div>
+
+<p>
+    There are a lot of moving parts here, so let's take a look at an example. 
+</p>
+
+<div class="example">
+    <b>(Pumped ABs)</b>
+    Let's return to considering the language \(L_{ab} = \{a^nb^n \mid n \in \mathbb N\}\).
+    This language has a double pumping length, but we are going to come back to that number later.
+    Instead, let's consider a concrete word \(aabb \in L_{ab}\). 
+    We can break this word into five words like the ones described in the definition of double pumping length:
+    \[\begin{gathered}
+        aabb = u_1p_1u_2p_2u_3 \\
+        \text{where above, } 
+        \quad
+        u_1 = a
+        \quad 
+        p_1 = a
+        \quad 
+        u_2 = \varepsilon
+        \quad 
+        p_2 = b
+        \quad 
+        u_3 = b
+    \end{gathered}\]
+    Property 1 holds, clearly.
+    Property 2 asks us to check that either \(p_1 \neq \varepsilon\) or \(p_2 \neq \varepsilon\).
+    This is of course true, because \(p_1 = a \neq \varepsilon\). 
+    Property 4 asks us to check that \(p_1\) and \(p_2\) can be <i>simultaneously pumped</i>. 
+    This is true! 
+    Watch: for any \(k \in \mathbb N\), 
+    \[
+        u_1 p_1^k u_2 p_2^k u_3 = a~a^k~\varepsilon~b^k~b = a^{k+1}b^{k+1} \in L
+    \] 
+    The property we left out has to do with the double pumping length iteself---the number!
+    
+    <p></p>
+    If you pay close attention, you should notice that \(u_1 = a\) and \(u_3 = b\) could be replaced by \(a^j\) and \(b^j\), respectively, without affecting the rest of the properties. 
+    This is a huge hint: the number \(\ell = 2\) is a double pumping length for this language!
+    To see why, let \(w = a^nb^n\) be any word in \(L_{ab}\) such that \(|a^nb^n| \ge 2\).
+    Then \(n \ge 1\), so we can find a number \(j \in \mathbb N\) such that
+    \[
+        w = a^j~a~b~b^j
+    \]
+    Now we can choose \(u_1,p_1,u_2,p_2,u_3\) like before:
+    \[\begin{gathered}
+        a^jabb^j = u_1p_1u_2p_2u_3 \\
+        \text{where above, } 
+        \quad
+        u_1 = a^j
+        \quad 
+        p_1 = a
+        \quad 
+        u_2 = \varepsilon
+        \quad 
+        p_2 = b
+        \quad 
+        u_3 = b^j
+    \end{gathered}\]
+    Properties 1, 2, and 4 hold for the same reason as before, and 
+    \[
+        |p_1u_2p_2| = |a \varepsilon b| = |ab| = 2 \ge 2 = \ell
+    \]
+    This shows that \(2\) is a double pumping length for \(L_{ab}\).
+</div>
+
+<div class="exercise">
+    <b>(Finding Double Pumps)</b>
+    Find double pumping lengths for the following three languages.
+    <ol>
+        <li>\(L_1 = \{a^nb^{2n} \mid n \in \mathbb N\}\)</li>
+        <li>\(L_2 = \{a^nb^{m}c^{n+m} \mid n,m \in \mathbb N\}\)</li>
+        <li>\(L_3 = \{ww^{op} \mid w \in A^*\}\) (these are the even length palindromes)</li>
+    </ol>
+</div>
+
+<p>
+    As you might have expected, every context-free language has a double pumping length.
+</p>
+
+<div class="theorem">
+    <b>(Double Pumping)</b>
+    Every context-free language has a double pumping length. 
+    More precisely, if \(L \in \mathsf{CFL}\), then there is a number \(\ell \in \mathbb{N}\) such that \(\ell\) is a double pumping length for \(L\).
+</div>
+
+<p>
+    We will talk about the proof a little bit later---the proof makes use of parse trees, actually.
+    For now let's get a bit of practice using the Double Pumping Theorem in.
+</p>
+
+<div class="example">
+    <b>(ABCs Ain't Context-free)</b>
+
+</div>
