@@ -207,6 +207,33 @@ img {
 	font-weight: bold;
 }
 
+.bonus-problem {
+	margin:10px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;
+	padding:2%;
+	border: 1px solid rgb(242, 0, 255);
+	background-color:rgba(253, 67, 129, 0.1) ;
+	animation: colorTransition 1s infinite alternate;
+}
+
+@keyframes colorTransition {
+	0% {
+		border-color: #ff0000;
+	}
+
+	100% {
+		border-color: #ff00ea;
+	}
+}
+
+.bonus-problem::before {
+	color: rgb(148, 17, 54) ;
+	content: "Bonus Problem. ";
+	font-weight: bold;
+}
+
 .definition {
 	margin:10px;
 	margin-left: auto;
@@ -271,6 +298,16 @@ img {
 	font-weight: bold;
 }
 
+.algorithm {
+	margin:10px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;
+	padding:2%;
+	/* border: 1px solid blue; */
+	background-color:rgba(60, 60, 60, 0.05); ;
+}
+
 .hint {
 	color: rgba(0,0,0,0);
 	font-style: italic;
@@ -304,6 +341,16 @@ img {
 	margin: 10px;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.tikz {
+	display: block;
+	width: fit-content;
+	text-align: center;
+	margin: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: large;
 }
 
 table, th, td {

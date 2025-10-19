@@ -1,0 +1,498 @@
+<!-- THIS IS A COMPILED FILE 
+ Compiled on 2025-10-18 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<head>
+	
+	<meta charset="UTF-8">
+	<meta name="author" content="Todd Schmid">
+	
+	<!-- Renders latex formulas -->
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+	<!-- Renders tikz figures mid page -->
+    <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
+    <script src="https://tikzjax.com/v1/tikzjax.js"></script>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="stylesheet" href="../../../styles.css" />
+	<link rel="stylesheet" href="../../course_styles.css" />
+	<link rel="icon" href="../../../squidab.png" />
+	
+	<!-- * Customize for each course * -->
+	<title>CSCI 341 Theory of Computation</title>
+	<meta name="description" content="Course pages for CSCI 341.">
+	<meta name="keywords" content="bucknell,theory,computer,science,schmid,csci341">
+	<!-- ***************************** -->
+</head>
+
+<body>
+
+<div id="content">
+
+<!-- Header Section -->
+<div id="course_head" style="text-align: left;">
+	<h1 style="margin-bottom: 0; text-align: left;">CSCI 341 Theory of Computation</h1>
+	<i>Fall 2025, with <a href="../../../teaching.html">Schmid</a></i>
+	<div id="links">
+		<!-- * Customize for each course * -->
+		<a href="csci341_index.html"><span class="link">Syllabus</span></a>
+		<a href="csci341_contents.html"><span class="link">Notes</span></a>
+		<a href="csci341_resources.html"><span class="link">Resources</span></a>
+		<a href= "csci341_assignments.html"><span class="link">Assignments</span></a>
+		<!-- ***************************** -->
+	</div>
+</div>
+
+
+
+<div id="stuff">
+
+
+<!-- BEGINNING OF BODY -->
+<div style="border: none; margin-bottom: -25px; padding: 0px; text-align: right;"><a href="../compiled/csci341_notes_2_06_cfl_pumping_lemma.html"><span class="link"> &larr; cfl pumping lemma</span></a><a href="../compiled/csci341_notes_3_01_lambda_calculus.html"><span class="link">lambda calculus &rarr;</span></a></div><h1>Computation in a Nutshell</h1>
+
+<p>
+    Computer Science is one of those rare fields of study \(X\) where the question "what is \(X\)?" actually has a pretty satisfying answer.
+    We asked this exact question, where \(X = \) computation, in the first section of the course, but we weren't really ready for that satisfying answer.
+    Now we are (kind of)!
+</p>
+
+<div class="figure">
+    <i>Question: what is computation?</i>
+    
+    <p></p>
+    <b>
+        Computation is the manipulation of semantical objects by syntactic means.
+    </b>
+</div>
+
+<p>
+    ...ehhhh ok, maybe we weren't quite ready for this yet. 
+    Today we are going to take the first couple of steps to understanding the bolded statement above, and talk about what "semantical objects" are and what "syntax" is.
+</p>
+
+<h2>Syntax and Semantics</h2>
+
+<p>
+    "Syntax" is a word that comes from linguistics. 
+    In that context (and in the context of programming languages, too), the <i>syntax</i> of a language consists of the strings of text that are "well-formed".
+    In linguistics, "well-formed" might mean "grammatical", and similarly in a programming language it might mean that there are no <i>syntax errors</i> (you haven't forgotten a bracket or a colon or something).
+    Abstractly, for us, <i>syntax</i> really just refers to strings of text, or words as we have been calling them.  
+</p>    
+<p>
+    Part of the point of syntax is that it is completely devoid of <i>meaning</i>.
+    It's just text!
+    <!-- Consider Chomsky's classic example of a grammatical sentence that is totally meaningless.
+    <div class="figure">
+        Colourless green ideas sleep furiously.
+    </div>
+    It may not mean a damn thing, but it is well-formed as sentences go. -->
+    The very nature of computation demands that when we get a machine to <i>compute</i> something, it should never need to understand what it is doing. 
+    Because it's not going to. It's a machine, after all.
+    It should be able to get its job done by just pushing symbols around.
+</p>
+
+<p>
+    Automata are a good examples of "machines that just push text around". 
+    Expanding our definition of "syntax" slightly, running an automaton just involves placing and removing "active" markers (see <a href="csci341_notes_1_02_reading_words.html" target="_blank">Reading Words</a>) according to some set rules.
+    It is in this sense that automata <i>calculate</i>.
+</p>
+
+<p>
+    But computation wouldn't amount to much if it was just text being pushed around. 
+    To us, the observer, each bit of syntax <i>means something</i>.
+    The meaning we ascribe to a string of text, i.e., our <i>interpretation</i> of it, is its <i>semantics</i>.
+    That type of thing that you interpret the text to mean is what is being referred to as a "semantical object".
+</p>
+
+<p>
+    Semantical objects can be as simple and finite, or as complex and infinite, as you want.
+    For a concrete example, consider the regular expression \((a + ((b \cdot c))^*)\).
+    Before you knew what all the symbols meant, it was just a string of text, nothing more, and isn't even that long a string of text (21 characters).
+    But how we interpret that string of text, i.e., its semantics, is as a language: it represents the language 
+    \[
+        \mathcal L((a + ((b \cdot c))^*)) = \{a(bc)^n \mid n \in \mathbb N\}
+    \]
+    That's not finite at all!
+    Somehow, we were able to capture this entire language with just 21 characters.
+</p>
+
+<p>
+    This is where computation gets its power from: text is easy to work with in comparison to infinite sets of numbers, words, etc.!
+    But the simplicity of text also places a limit on what computation can and cannot accomplish.
+    In this chapter of the course, on computability, we are going to prove, mathematically, that there is an upper bound on what computation can achieve.
+    In fact, we will see a whole host of problems that cannot be solved computationally.
+</p>
+
+<p>
+    Mathematical proof requires rigour, so let's get started on that.
+    We are going to start by taking a look at <i>representation</i>, which is the process of taking something and turning it into syntax.
+    The opposite direction, turning a piece of syntax back into its semantics, is called <i>interpretation</i>.
+</p>
+
+<h2>Representations of Decision Problems</h2>
+
+<p>
+    The problems we have learned to solve with the models of computation we have seen so far in the course have only dealt with <i>deciding language membership</i>, i.e., deciding if a word is an element of a given language. 
+    This is not so dramatic a restriction: in fact, just about any <i>decision problem</i> (deciding between "yes" or "no") can be translated into a <i>language membership decision problem</i> (deciding whether a word is in a language or not).
+    This fact is essential to modern computing.
+    In your computer, every piece of information that is stored is represented as a bitstring, i.e., a word \(w \in \{0,1\}^*\). 
+    Therefore, every decision problem that can be solved with a computer program must boil down to a decision problem in bitstrings!
+    Let us make all of this more general and more precise.
+</p>
+
+<div class="definition">
+    <b>(Representation of Decisions)</b>
+    Let \(S\) be any set. 
+    Formally, a <i>decision problem in \(S\)</i> is just a subset \(D \subseteq S\), often described as a property of elements of \(S\) (we can translate between the two by taking \(D\) to be the set of elements of \(S\) that satisfy the property).
+    
+    <p></p>
+    Now let \(A\) be an alphabet.
+    A <i>string representation of the elements of \(S\) in the alphabet \(A\)</i> is a function that takes an element of \(S\) as input and returns a string, 
+    \(
+        \rho \colon S \to A^*
+    \).
+
+    <p></p>
+    Given a decision problem in \(S\), \(D \subseteq S\), and a pair \((f, L)\), where \(\rho \colon S \to A^*\) is a string representation of the elements of \(S\) and \(L \subseteq A^*\) is a language, we say that \((f, S)\) is a <i>faithful representation of \(D\)</i> if 
+    <ol>
+        <li>
+            for any \(s \in S\), \(\rho(s) \in L\)  if and only if \(s \in S\), and
+        </li>
+        <li>
+            \(\rho\) is injective.
+        </li>
+    </ol>
+</div>
+
+<div class="example">
+    <b>(Even-numbers)</b>
+    Consider the following familiar decision problem in \(\mathbb N\).
+
+    <div class="algorithm">
+        <b>The Even-numbers Problem.</b> 
+        Given a natural number \(n \in \mathbb N\), is \(n\) a multiple of \(2\)?
+    </div>
+    Formally, this would be represented as \(E = \{2n \mid n \in \mathbb N\} \subseteq \mathbb N\).
+
+    <p></p>
+    There are different ways to faithfully represent the even-number problem. 
+    What we have done in the past, in this course, is simply to represent every number \(n\) as a string of \(a\)'s (where \(a\) is some letter) of length \(n\).
+    That is, we represent \(n\) with \(a^n\). 
+    This defines the string representation of numbers below:
+    \[
+        \rho \colon \mathbb N \to \{a\}^*
+        \qquad 
+        \rho(n) = a^n
+    \]
+    Representing numbers this way paints a very clear picture of how to find a language that faithfully represents the even-numbers problem.
+    Here it is in words:
+
+    <div class="algorithm">
+        <b>The \(\mathcal L((aa)^*)\) Membership Problem.</b> Given a string of \(a\)'s \(a^n \in \{a\}^*\), is \(a^n \in \mathcal L((aa)^*)\)?
+    </div>
+
+    According to our formal definition, the pair \((\rho, \mathcal L((aa)^*))\) is a faitful representation of the even-numbers problem.
+</div>
+
+<p>
+    Another classic string representations of natural numbers is one we use one all the time!
+    \[\begin{gathered}
+        \mathsf{dec} \colon \mathbb N \to \{0,1,2,3,4,5,6,7,8,9\}^* \\
+        \mathsf{dec}(n) = \text{(the shortest decimal expansion of \(n\))}
+    \end{gathered}\] 
+    Note that the word "shortest" means that \(\mathsf{dec}(n)\) only starts with a \(0\) if \(n = 0\).
+    There are analogous representations for binary, hexadecimal, and so on.
+</p>
+
+<div class="exercise">
+    <b>(Even Binaries and Trinaries)</b>
+    Consider the <i>binary representation</i> of natural numbers 
+    \[\begin{gathered}
+        \mathsf{bin} \colon \mathbb N \to \{0,1\}^* \\
+        \mathsf{bin}(n) = \text{(the shortest binary expansion of \(n\))}
+    \end{gathered}\] 
+    For each of the decision problems \(D \subseteq \mathbb N\) below, find a regular expression \(r\) such that \((\mathsf{bin}, \mathcal L(r))\) is a faithful representation of \(D\).
+    <ol>
+        <li>\(D_1 = \{n \in \mathbb N \mid n > 0\}\)</li>
+        <li>\(D_2 = E = \{n \in \mathbb N \mid \text{\(n\) is even}\}\)</li>
+        <li>\(D_3 = \{2^n \mid n \in \mathbb N\}\)</li>
+        <li>\(D_4 = \{2^n + 1 \mid n \in \mathbb N\}\)</li>
+    </ol>
+    <div class="hint">
+        Along the way, you might need to "solve" the problem, in the sense that you might have to draw an automaton with a state that accepts the language. 
+    </div>
+</div>
+
+<div class="problem">
+    <b>(5 out of 16)</b>
+    Consider the decision problem 
+    \[
+        D_5 = \{5n \mid n \in \mathbb N\} \subseteq \mathbb{N}
+    \]
+    Given a natural number \(n\in \mathbb N\), let \(\mathsf{hex}(n)\) be the hexidecimal representation of \(n\). 
+    Find a regular expression \(r\) such that \((\mathsf{hex}, \mathcal L(r))\) is a faithful representation of \(D_5\).
+    <div class="hint">
+        Do this first for the numbers \(2\) and \(3\) (even in base \(3\)) instead of \(5\) and \(16\) first, then try it for \(3\) and \(10\) (multiple of \(3\) in decimal).
+        This is going to help with the second one: <a href="https://www.geeksforgeeks.org/maths/divisibility-rule-of-3/" target="_blank">Divisibility Rule for 3 on GeeksForGeeks</a>.
+    </div>
+</div>
+
+<p>
+    The definition of faithful representation is very general: it allows us to extend our definitions of "regular" and "context-free" to other types of decision problems.
+</p>
+
+<div class="definition">
+    <b>(Families of Problems)</b>
+    Let \(\mathsf{Fam}\) be a family of languages in the alphabet \(A\), and let \(S\) be any set. 
+    A decision problem \(D \subseteq S\) is said to <i>be in \(\mathsf{Fam}\)</i> if there is a faithful representation \((\rho, L)\) of \(D\) with \(\rho \colon S \to A^*\) and \(L \subseteq A^*\).
+</div>
+
+<p>
+    For example, we saw that \(D_1,D_2,D_3,D_4\), and \(D_5\) above are all regular problems (in the sense that they are in \(\mathsf{Reg}\)).
+</p>
+
+<p>
+    In the previous exercises (and problem), you found faithful representations of a handful of number-theoretic problems.
+    Other types of objects have string representations though. 
+    Sometimes these take a bit more work and ingenuity.
+</p>
+
+<div class="exercise">
+    <b>(Representing Order)</b>
+    Let \(S\) be the set of all binary trees where the data of the nodes of the tree are numbers from the set \(A = \{0,1,2,3,4,5\}\). 
+    Let \(D \subseteq S\) be the set of all trees \(t \in S\) such that \(t\) is a binary search tree. 
+    Find a faithful representation of \(D\).
+</div>
+
+<p>
+    We are not <i>quite</i> ready to get into what exactly a <i>solution</i> to a decision problem is yet.
+    For now, we are going to let ourselves be content with the idea that a solution to a decision problem \(D\) is a faithful representation \((f, L)\) of \(D\) and a finite automaton (of some kind, maybe with a stack or a counter!) \(\mathcal A\) with a state \(x\) such that \(L = \mathcal L(\mathcal A, x)\).
+    We will be more precise about this later.
+</p>
+
+<div class="bonus-problem">
+    <b>(3 out of 2)</b>
+    Let \(D = \{3n \mid n \in \mathbb N\}\).
+    Find a language \(L \subseteq \{0,1\}^*\) such that \((\mathsf{bin}, L)\) is a faithful representation of \(D\).
+    Find a stack automaton \(\mathcal S\) with a state \(x\) such that \(L = \mathcal L(\mathcal S, x)\).
+</div>
+
+<h2>Representations of Problems Generally</h2>
+
+<p>
+    So we've talked about decision problems a lot. 
+    But not every computational problem is a decision problem.
+    For example, <i>given \(n \in \mathbb N\), how does one compute \(n^2\)?</i>
+    This is not so much a <i>decision</i> problem as it is a <i>finding-a-function</i> problem. 
+    These more general types of problems are also going to be useful for us to understand from a computational perspective, so we should spend some time with them here. 
+</p>
+
+<div class="definition">
+    <b>(Representation of Functions)</b>
+    Let \(S_1\) and \(S_2\) and be any sets, and let \(f \colon S_1 \to S_2\) be any function. 
+    Given string representations \(\rho_1 \colon S_1 \to A^*\) and \(\rho_2 \colon S_2 \to A^*\), we say that \((\rho_1, g, \rho_2)\) is a <i>representation of \(f\)</i> if \(g \colon A^* \to A^*\) and for any \(s \in S_1\), 
+    \[
+        g(\rho_1(s)) = \rho_2(f(s))
+    \]
+    That is, computing the functions one at a time from top-left to bottom-right in the diagram below always ends at the same word both ways.
+    <div class="tikz">
+        <script type="text/tikz">
+            \begin{tikzcd}
+                S_1 \arrow[r, red, "f"] \arrow[d, "\rho_1"]
+                & S_2 \arrow[d, "\rho_2"] \\
+                A^* \arrow[r, red, "g"]
+                & A^*
+            \end{tikzcd}
+        </script>
+    </div>
+</div>
+
+<div class="example">
+    <b>(Taking Negatives)</b>
+    Consider the following representation of integers \(\rho \colon \mathbb Z \to \{0,1\}^*\), defined by
+    \[
+        \rho(n) = \begin{cases}
+            0~\mathsf{bin}(n) &\text{ if \(n \ge 0\)} \\
+            1~\mathsf{bin}(n) &\text{ if \(n \le 0\)} 
+        \end{cases}
+    \]
+    For example, 
+    \[
+        \rho(0) = 00
+        \quad 
+        \rho(1) = 01
+        \quad 
+        \rho(-1) = 11
+        \quad 
+        \rho(-2) = 110
+    \]
+    We would like to represent the function \(f \colon \mathbb Z \to \mathbb Z\) that takes the negative of every number, 
+    \[
+        f(n) = -n
+    \]
+    Here is one such representation: 
+    define \(g \colon \{0,1\}^* \to \{0,1\}^*\) by 
+    \[
+        g(w) = \begin{cases}
+            0~u &\text{ if \(w = 1u\)} \\
+            1~u &\text{ if \(w = 0u\)} \\
+            \varepsilon &\text{ if \(w = \varepsilon\)} 
+        \end{cases}
+    \]
+    This function flips the first bit of the input word if it is nonempty and sends the empty word to itself. 
+    To see that it is a representation of \(f\), we need to check that \(g(\rho(n)) = \rho(f(n))\) for all \(n \in \mathbb Z\).
+    If \(n \ge 0\), then 
+    \[\begin{aligned}
+        g(\rho(n))
+        &= g(0~\mathsf{bin}(n)) \\
+        &= 1~\mathsf{bin}(n) \\
+        &= \rho(-n) \\
+        &= \rho(f(n)) 
+    \end{aligned}\]
+    The case where \(n < 0\) is very similar.
+</div>
+
+<div class="exercise">
+    <b>(Finishing the Negative Example)</b>
+    In the Taking Negatives example, we defined a representation of integers \(\mathbb Z\) and functions \(f\) and \(g\). 
+    Show that if \(n < 0\) is any negative integer, then \(g(\rho(n)) = \rho(f(n))\).
+</div>
+
+<div class="exercise">
+    <b>(Multiplying by Two)</b>
+    Find a representation \((\mathsf{bin}, g, \mathsf{bin})\) of the function \(f \colon \mathbb N \to \mathbb N\) defined by \(f(n) = 2n\), where \(\mathsf{bin} \colon \mathbb N \to \{0,1\}^*\) is the binary representation function.
+</div>
+
+<div class="problem">
+    <b>(Composing Representations)</b>
+    In this problem, we are going to show that representations of functions "compose".
+    We need a bit of notation: given functions \(f_1 \colon S_1 \to S_2\) and \(f_2 \colon S_2 \to S_3\), we are going to write \(f_2 \circ f_1 \colon S_1 \to S_3\) be the function defined by 
+    \[
+        f_2 \circ f_1(s) = f_2(f_1(s))
+    \]
+    This function, \(f_2 \circ f_1\), is called the <i>composition of \(f_1\) and \(f_2\)</i>.
+
+    <p></p>
+    Now on to the problem.
+    Let \(S_1,S_2,S_3\) be sets and let \(A\) be an alphabet.
+    Let \(\rho_i \colon S_i \to A^*\) be a string representation for each \(i = 1,2,3\), and let \(f_1 \colon S_1 \to S_2\) and \(f_2 \colon S_2 \to S_3\) be functions. 
+    \[
+        S_1 \xrightarrow{f_1} S_2 \xrightarrow{f_2} S_3
+    \]
+    Given a representation \((\rho_1, g_1, \rho_2)\) of \(f_1\) and a representation \((\rho_2, g_2, \rho_3)\) of \(f_2\), prove that \((\rho_1, g_2 \circ g_1, \rho_3)\) is a representation of \(f_2 \circ f_1\).
+</div><div style="border: none; margin-bottom: -25px; padding: 0px; text-align: right;"><a href="../compiled/csci341_notes_2_06_cfl_pumping_lemma.html"><span class="link"> &larr; cfl pumping lemma</span></a><a href="../compiled/csci341_notes_3_01_lambda_calculus.html"><span class="link">lambda calculus &rarr;</span></a></div>
+
+
+<!-- END OF BODY -->
+    <div style="height: 50px;border-top: 1px solid rgb(131, 131, 131);margin-top: 50px; padding: 20px; text-align: right;">
+        <a href=""><span class="link">Top</span></a>
+    </div>
+</div>
+</div>
+</body>
+
+
+</html>
