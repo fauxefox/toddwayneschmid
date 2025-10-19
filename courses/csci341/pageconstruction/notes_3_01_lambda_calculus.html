@@ -1,1 +1,91 @@
 <h1>Pure Computation: The \(\lambda\)-calculus</h1>
+
+<p>
+    Last lecture, we spent some time understanding how to represent decision problems and functions <i>syntactically</i>, i.e., as properties and transformations of strings. 
+    This allowed us to classify problems about numbers and trees using the heirarchy of families of languages we have seen so far (for eg., we were able to make sense of the statement, "deciding the parity of a natural number is a regular problem").
+    We also talked about how we can represent arbitrary functions, including any function of the form \(f \colon \mathbb N \to \mathbb N\), as a function on words.
+    Today we are going to focus on the latter item: we have decided to conceive of computation as "the manipulation of semantical objects via syntactic means".
+    We have a clear conception, at this point, what it means to solve language membership problems syntactically (via automata, for example), but we haven't said anything about how to do do this for <i>functions on strings</i>.
+    Next time, we will see that automata can also be used to define functions on strings, but today we are going to do something a bit different: we are going to use purely syntactic transformations---rewrite rules, nothing else---to define functions on strings. 
+    This is what the <i>\(\lambda\)-calculus</i> is for. 
+</p>
+
+<h2>\(\lambda\)-terms</h2>
+
+<p>
+    Let's start with a specific description of the <i>syntax</i> of the \(\lambda\)-calculus, what are called <i>\(\lambda\)-terms</i>.
+    (Recall that we saw these in the Parse Trees section!)
+</p>
+
+<div class="definition">
+    <b>(\(\lambda\)-terms)</b>
+    Fix a set \(\mathit{Var}\) of what we are going to call <i>input variables</i>.
+    The set of \(\lambda\)-terms, \(\lambda-\mathit{Term}\), is the language that is derived from the variable \(E\) in the grammar below. 
+    \[
+        E \to x \mid (E \circ E) \mid (\lambda x . E) 
+    \]
+    where \(x \in \mathit{Var}\) is any input variable. 
+</div>
+
+<p>
+    For example, \(\lambda x.(y \circ (\lambda y. y))\) is a \(\lambda\)-term.
+</p>
+
+<div class="exercise">
+    <b>(Penmanship)</b>
+    Write down five more \(\lambda\)-terms using the input variables \(x\) and \(y\).
+</div>
+
+<p>
+    We are going to simplify notation a bit sometimes, with the tacit understanding that the simpler strings of symbols representing \(\lambda\)-terms always represent unique <i>honest-to-goodness</i> \(\lambda\)-terms. 
+    For example, for \(\lambda\)-terms \(t_1\) and \(t_2\), instead of \((t_1 \circ t_2)\) we will probably just write \(t_1t_2\).
+    So, for example, the two expressions below represent the same \(\lambda\)-term:
+    \[
+        \lambda x.y(\lambda y. y)
+        = \lambda x.(y \circ (\lambda y. y))
+    \]
+    When we are feeling very lazy, we are also going to use the shorthand 
+    \[
+        \lambda xy.t = (\lambda x.(\lambda y.t))
+    \]
+</p>
+
+<div class="exercise">
+    <b>(Shorthand)</b>
+    Expand the following shorthands into full \(\lambda\)-terms.
+    <ol>
+        <li>\(\lambda x.xy\)</li>
+        <li>\(\lambda fx.fy\)</li>
+        <li>\(\lambda xy.z(\lambda zy.x)\)</li>
+    </ol>
+</div>
+
+<p>
+    Probably the most important <i>notation</i> to learn in the coming days is <i>input variable substitution</i>. 
+    This requires a bit of care: to begin with, observe that every \(\lambda\)-term is just a string of symbols, so in particular, every character in the string has an index.
+    Given a \(\lambda\)-term \(t\), if the character at index \(i\) in \(t\) is \(a\), then we call the pair \((a, i)\) an <i>instance of \(a\) in \(t\)</i>.
+    We are being careful about this now because different instances of the same character in a \(\lambda\)-term can mean different things.
+</p>
+
+<div class="definition">
+    <b>(Free, Bound, and Substituted)</b>
+    Given a \(\lambda\)-term \(t\), the set of <i>free input variables in \(t\)</i>, \(\mathsf{fv}(t)\), is defined recursively on \(\lambda\)-terms:
+    \[\begin{aligned}
+        \mathsf{fv}(x) &= \{(x, 0)\} \\
+        \mathsf{fv}((t_1 \circ t_2)) &= \{(y, i+1) \mid (y,i) \in \mathsf{fv}(t_1)\} \cup \{(y, i + |t_1| + 2) \mid (y,i) \in \mathsf{fv}(t_2)\}  \\
+        \mathsf{fv}((\lambda x.t)) &= \{(y, i + 4) \mid (y, i) \in \mathsf{fv}(t) \text{ and } y \neq x\}  
+    \end{aligned}\]
+    If \((x,i) \in \mathsf{fv}(t)\), we say that \((x, i)\) is a <i>free instance of \(x\) in \(t\)</i>.
+
+    <p></p>
+    The <i>scope of \(x\) in \(\lambda x.t\)</i> is the term \(t\).
+    We say that every free instance of \(x\) in \(t\) is <i>bound by \(\lambda x\) in \(\lambda x.t\)</i>, and we refer to \(\lambda x\) as the <i>binder</i> of the instance.
+</div>
+
+<h2>\(\beta\)-reduction as Computation</h2>
+
+<h2></h2>
+
+<h2>Representing Number-theoretic Functions</h2>
+
+<h2></h2>
