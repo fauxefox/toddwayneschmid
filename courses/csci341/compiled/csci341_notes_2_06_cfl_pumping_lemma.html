@@ -388,70 +388,73 @@
 </p>
 
 <div class="proof"> (of the Double Pumping Theorem)
-Let \(L\) be a language, and let \(\mathcal G = (X, A, R)\) be a context-free grammar with a variable \(x\) that derives \(L\).
-Recall from the Parsing is Deriving Theorem that \(L\) is also the language of all words yielded from parse trees rooted at \(x\).
-We are going to find a double pumping length for \(L\) using \(\mathcal G\) and the Parsing is Deriving theorem.
+    Let \(L\) be a language, and let \(\mathcal G = (X, A, R)\) be a context-free grammar with a variable \(x\) that derives \(L\).
+    Recall from the Parsing is Deriving Theorem that \(L\) is also the language of all words yielded from parse trees rooted at \(x\).
+    We are going to find a double pumping length for \(L\) using \(\mathcal G\) and the Parsing is Deriving theorem.
 
-<p>
-    To determine a double pumping length for \(L\), find the longest monomial expression \(\mu\) such that there is a derivation rule \(y \to \mu\) for some variable \(y \in X\), and let \(m = |\mu|\).
-    Then every node in a parse tree rooted at some variable of \(\mathcal G\) has to have at most \(m\) children (otherwise, there would be a rule \(y \to |\mu'|\) with \(\mu'\) longer than \(\mu\)).
-    It follows that a parse tree in \(\mathcal G\) of height \(h > 1\) can have at most \(m^h\) leaves (count the number of leaves in an \(m\)-branching tree with height \(h\)).
-    This little bit of counting is how we are going to produce a double pumping length for the languages derived from \(\mathcal G\).
-</p>
+    <p>
+        To determine a double pumping length for \(L\), find the longest monomial expression \(\mu\) such that there is a derivation rule \(y \to \mu\) for some variable \(y \in X\), and let \(m = |\mu|\).
+        Then every node in a parse tree rooted at some variable of \(\mathcal G\) has to have at most \(m\) children (otherwise, there would be a rule \(y \to |\mu'|\) with \(\mu'\) longer than \(\mu\)).
+        It follows that a parse tree in \(\mathcal G\) of height \(h > 1\) can have at most \(m^h\) leaves (count the number of leaves in an \(m\)-branching tree with height \(h\)).
+        This little bit of counting is how we are going to produce a double pumping length for the languages derived from \(\mathcal G\).
+    </p>
 
-<p>
-    Write \(n = |X|\) for the number of variabels in \(X\).
-    Suppose you were given a word \(w\) of length \(|w| = m^{n + 2}\), where \(m\) is the longest word appearing in a derivation rule of \(\mathcal G\). 
-    Now let \(T\) be a <b>smallest</b> parse tree for \(w\) in \(\mathcal G\) rooted at \(x\) (the "smallest" part will come up later---it just means that no rewrite steps went to waste). 
-    Consider the tree \(T'\), which we obtain by deleting every subtree of \(T\) that only has leaves labelled with \(\varepsilon\).
-    Then \(T'\) must have exactly \(m^{n+2}\) leaves, because its leaves are labelled with the letters of \(w\).
-    But this means that the height of \(T'\) has to be at least \(n + 1\), which is one more than the number of variables in \(X\)!
-    It follows that there is a branch of \(T'\), starting from the root node \(x\) and ending at a leaf of \(T'\), that has \(n+1\) nodes labelled with variables.
-    This means that along this branch of length \(n + 1\), one of the variables of \(\mathcal G\) must appear twice in \(T'\). 
-    This motivates us to choose the number 
-    \[
-        \ell = m^{n + 2}
-    \]
-    as our prospective pumping length, since we are now in the business of using this branch to find a pair of words to simultaneously pump in \(w\).
-</p>
+    <p>
+        Write \(n = |X|\) for the number of variabels in \(X\).
+        Suppose you were given a word \(w\) of length \(|w| \ge m^{n + 2}\), where \(m\) is the longest word appearing in a derivation rule of \(\mathcal G\). 
+        Now let \(T\) be a <b>smallest</b> parse tree for \(w\) in \(\mathcal G\) rooted at \(x\) (the "smallest" part will come up later---it just means that no rewrite steps went to waste). 
+        Consider the tree \(T'\), which we obtain by deleting every subtree of \(T\) that only has leaves labelled with \(\varepsilon\).
+        Then \(T'\) must have exactly \(|w|\) leaves, because its leaves are labelled with the letters of \(w\).
+        But \(|w| \ge m^{n+2}\), so this means that the height of \(T'\) has to be at least \(n + 2\), which is two more than the number of variables in \(X\)!
+        It follows that there is a branch of \(T'\), starting from the root node \(x\) and ending at a leaf of \(T'\), that has at least \(n+1\) nodes labelled with variables.
+        This means that along this branch, one of the variables of \(\mathcal G\) must appear twice in \(T'\). 
+        This motivates us to choose the number 
+        \[
+            \ell = m^{n + 2}
+        \]
+        as our prospective pumping length, since we are now in the business of using this branch to find a pair of words to simultaneously pump in \(w\).
+    </p>
 
-<p>
-    Now, along the branch of length \(n + 1\), one of the variables of \(\mathcal G\) must appear twice in \(T'\). 
-    We can therefore break \(w\) up into five segments, as illustrated in the figure below.
-</p>
+    <p>
+        Now, along the branch of length \(\ge n + 1\), one of the variables of \(\mathcal G\) must appear twice in \(T'\). 
+        We can therefore break \(w\) up into five segments, as illustrated in the figure below.
+    </p>
 
-<div class="figure">
-    <img src="../imgs/double_pump_tree_1.svg" />
-</div>
+    <div class="figure">
+        <img src="../imgs/double_pump_tree_1.svg" />
+    </div>
 
-<p>
-    In this diagram, the outer triangle is a parse tree rooted at the variable \(x\) in \(\mathcal G\). 
-    The lightening-strike in the middle is the path (originally through \(T'\)) starting from the root node where the variable \(y\) appears twice. 
-    The pink triangle represents the subtree \(S\) of \(T\) that is rooted at the first \(y\) encountered in the path, and the blue triangle represents the subtree \(V\) rooted at the second instance of \(y\) in the path. 
-    The leaves of the tree can now be organized into five groups: from left to right,
-    <ol type="i">
-        <li>the leaves of \(T\) that are strictly to the left of the leaves of \(S\), which we concatenate to form \(u_1\),</li>
-        <li>the leaves of \(S\) that are strictly to the left of the leaves of \(V\), which we concatenate to form \(p_1\),</li>
-        <li>the leaves of \(V\), which we concatenate to form the word \(u_2\),</li>
-        <li>the leaves of \(S\) that are strictly to the right of the leaves of \(V\), which we concatenate to form \(p_2\),</li>
-        <li>the leaves of \(T\) that are strictly to the right of the leaves of \(S\), which we concatenate to form \(u_3\).</li>
-    </ol>
-    These are all of the leaves of \(T\), so \(w = u_1p_2u_2p_2u_3\).
-    We also know that at least one of \(p_1\) or \(p_2\) is nonempty: if they were not, then we could replace \(S\) (the pink triangle) with \(V\) (the blue triangle) to find a smaller parse tree, but we assumed that \(T\) can't get any smaller!
-    It's also true that \(p_1\) and \(p_2\) can be simultaneously pumped in \(w\): however many times you would like to pump \(p_1\) and \(p_2\), replace \(V\) with a copy of \(S\) (including \(0\) times!).
-</p>
+    <p>
+        In this diagram, the outer triangle is a parse tree rooted at the variable \(x\) in \(\mathcal G\). 
+        The lightening-strike in the middle is the path (originally through \(T'\)) starting from the root node where the variable \(y\) appears twice. 
+        The pink triangle represents the subtree \(S\) of \(T\) that is rooted at the first \(y\) encountered in the path, and the blue triangle represents the subtree \(V\) rooted at the second instance of \(y\) in the path. 
+        The leaves of the tree can now be organized into five groups: from left to right,
+        <ol type="i">
+            <li>the leaves of \(T\) that are strictly to the left of the leaves of \(S\), which we concatenate to form \(u_1\),</li>
+            <li>the leaves of \(S\) that are strictly to the left of the leaves of \(V\), which we concatenate to form \(p_1\),</li>
+            <li>the leaves of \(V\), which we concatenate to form the word \(u_2\),</li>
+            <li>the leaves of \(S\) that are strictly to the right of the leaves of \(V\), which we concatenate to form \(p_2\),</li>
+            <li>the leaves of \(T\) that are strictly to the right of the leaves of \(S\), which we concatenate to form \(u_3\).</li>
+        </ol>
+        These are all of the leaves of \(T\), so \(w = u_1p_2u_2p_2u_3\).
+        We also know that at least one of \(p_1\) or \(p_2\) is nonempty: if they were not, then we could replace \(S\) (the pink triangle) with \(V\) (the blue triangle) to find a smaller parse tree, but we assumed that \(T\) can't get any smaller!
+        It's also true that \(|p_1u_2p_2| \le \ell\), because the number of leaves in \(S\) is at most \(m^h\) where \(h\) is the height of \(S\), and \(\)
+        Finally, \(p_1\) and \(p_2\) can be simultaneously pumped in \(w\): however many times \(k\) you would like to pump \(p_1\) and \(p_2\), replace \(V\) with a copy of \(S\) (including \(0\) times) to produce a parse tree for \(u_1p_1^ku_2p_2^ku_3\).
+    </p>
 
-<div class="figure">
-    <img src="../imgs/double_pump_tree_2.svg" />
-    The tree \(T\) with \(p_1\) and \(p_2\) simultaneously pumped once.
+    <div class="figure">
+        <img src="../imgs/double_pump_tree_2.svg" />
+        The tree \(T\) with \(p_1\) and \(p_2\) simultaneously pumped once.
 
-    <img src="../imgs/double_pump_tree_3.svg" />
-    The tree \(T\) with \(p_1\) and \(p_2\) simultaneously down-pumped.
-</div>
+        <img src="../imgs/double_pump_tree_3.svg" />
+        The tree \(T\) with \(p_1\) and \(p_2\) simultaneously down-pumped.
+    </div>
 
-<p>
-        
-</p><div style="border: none; margin-bottom: -25px; padding: 0px; text-align: right;"><a href="../compiled/csci341_notes_2_05_cfg_stack_equivalence.html"><span class="link"> &larr; cfg stack equivalence</span></a><a href="../compiled/csci341_notes_3_00_computation.html"><span class="link">computation &rarr;</span></a></div>
+    <p>
+        We have successfully verified that \(\ell\) is a double pumping length for \(L\).
+    </p>
+
+</div><div style="border: none; margin-bottom: -25px; padding: 0px; text-align: right;"><a href="../compiled/csci341_notes_2_05_cfg_stack_equivalence.html"><span class="link"> &larr; cfg stack equivalence</span></a><a href="../compiled/csci341_notes_3_00_computation.html"><span class="link">computation &rarr;</span></a></div>
 
 
 <!-- END OF BODY -->
