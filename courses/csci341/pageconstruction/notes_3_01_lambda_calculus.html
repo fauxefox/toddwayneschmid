@@ -61,6 +61,24 @@
 </div>
 
 <p>
+    At this point, \(\lambda\)-terms are just syntax. 
+    They're meaningless strings of symbols. 
+    This is going to make them feel a bit abstract, which is a good thing at this point, but to help you understand what's going on here: every \(\lambda\)-term represents a function. 
+    Specifically, the term \(\lambda x.t\) represents a function whose parameter is \(x\). 
+    For example, if we allowed ourselves arithmetic operations, we might write 
+    \[
+        f = \lambda x. (x + 1)
+        \quad 
+        f(2) = 2 + 1
+    \]
+    The idea is that the \(x\) is a symbol that we are supposed to replace when we are "evaluating" the function.
+    Many programming languages have a feature like \(\lambda x\), sometimes just called \(\texttt{lambda x}\) (and in that context, it is called <i>abstraction</i>).
+    For now, \(\lambda\)-terms are just strings of symbols, but it doesn't hurt to keep this in mind.
+</p>
+
+<h2>\(\beta\)-reduction and \(\alpha\)-equivalence</h2>
+
+<p>
     Probably the most important <i>notation</i> to learn in the coming days is <i>input variable substitution</i>. 
     This requires a bit of care: to begin with, observe that every \(\lambda\)-term is just a string of symbols, so in particular, every character in the string has an index.
     Given a \(\lambda\)-term \(t\), if the character at index \(i\) in \(t\) is \(a\), then we call the pair \((a, i)\) an <i>instance of \(a\) in \(t\)</i>.
@@ -82,7 +100,11 @@
     We say that every free instance of \(x\) in \(t\) is <i>bound by \(\lambda x\) in \(\lambda x.t\)</i>, and we refer to \(\lambda x\) as the <i>binder</i> of the instance.
 </div>
 
-<h2>\(\beta\)-reduction as Computation</h2>
+<div class="exercise">
+
+</div>
+
+<h3>\(\beta\)-reduction as Computation</h3>
 
 <h2></h2>
 
