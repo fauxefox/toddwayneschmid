@@ -291,7 +291,7 @@
     <b>(ABCs Ain't Context-free)</b>
     We are going to use the Douple Pumping theorem to show that \(\{a^nb^nc^n \mid n \in \mathbb N\}\) is not context-free.
     Given an arbitrary \(\ell \in \mathbb N\), let \(w = a^\ell b^\ell c^\ell\). 
-    Observe that \(|w| = 3\ell \ge \ell\), and that the first three properties required by the definition of a double pumping length are satisfied:
+    Observe that \(|w| = 3\ell \ge \ell\), and let \(u_1,p_1,u_2,p_2,u_3\) be five words that satisfy the first three properties required by the definition of a double pumping length:
     <ol>
         <li>\(w = u_1 p_1 u_2 p_2 u_3\) (\(w\) breaks up into \(u_1, u_2, u_3, p_1, p_2\))</li>
         <li>either \(p_1 \neq \varepsilon\) or \(p_2 \neq \varepsilon\) (at least one of the <i>pumps</i> is nonempty)</li>
