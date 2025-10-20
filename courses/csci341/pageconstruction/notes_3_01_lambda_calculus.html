@@ -514,4 +514,13 @@
     That is, if \(\mathsf{C} \colon \mathbb N \to \lambda\mathit{Term}\) is the Church-numeral representation of natural numbers, \[
         \mathsf{M}_3\mathsf{C_n} \Downarrow \mathsf{C_{3n}}
     \]
+    Verify that \(\mathsf{M_3} \mathsf{C_3} = \mathsf{C_9}\) using your definition of \(\mathsf{M_3}\).
+    <div class="hint">
+        Try this first for \(2\).
+    </div>
+    <div class="hint">
+        You can do this in multiple ways, but it's easiest (since you just care about \(3\)) to do this with \(\mathsf{S}\) and avoid \(\mathsf{ADD}\).
+        For \(2\), you want to apply \(\mathsf{S}~\mathsf{SS}\) \(n\) times to get \(2n\). 
+        How would you replicate this for \(3\)?
+    </div>
 </div>
