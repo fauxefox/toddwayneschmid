@@ -4,7 +4,7 @@
     7
 }
 \newcommand{\subtitle}{
-    From Double Pumping to the \(\lambda\)-calculus
+     Beyond \(\mathsf{CFL}\) and the Nature of Computation
 }
 \newcommand{\duedate}{
     Friday, October 31
@@ -209,14 +209,13 @@ Don't forget to check the webspace for hints and additional context for each pro
     \]
     This function, \(f_2 \circ f_1\), is called the <i>composition of \(f_1\) and \(f_2\)</i>.
 
-    <p></p>
     Now on to the problem.
     Let \(S_1,S_2,S_3\) be sets and let \(A\) be an alphabet.
     Let \(\rho_i \colon S_i \to A^*\) be a string representation for each \(i = 1,2,3\), and let \(f_1 \colon S_1 \to S_2\) and \(f_2 \colon S_2 \to S_3\) be functions. 
     \[
         S_1 \xrightarrow{f_1} S_2 \xrightarrow{f_2} S_3
     \]
-    Given a representation \((\rho_1, g_1, \rho_2)\) of \(f_1\) and a representation \((\rho_2, g_2, \rho_3)\) of \(f_2\), prove that \((\rho_1, g_2 \circ g_1, \rho_3)\) is a representation of \(f_2 \circ f_1\).
+    Given a representation \((\rho_1, g_1, \rho_2)\) of \(f_1\) and another a representation \((\rho_2, g_2, \rho_3)\) of \(f_2\), prove that \((\rho_1, g_2 \circ g_1, \rho_3)\) is a representation of \(f_2 \circ f_1\).
 \end{problem}
 
 \begin{proof}
@@ -225,7 +224,7 @@ Don't forget to check the webspace for hints and additional context for each pro
 
 \begin{problem}
     [OR WHAT]
-    Let \(\vee \colon B \times B \to B\) be the logical "or" function. 
+    Let \(\vee \colon B \times B \to B\) be the logical ``or'' function. 
     Find a \(\lambda\)-representation \(\mathsf{OR}\) of \(\vee\), and evaluate its truth table.
 \end{problem}
 
@@ -235,8 +234,9 @@ Don't forget to check the webspace for hints and additional context for each pro
 
 \begin{problem}
     [Multipy by Three]
-    Find a \(\lambda\)-term \(\mathsf{M}_3\) that represents <i>multiplication by \(3\)</i>. 
-    That is, if \(\#_{Ch} \colon \mathbb N \to \lambda\mathit{Term}\) is the Church-numeral representation of natural numbers, \[
+    Find a \(\lambda\)-term \(\mathsf{M}_3\) that represents multiplication by \(3\). 
+    That is, if \(\mathsf{C} \colon \mathbb N \to \lambda\mathit{Term}\) is the Church-numeral representation of natural numbers, find \(\mathsf{M_3}\) such that 
+    \[
         \mathsf{M}_3\mathsf{C_n} \Downarrow \mathsf{C_{3n}}
     \]
     Verify that \(\mathsf{M_3} \mathsf{C_3} = \mathsf{C_9}\) using your definition of \(\mathsf{M_3}\).
