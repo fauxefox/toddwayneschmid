@@ -443,6 +443,23 @@
     But what it does tell us is that \(\beta\)-reduction does, up to \(\alpha\)-equivalence, give us a useful notion of "running a program to calculate the value of a function".
 </p>
 
+<p>
+    One consequence of the Church-Rosser theorem is that it does not matter what order you apply your \(\beta\)-reductions in.
+    Try it!
+</p>
+
+<div class="exercise">
+    <b>(Evaluation)</b>
+    Evaluate the following \(\lambda\)-terms in two different ways by applying \(\beta\)-reductions in different orders.
+    <ol>
+        <li>\((\lambda a.aa)((\lambda y.y)x)\)</li>
+        <li>\(((\lambda ab.aba)(\lambda y.y))x\)</li>
+    </ol>
+    \[
+        
+    \]
+</div>
+
 <h2>Computing in the \(\lambda\)-calculus</h2>
 
 <p>
