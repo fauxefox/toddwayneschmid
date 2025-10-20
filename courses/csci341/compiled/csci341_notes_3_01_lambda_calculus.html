@@ -589,13 +589,13 @@
     We can also represent numbers as \(\lambda\)-terms. 
     Let \(\#_{Ch} \colon \mathbb N \to \lambda\mathit{Term}\) be the function 
     \[\begin{aligned}
-        \#_{Ch}(0) &= \lambda fx.x \\
-        \#_{Ch}(1) &= \lambda fx.fx \\
-        \#_{Ch}(2) &= \lambda fx.ffx \\
+        \mathsf{C_0} &= \lambda fx.x \\
+        \mathsf{C_1} &= \lambda fx.fx \\
+        \mathsf{C_2} &= \lambda fx.ffx \\
                    &\vdots  \\
-        \#_{Ch}(n) &= \lambda fx.\overbrace{ff\cdots ff}^{\text{\(n\) times}} x \\
+        \mathsf{C_n} &= \lambda fx.\overbrace{ff\cdots ff}^{\text{\(n\) times}} x \\
     \end{aligned}\]
-    The \(\lambda\)-term \(\#_{Ch}(n)\) is called the <i>Church numeral of \(n\)</i>.
+    The \(\lambda\)-term \(\mathsf{C_n}\) is called the <i>Church numeral of \(n\)</i>.
     The functions \(\mathbb N \to \mathbb N\) that are representable by \(\lambda\)-terms are called <i>Church-computable</i>, like the following example.
 </p>
 
@@ -605,18 +605,18 @@
     \[
         \mathsf{S} = \lambda abc.b(abc)
     \]  
-    Applying this \(\lambda\)-term to \(\#_{Ch}(1)\), we evaluate as follows
+    Applying this \(\lambda\)-term to \(\mathsf{C_1}\), we evaluate as follows
     \[\begin{aligned}
-        \mathsf{S}\#_{Ch}(1)
+        \mathsf{S}\mathsf{C_1}
         &= (\lambda abc.b(abc))(\lambda fx.fx) \\
         &\Rightarrow_\beta \lambda bc.b((\lambda fx.fx)bc) \\
         &\Rightarrow_\beta \lambda bc.b((\lambda x.bx)c) \\
         &\Rightarrow_\beta \lambda bc.b(bc) \\
         &= \lambda bc.bbc \\
         &=_\alpha \lambda fx.ffx \\
-        &= \#_{Ch}(2)
+        &= \mathsf{C_2}
     \end{aligned}\]
-    In other words, \(\mathsf{S} \#_{Ch}(1) \Downarrow \#_{Ch}(2)\).
+    In other words, \(\mathsf{S} \mathsf{C_1} \Downarrow \mathsf{C_2}\).
     This \(\lambda\)-term \(\mathsf{S}\) represents the function \((x + 1) \colon \mathbb N \to \mathbb N\)!
 </div>
 
@@ -624,7 +624,7 @@
     <b>(Succession)</b>
     Evaluate the following \(\lambda\)-term to verify that it is the Church numeral for \(3\).
     \[
-        \mathsf{S}~\mathsf{S}~\mathsf{S}~\#_{Ch}(0)   
+        \mathsf{S}~\mathsf{S}~\mathsf{S}~\mathsf{C_0}   
     \]  
 </div>
 
@@ -636,19 +636,37 @@
     <b>(Repeat Application)</b>
     Evaluate the \(\lambda\)-term
     \[
-        (\#_{Ch}(2)~\mathsf{S})~\#_{Ch}(1)
+        (\mathsf{C_2}~\mathsf{S})~\mathsf{C_1}
     \]  
 </div>
 
 <p>
-    Using \(\mathsf{S}\), a lot of other number-theoretic functions can be defined.
-    For example, 
+    Using this idea, a lot of other number-theoretic functions can be defined.
+    For example, addition can be represented as
+    \[
+        \mathsf{ADD} = \lambda n m.(n~\mathsf{S})m
+    \]
+</p>
+
+<div class="exercise">
+    <b>(1+1)</b>
+    Evaluate the \(\lambda\)-term 
+    \[
+        \mathsf{ADD}~\mathsf{C_1}~\mathsf{C_2}
+    \]  
+</div>
+
+<p>
+    Using the same idea, multiplication can be defined as repeated addition.
+    But I'll let you figure this out!
 </p>
 
 <div class="problem">
     <b>(Multiply by 3)</b>
     Find a \(\lambda\)-term \(\mathsf{M}_3\) that represents <i>multiplication by \(3\)</i>. 
-    That is, if \(\#_{Ch} \colon \mathbb N \to \lambda\mathit{Term}\) is the Church-numeral representation of natural numbers, \[\mathsf{M}_3\#_{Ch}(n) \Downarrow \#_{Ch}(3 \times n)\]
+    That is, if \(\#_{Ch} \colon \mathbb N \to \lambda\mathit{Term}\) is the Church-numeral representation of natural numbers, \[
+        \mathsf{M}_3\mathsf{C_n} \Downarrow \mathsf{C_{3n}}
+    \]
 </div><div style="border: none; margin-bottom: -25px; padding: 0px; text-align: right;"><a href="../compiled/csci341_notes_3_00_computation.html"><span class="link"> &larr; computation</span></a></div>
 
 
