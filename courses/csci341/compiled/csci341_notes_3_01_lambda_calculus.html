@@ -189,7 +189,7 @@
 </div>
 
 <p>
-    For example, \(\lambda x.(y \circ (\lambda y. y))\) is a \(\lambda\)-term.
+    For example, \((\lambda x.(y \circ (\lambda y. y)))\) is a \(\lambda\)-term.
 </p>
 
 <div class="exercise">
@@ -199,11 +199,12 @@
 
 <p>
     We are going to simplify notation a bit sometimes, with the tacit understanding that the simpler strings of symbols representing \(\lambda\)-terms always represent unique <i>honest-to-goodness</i> \(\lambda\)-terms. 
-    For example, for \(\lambda\)-terms \(t_1\) and \(t_2\), instead of \((t_1 \circ t_2)\) we will probably just write \(t_1t_2\).
+    For \(\lambda\)-terms \(t_1\) and \(t_2\), instead of \((t_1 \circ t_2)\) we will probably just write \(t_1t_2\).
+    We also typically eliminate the outermost brackets.
     So, for example, the two expressions below represent the same \(\lambda\)-term:
     \[
         \lambda x.y(\lambda y. y)
-        = \lambda x.(y \circ (\lambda y. y))
+        = (\lambda x.(y \circ (\lambda y. y)))
     \]
     When we are feeling very lazy, we are also going to use the shorthand 
     \[
