@@ -1,19 +1,19 @@
 # Fdb version 4
-["biber Pset7"] 0 "Pset7.bcf" "Pset7.bbl" "Pset7" 1760977817.96581 0
+["biber Pset7"] 0 "Pset7.bcf" "Pset7.bbl" "Pset7" 1760991736.15529 0
   "Pset7.bcf" 0 -1 0 "pdflatex"
   "refs.bib" 0 -1 0 ""
   (generated)
   "Pset7.bbl"
   "Pset7.blg"
   (rewritten before read)
-["makeindex Pset7.idx"] 1760975944.39887 "Pset7.idx" "Pset7.ind" "Pset7" 1760977817.96569 0
-  "Pset7.idx" 1760977817.03413 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+["makeindex Pset7.idx"] 1760975944.39887 "Pset7.idx" "Pset7.ind" "Pset7" 1760991736.15516 0
+  "Pset7.idx" 1760991735.25591 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   (generated)
   "Pset7.ilg"
   "Pset7.ind"
   (rewritten before read)
-["pdflatex"] 1760977816.49801 "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/Pset7.tex" "Pset7.pdf" "Pset7" 1760977817.9661 0
-  "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/Pset7.tex" 1760977816.25443 6739 679a899deb904457056b1c1045767db3 ""
+["pdflatex"] 1760991734.70829 "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/Pset7.tex" "Pset7.pdf" "Pset7" 1760991736.15558 0
+  "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/Pset7.tex" 1760991734.41983 7107 73cd0067b6992880f2fc95b2bdc3de0d ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/bitstrea/charter/bchb7t.tfm" 1136768653 2732 006d846b4d54f9b40899c7c3eecd771a ""
@@ -270,12 +270,12 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1721257481.80017 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1721257440 8221420 55780793342b43867148509ad7bdd958 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "Pset7.aux" 1760977817.69191 342 d319a37e5e7a7ebc697840efd320507f "pdflatex"
+  "Pset7.aux" 1760991735.93176 342 d319a37e5e7a7ebc697840efd320507f "pdflatex"
   "Pset7.bbl" 0 -1 0 "biber Pset7"
   "Pset7.ind" 1760975944.92416 0 d41d8cd98f00b204e9800998ecf8427e "makeindex Pset7.idx"
-  "Pset7.out" 1760977817.52094 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "Pset7.run.xml" 1760977817.69391 2306 307a81dc1084ac98e4e7c0c9cd88babb "pdflatex"
-  "Pset7.tex" 1760977816.25443 6739 679a899deb904457056b1c1045767db3 ""
+  "Pset7.out" 1760991735.74937 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "Pset7.run.xml" 1760991735.93444 2306 307a81dc1084ac98e4e7c0c9cd88babb "pdflatex"
+  "Pset7.tex" 1760991734.41983 7107 73cd0067b6992880f2fc95b2bdc3de0d ""
   (generated)
   "Pset7.aux"
   "Pset7.bcf"
