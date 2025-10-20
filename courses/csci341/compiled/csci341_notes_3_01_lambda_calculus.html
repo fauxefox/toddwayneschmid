@@ -461,7 +461,8 @@
         &\Rightarrow_\beta ((\lambda y.yy)a)d \\
         &\Rightarrow_\beta (aa)d 
     \end{aligned}\]
-    That last \(\lambda\)-term is in \(\alpha\beta\)-normal form, so we are done.
+    That last \(\lambda\)-term is in \(\alpha\beta\)-normal form, so we are done:
+    \(((\lambda yx.yx)((\lambda y.yy)a))d \Downarrow aad\).
 </div>
 
 <p>
@@ -588,13 +589,60 @@
     We can also represent numbers as \(\lambda\)-terms. 
     Let \(\#_{Ch} \colon \mathbb N \to \lambda\mathit{Term}\) be the function 
     \[\begin{aligned}
-        \#_{Ch}(0) &= \lambda x.x \\
-        \#_{Ch}(1) &= \lambda x.fx \\
-        \#_{Ch}(2) &= \lambda x.ffx \\
+        \#_{Ch}(0) &= \lambda fx.x \\
+        \#_{Ch}(1) &= \lambda fx.fx \\
+        \#_{Ch}(2) &= \lambda fx.ffx \\
                    &\vdots  \\
-        \#_{Ch}(n) &= \lambda x.\overbrace{ff\cdots ff}^{\text{\(n\) times}} x \\
+        \#_{Ch}(n) &= \lambda fx.\overbrace{ff\cdots ff}^{\text{\(n\) times}} x \\
     \end{aligned}\]
     The \(\lambda\)-term \(\#_{Ch}(n)\) is called the <i>Church numeral of \(n\)</i>.
+    The functions \(\mathbb N \to \mathbb N\) that are representable by \(\lambda\)-terms are called <i>Church-computable</i>, like the following example.
+</p>
+
+<div class="example">
+    <b>(Successor)</b>
+    Consider the \(\lambda\)-term below, 
+    \[
+        \mathsf{S} = \lambda abc.b(abc)
+    \]  
+    Applying this \(\lambda\)-term to \(\#_{Ch}(1)\), we evaluate as follows
+    \[\begin{aligned}
+        \mathsf{S}\#_{Ch}(1)
+        &= (\lambda abc.b(abc))(\lambda fx.fx) \\
+        &\Rightarrow_\beta \lambda bc.b((\lambda fx.fx)bc) \\
+        &\Rightarrow_\beta \lambda bc.b((\lambda x.bx)c) \\
+        &\Rightarrow_\beta \lambda bc.b(bc) \\
+        &= \lambda bc.bbc \\
+        &=_\alpha \lambda fx.ffx \\
+        &= \#_{Ch}(2)
+    \end{aligned}\]
+    In other words, \(\mathsf{S} \#_{Ch}(1) \Downarrow \#_{Ch}(2)\).
+    This \(\lambda\)-term \(\mathsf{S}\) represents the function \((x + 1) \colon \mathbb N \to \mathbb N\)!
+</div>
+
+<div class="exercise">
+    <b>(Succession)</b>
+    Evaluate the following \(\lambda\)-term to verify that it is the Church numeral for \(3\).
+    \[
+        \mathsf{S}~\mathsf{S}~\mathsf{S}~\#_{Ch}(0)   
+    \]  
+</div>
+
+<p>
+    One of the funny things about Church numerals is that they really represent "repeated application".
+</p>
+
+<div class="exercise">
+    <b>(Repeat Application)</b>
+    Evaluate the \(\lambda\)-term
+    \[
+        \#_{Ch}(2)\mathsf{S}\#_{Ch}(1)
+    \]  
+</div>
+
+<p>
+    Using \(\mathsf{S}\), a lot of other number-theoretic functions can be defined.
+    For example, 
 </p>
 
 <div class="problem">
