@@ -337,6 +337,13 @@
     </ul>
 </div>
 
+<div class="example">
+    For example, we can perform a \(\beta\)-reduction of \((\lambda y.yy)a\) by substituting the free instances of \(y\) in the scope of \(\lambda y\) with the \(a\) on the right:
+    \[
+        (\lambda {\color{red} y}.{\color{red} yy}){\color{blue} a} \Rightarrow_\beta {\color{red} aa}
+    \]
+</div>
+
 <div class="exercise">
     <b>(Calculating for the First Time)</b>
     Find all of the \(\beta\)-reductions of the following \(\lambda\)-terms.
@@ -452,8 +459,9 @@
         &\Rightarrow_\beta ((\lambda c.((\lambda y.yy)a)c))d \\
         &\Rightarrow_\beta (\lambda c.((\lambda y.yy)a)c)d \\
         &\Rightarrow_\beta ((\lambda y.yy)a)d \\
-        &\Rightarrow_\beta (aa)d \\
+        &\Rightarrow_\beta (aa)d 
     \end{aligned}\]
+    That last \(\lambda\)-term is in \(\alpha\beta\)-normal form, so we are done.
 </div>
 
 <p>
