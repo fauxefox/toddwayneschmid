@@ -4,6 +4,9 @@
     Last lecture, we spent some time understanding how to represent decision problems and functions <i>syntactically</i>, i.e., as properties and transformations of strings. 
     This allowed us to classify problems about numbers and trees using the heirarchy of families of languages we have seen so far (for eg., we were able to make sense of the statement, "deciding the parity of a natural number is a regular problem").
     We also talked about how we can represent arbitrary functions, including any function of the form \(f \colon \mathbb N \to \mathbb N\), as a function on words.
+</p>
+
+<p>
     Today we are going to focus on the latter item: we have decided to conceive of computation as "the manipulation of semantical objects via syntactic means".
     We have a clear conception, at this point, what it means to solve language membership problems syntactically (via automata, for example), but we haven't said anything about how to do do this for <i>functions on strings</i>.
     Next time, we will see that automata can also be used to define functions on strings, but today we are going to do something a bit different: we are going to use purely syntactic transformations---rewrite rules, nothing else---to define functions on strings. 
@@ -20,11 +23,16 @@
 <div class="definition">
     <b>(\(\lambda\)-terms)</b>
     Fix a set \(\mathit{Var}\) of what we are going to call <i>input variables</i>.
-    The set of \(\lambda\)-terms, \(\lambda-\mathit{Term}\), is the language that is derived from the variable \(E\) in the grammar below. 
+    The set of \(\lambda\)-terms, \(\lambda\mathit{Term}\), is the language that is derived from the variable \(E\) in the grammar below. 
     \[
         E \to x \mid (E \circ E) \mid (\lambda x . E) 
     \]
     where \(x \in \mathit{Var}\) is any input variable. 
+
+    <p></p>
+    The \(\lambda\)-term \(x\) is called an <i>isolated input variable</i>.
+    Given \(\lambda\)-terms \(t,s\), the \(\lambda\)-term \((t \circ s)\) is called the <i>composition of \(t\) and \(s\)</i>.
+    Given a \(\lambda\)-term \(t\), the \(\lambda\)-term \((\lambda x.t)\) is called the <i>\(\lambda\)-abstraction of \(t\)</i>.
 </div>
 
 <p>
@@ -63,8 +71,9 @@
 <p>
     At this point, \(\lambda\)-terms are just syntax. 
     They're meaningless strings of symbols. 
-    This is going to make them feel a bit abstract, which is a good thing at this point, but to help you understand what's going on here: every \(\lambda\)-term represents a function. 
-    Specifically, the term \(\lambda x.t\) represents a function whose parameter is \(x\). 
+    This is going to make them feel a bit abstract, which is a good thing at this point, but to help you understand what's going on here: every \(\lambda\)-term represents a function.
+    In fact, every \(\lambda\)-term is a <i>program that computes a function</i>.
+    Specifically, the term \(\lambda x.t\) represents a program that computes a function whose parameter is \(x\). 
     For example, if we allowed ourselves arithmetic operations, we might write 
     \[
         f = \lambda x. (x + 1)
@@ -76,7 +85,8 @@
     For now, \(\lambda\)-terms are just strings of symbols, but it doesn't hurt to keep this in mind.
 </p>
 
-<h2>\(\beta\)-reduction and \(\alpha\)-equivalence</h2>
+<!-- BETA REDUCTION -->
+<h2>Substitution</h2>
 
 <p>
     Probably the most important <i>notation</i> to learn in the coming days is <i>input variable substitution</i>. 
@@ -85,8 +95,13 @@
     We are being careful about this now because different instances of the same character in a \(\lambda\)-term can mean different things.
 </p>
 
+<p>
+    The following definition is a bit technical, so let's start with the basic idea: an instance of a variable in a \(\lambda\)-term is <i>bound</i> if it is in the scope of a \(\lambda x\), and <i>free</i> otherwise. 
+    Exact indices don't make a difference to bookkeeping in the end, so don't drive yourself nuts when counting the symbols in a string.
+</p>
+
 <div class="definition">
-    <b>(Free, Bound, and Substituted)</b>
+    <b>(Free, Bound)</b>
     Given a \(\lambda\)-term \(t\), the set of <i>free input variables in \(t\)</i>, \(\mathsf{fv}(t)\), is defined recursively on \(\lambda\)-terms:
     \[\begin{aligned}
         \mathsf{fv}(x) &= \{(x, 0)\} \\
@@ -101,13 +116,294 @@
 </div>
 
 <div class="exercise">
-
+    <b>(Over the Line!)</b>
+    For each of the following \(\lambda\)-terms, determine the free instances of each variable and determine the bound instances of each variable as well as the \(\lambda\) that binds them.
+    <ol>
+        <li>\(\lambda x.xy\)</li>
+        <li>\(\lambda x.yx(\lambda x.x)\)</li>
+        <li>\(\lambda xy.z(\lambda zy.x)\)</li>
+    </ol>
 </div>
 
-<h3>\(\beta\)-reduction as Computation</h3>
+<p>
+    Now that we have some idea about what counts as <i>bound</i> and <i>free</i>, let's talk about the key idea on which the \(\lambda\)-calculus is built: <i>substitution</i>.
+</p>
 
-<h2></h2>
+<div class="definition">
+    <b>(Substitution)</b>
+    Let \(t\) and \(s\) be \(\lambda\)-terms and \(x\) be an input variable.
+    The <i>substitution of \(s\) for \(x\) in \(t\)</i> is the \(\lambda\)-term \(t[s/x]\) obtained by replacing every free instance of the variable \(x\) in \(t\) with \(s\).
+</div>
 
-<h2>Representing Number-theoretic Functions</h2>
+<p>
+    For example, given any \(\lambda\)-term \(s\), we can compute the substitution 
+    \[
+        (\lambda x.y(\lambda y.y))[s / y] = (\lambda x.s(\lambda y.y))
+    \]
+    The only free instance of \(y\) in \((\lambda x.y(\lambda y.y))\) is \((y, 4)\), so that is the only instance that is substituted. 
+    So, if \(s = \lambda x.x\), then we would have 
+    \[
+        (\lambda x.y(\lambda y.y))[(\lambda x.x) / y] = (\lambda x.(\lambda x.x)(\lambda y.y))
+    \]
+</p>
 
-<h2></h2>
+<div class="exercise">
+    <b>(Substitute Teacher)</b>
+    Calculate the following \(\lambda\)-terms.
+    <ol>
+        <li>\((\lambda x.xy)[(\lambda f.f)/y]\)</li>
+        <li>\((\lambda x.yx(\lambda x.x))[(\lambda f.f)/x]\)</li>
+        <li>\((\lambda xy.z(\lambda zy.x))[(\lambda f.f)/z]\)</li>
+    </ol>
+</div>
+
+<h2>\(\beta\)-reduction and \(\alpha\)-equivalence</h2>
+
+<p>
+    We are now ready to give some meaning to \(\lambda\)-terms.
+    We already stated that every \(\lambda\)-term represents a function, and that the function it represents is somehow given by substituting variables.
+    But what exactly does that mean? 
+    We define a <i>rewrite system</i> to make sense of this, similar to how grammars are defined, called <i>\(\beta\)-reduction</i>. 
+</p>
+
+<div class="definition">
+    <b>(\(\beta\)-reduction)</b>
+    Let \(t,s\) be \(\lambda\)-terms such that there are no free variables in \(s\) that are bound in \(t\).
+    In such a case, we call the \(\lambda\)-term \(\lambda x.t\) a <i>\(\beta\)-redex</i>, define the rewrite rule 
+    \[
+        (\lambda x.t)s \to_\beta t[s / x]
+    \]
+    and call \(t[s / x]\) a <i>\(\beta\)-reduction of \(\lambda x.t\)</i>.
+
+    <p></p>
+    The <i>\(\beta\)-reduction relation</i> extends this rewrite rule to \(\Rightarrow_\beta\), which includes compositions and \(\lambda\)-abstractions as follows:
+    <ul>
+        <li>If \(t_1 \Rightarrow_\beta t_2\), then \(t_1s \Rightarrow_\beta t_2 s\) and \(st_1 \Rightarrow_\beta st_2\)</li>
+        <li>If \(t_1 \Rightarrow_\beta t_2\), then \(\lambda x.t_1 \Rightarrow_\beta \lambda x.t_2\)</li>
+    </ul>
+</div>
+
+<div class="exercise">
+    <b>(Calculating for the First Time)</b>
+    Find all of the \(\beta\)-reductions of the following \(\lambda\)-terms.
+    <ol>
+        <li>\((\lambda x.xy)(\lambda f.f)\)</li>
+        <li>\((\lambda x.yx(\lambda x.x))(\lambda f.f)\)</li>
+        <li>\((\lambda zy.z(\lambda x.xy))(\lambda f.f)(\lambda f.f)\)</li>
+    </ol>
+</div>
+
+<p>
+    With a bit of care, the techincal condition in the definition of \(\beta\)-reduction (that free variables cannot be come bound after \(\beta\)-reduction) can be ducked.
+    This is what is called <i>\(\alpha\)-equivalence</i>, although it's not quite as fancy as it sounds.
+    The basic idea is that two functions like \(f(x) = x + 1\) and \(f(y) = y + 1\) are "really the same function". 
+    The only difference is what you have named the parameters.
+</p>
+
+<div class="definition">
+    <b>(\(\alpha\)-equivalence)</b>
+    Let \(t,s\) be \(\lambda\)-terms and \(x,y\) be input variables.
+    If either \(y = x\) or \(y\) is not bound anywhere in \(t\), then we define the rewrite rule 
+    \[
+        \lambda x.t \to_\alpha \lambda y.(t[y/x])
+    \]
+    and call this relation <i>\(\alpha\)-reduction</i>.
+    This rewrite rule extends to \(\Rightarrow_\alpha\), defined across composition and \(\lambda\)-abstractions as follows:
+    <ul>
+        <li>If \(t_1 \Rightarrow_\alpha t_2\), then \(t_1s \Rightarrow_\alpha t_2 s\) and \(st_1 \Rightarrow_\alpha st_2\)</li>
+        <li>If \(t_1 \Rightarrow_\alpha t_2\), then \(\lambda x.t_1 \Rightarrow_\alpha \lambda x.t_2\)</li>
+    </ul>
+    We write \(=_\alpha\) for the relation 
+    \[
+        t =_\alpha s \text{ if and only if } t \Rightarrow_\alpha^* s
+    \]
+    That is, there is a sequence of \(\alpha\)-rductions that turns \(t\) into \(s\).
+    The relation \(=_\alpha\) is called <i>\(\alpha\)-equivalence</i>.
+</div>
+
+<div class="exercise">
+    <b>(Alpha-Equivalence)</b>
+    Determine which of the following \(\lambda\)-terms are \(\alpha\)-equivalent.
+    <ol>
+        <li>\((\lambda x.xy)\)</li>
+        <li>\((\lambda y.xy)\)</li>
+        <li>\((\lambda x.yx)\)</li>
+        <li>\((\lambda y.yy)\)</li>
+        <li>\((\lambda x.xx)\)</li>
+    </ol>
+</div>
+
+<p>
+    We have given \(\alpha\)-reduction a "direction", but it really doesn't have one. 
+    This is why we call it an <i>equivalence</i>. 
+</p>
+
+<div class="lemma">
+    <b>(\(\alpha\)-reduction is an equivalence)</b>
+    The relation \(=_\alpha\) is an equivalence relation. 
+    That is, for any \(\lambda\)-terms \(t,s,r\),
+    <ol>
+        <li>\(t =_\alpha t\)</li>
+        <li>if \(t =_\alpha s\), then \(s =_\alpha t\)</li>
+        <li>if \(t =_\alpha s\) and \(s =_\alpha r\), then \(t =_\alpha r\)</li>
+    </ol>
+</div>
+
+<p>
+    Up to \(\alpha\)-equivalence, all of the ingredients for using \(\lambda\)-terms as functions is actually buried in the definition of \(\beta\)-reduction.
+    In fact, the stance that the \(\lambda\)-calculus takes is that "complete \(\beta\)-reduction = function computation".
+    By "complete", we mean "no further reductions can be formed".
+</p>
+
+<div class="definition">
+    <b>(\(\alpha\beta\)-Normal Form)</b>
+    A \(\lambda\)-term is said to be <i>in \(\alpha\beta\)-normal form</i> if for every \(\lambda\)-term \(s\) such that \(t =_\alpha s\), \(s\) has no further \(\beta\)-reductions, i.e., \(s \not{\Rightarrow_\beta}\).
+</div>
+
+<p>
+    This leads to the definition of function evaluation stipulated by the \(\lambda\)-calculus.
+</p>
+
+<div class="definition">
+    <b>(Evaluation)</b>
+    Let \(t \Rightarrow s\) denote that either \(t \Rightarrow_\beta\) or \(t =_\alpha s\).
+    Then we say that <i>\(t\) evaluates to \(s\)</i> if \(t \Rightarrow^* s\) and \(s\) is in \(\alpha\beta\)-normal form.
+    In this case, we write \(t \Downarrow s\).
+</div>
+
+<p>
+    It is important to note that if \(s_1 =_\alpha s_2\) and \(t \Downarrow s_1\), then \(t\Downarrow s_2\) as well.
+    In other words, evaluation is not unique.
+    However, it is unique <i>up to \(\alpha\)-equivalence</i>. 
+    This is what's known as the <i>Church-Rosser Theorem</i>.
+</p>
+
+<div class="theorem">
+    <b>(Church-Rosser)</b>
+    Let \(t\) be a \(\lambda\)-term, and let \(t \Downarrow s_1\) and \(t \Downarrow s_2\).
+    Then \(s_1 =_\alpha s_2\).
+</div>
+
+<p>
+    We aren't going to prove this theorem; that would go beyond the scope of the course.
+    But what it does tell us is that \(\beta\)-reduction does, up to \(\alpha\)-equivalence, give us a useful notion of "running a program to calculate the value of a function".
+</p>
+
+<h2>Computing in the \(\lambda\)-calculus</h2>
+
+<p>
+    So far, we have seen evaluation in the \(\lambda\)-calculus as a process of taing \(\beta\)-reductions of \(\lambda\)-terms up to \(\alpha\)-equivalence. 
+    This is exactly the kind of thing we were talking about when we said that computation operated "by syntactic means": strings becoming strings via purely syntactic transformations.
+    What we <i>do</i> with the syntax, i.e., how we <i>interpret</i> the syntax, is now up to us!
+</p>
+
+<p>
+    Given an alphabet \(A\) and sets \(S_1,S_2\), recall that a <i>string representation of a function</i> \(f \colon S_1 \to S_2\) consists of two representations, \(\rho_1 \colon S_1 \to A^*\) and \(\rho_2 \colon S_2 \to A^*\) respectively, and a function \(g \colon A^* \to A^*\) such that \(g(\rho_1(s)) = \rho_2(f(s))\) for all \(s \in S\).
+    In order to get a notion of representation in \(\lambda\)-terms, we need to relax the strict equality to \(\alpha\)-equivalence instead.
+</p>
+
+<div class="definition">
+    <b>(\(\lambda\)-representation)</b>
+    A <i>\(\lambda\)-term representation</i> of a set \(S\) is a function \(\rho \colon S \to \lambda\mathit{Term}\).
+    
+    Now, for arbitrary sets \(S_1,S_2\), let \(f \colon S_1 \to S_2\) be a function. 
+    A <i>\(\lambda\)-representation of \(f\)</i> consists of two \(\lambda\)-term representations 
+    \(\rho_1 \colon S_1 \to \lambda\mathit{Term}\) and 
+    \(\rho_2 \colon S_2 \to \lambda\mathit{Term}\), and a \(\lambda\)-term \(\mathsf{g}\) such that for any \(s \in S\), 
+    \[
+        \mathsf{g}~\rho_1(s) \Downarrow \rho_2(f(s))
+    \]
+</div>
+
+<p>
+    Notice that nothing is said for how an arbitrary \(\lambda\)-term is evaluated by \(\mathsf{g}\), only the ones that are representatives of elements of \(S_1\).
+    The next thing we are going to do is look at a whole lot of different \(\lambda\)-term representations of everyday objects, starting with a pretty simple type. 
+</p>
+
+<h3>Boolean Logic</h3>
+
+<p>
+    Let \(B = \{\mathtt{True}, \mathtt{False}\}\) be the set containing the two Boolean truth values.
+    Consider the following \(\lambda\)-interpretation of this set: 
+    \[\begin{gathered}
+        \rho \colon B \to \lambda\mathit{Term}
+        \\
+        \rho(\mathtt{True}) = \mathsf{T} = \lambda xy.x
+        \qquad 
+        \rho(\mathtt{False}) = \mathsf{F} = \lambda xy.y
+    \end{gathered}\]
+    In some way or form, these two \(\lambda\)-terms are the <i>representatives</i> of the true/false logic that we know and love. 
+    But how? 
+    The only way we can find out is <i>combining</i> them with the logical operators we know and love. 
+</p>
+
+<p>
+    For example, let's define the "and" operation.
+    Consider the \(\lambda\)-term 
+    \[
+        \mathsf{AND} = (\lambda xy.yxy)
+    \]
+    Where did this come from? Who cares! Does it work?
+    Well, let's see:
+    let's try computing \(\mathsf{AND}~\mathsf{T}~\mathsf{T}\), which we think of as "true and true". 
+    Intuitively, this should evaluate to \(\mathsf{T}\), right?
+    Let's apply the definitions and \(\beta\)-reduce:
+    \[\begin{aligned}
+        \mathsf{AND}~\mathsf{T}~\mathsf{T} 
+        &=_\alpha (\lambda ab.bab)(\lambda cd.c) \\
+    \end{aligned}\]
+</p>
+
+<div class="exercise">
+    <b>(\(\lambda\)-circuits)</b>
+    Evaluate the following \(\lambda\)-terms.
+    <ol>
+        <li>\(\mathsf{AND}~\mathsf{F}~\mathsf{T} \)</li>
+        <li>\(\mathsf{AND}~\mathsf{T}~\mathsf{F} \)</li>
+        <li>\(\mathsf{AND}~\mathsf{F}~\mathsf{F} \)</li>
+    </ol>
+</div>
+
+<p>
+    This confirms that \(\mathsf{AND}\) is a \(\lambda\)-term representation of the "and" function from Boolean logic. 
+    Formally speaking, let \(\wedge \colon B \times B \to B\) be the usual logical "and". 
+    We can define the \(\lambda\)-representation of paris of Booleans by setting \(\langle \rho,\rho \rangle \colon B \times B \to \lambda\mathit{Term}\) equal to
+    \[\begin{aligned}
+        \langle \rho,\rho \rangle(\mathtt{True}, \mathtt{True}) &= \mathsf{T}\mathsf{T} \\
+        \langle \rho,\rho \rangle(\mathtt{False}, \mathtt{True}) &= \mathsf{F}\mathsf{T} \\
+        \langle \rho,\rho \rangle(\mathtt{True}, \mathtt{False}) &= \mathsf{T}\mathsf{F} \\
+        \langle \rho,\rho \rangle(\mathtt{False}, \mathtt{False}) &= \mathsf{F}\mathsf{F} 
+    \end{aligned}\]
+    Then we have just verified that
+    \[
+        \mathsf{AND} \langle \rho,\rho \rangle(a, b) \Downarrow \rho(a \wedge b)
+    \]
+    This is the formal statement that says that \(\mathsf{AND}\) is a \(\lambda\)-representation of \(\wedge\).
+</p>
+
+<div class="problem">
+    <b>(OR WHAT)</b>
+    Let \(\vee \colon B \times B \to B\) be the logical "or" function. 
+    Find a \(\lambda\)-representation \(\mathsf{OR}\) of \(\vee\), and evaluate its truth table.
+</div>
+
+<h3>Number-theoretic Functions</h3>
+
+<p>
+    We can also represent numbers as \(\lambda\)-terms. 
+    Let \(\#_{Ch} \colon \mathbb N \to \lambda\mathit{Term}\) be the function 
+    \[\begin{aligned}
+        \#_{Ch}(0) &= \lambda x.x \\
+        \#_{Ch}(1) &= \lambda x.fx \\
+        \#_{Ch}(2) &= \lambda x.ffx \\
+                   &\vdots  \\
+        \#_{Ch}(n) &= \lambda x.\overbrace{ff\cdots ff}^{\text{\(n\) times}} x \\
+    \end{aligned}\]
+    The \(\lambda\)-term \(\#_{Ch}(n)\) is called the <i>Church numeral of \(n\)</i>.
+</p>
+
+<div class="problem">
+    <b>(Multiply by 3)</b>
+    Find a \(\lambda\)-term \(\mathsf{M}_3\) that represents <i>multiplication by \(3\)</i>. 
+    That is, if \(\#_{Ch} \colon \mathbb N \to \lambda\mathit{Term}\) is the Church-numeral representation of natural numbers, \[\mathsf{M}_3\#_{Ch}(n) \Downarrow \#_{Ch}(3 \times n)\]
+</div>
