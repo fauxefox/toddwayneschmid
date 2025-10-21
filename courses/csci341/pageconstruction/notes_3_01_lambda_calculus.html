@@ -189,7 +189,7 @@
 <div class="example">
     For example, we can perform a \(\beta\)-reduction of \((\lambda y.yy)a\) by substituting the free instances of \(y\) in the scope of \(\lambda y\) with the \(a\) on the right:
     \[
-        (\lambda {\color{red} y}.{\color{red} yy}){\color{blue} a} \Rightarrow_\beta {\color{red} aa}
+        (\lambda {\color{blue} y}.{\color{red} yy}){\color{blue} a} \Rightarrow_\beta aa
     \]
 </div>
 
@@ -304,10 +304,9 @@
     The \(\lambda\)-term below can be evaluated as follows:
     \[\begin{aligned}
         ((\lambda yx.yx)((\lambda y.yy)a))d
-        &=_\alpha ((\lambda bc.bc)((\lambda y.yy)a))d \\
-        &\Rightarrow_\beta ((\lambda c.((\lambda y.yy)a)c))d \\
-        &\Rightarrow_\beta (\lambda c.((\lambda y.yy)a)c)d \\
-        &\Rightarrow_\beta ((\lambda y.yy)a)d \\
+        &=_\alpha ((\lambda {\color{blue} b}c.{\color{red} b}c){\color{blue}( (\lambda y.yy)a)})d \\
+        &\Rightarrow_\beta (\lambda {\color{blue} c}.((\lambda y.yy)a)~{\color{red} c}){\color{blue} d} \\
+        &\Rightarrow_\beta ((\lambda {\color{blue} y}.{\color{red} yy}){\color{blue} a})d \\
         &\Rightarrow_\beta (aa)d 
     \end{aligned}\]
     That last \(\lambda\)-term is in \(\alpha\beta\)-normal form, so we are done:
@@ -382,7 +381,8 @@
     The only way we can find out is <i>combining</i> them with the logical operators we know and love. 
 </p>
 
-<p>
+<div class="example">
+    <b>(AND)</b>
     For example, let's define the "and" operation.
     Consider the \(\lambda\)-term 
     \[
@@ -395,9 +395,14 @@
     Let's apply the definitions and \(\beta\)-reduce:
     \[\begin{aligned}
         \mathsf{AND}~\mathsf{T}~\mathsf{T} 
-        &=_\alpha (\lambda ab.bab)(\lambda cd.c) \\
+        &=_\alpha (\lambda {\color{blue} a}b.b{\color{red} a}b){\color{blue} (\lambda cd.c)}(\lambda xy.x) \\
+        &\Rightarrow_\beta (\lambda {\color{blue} b}.{\color{red} b}(\lambda cd.c){\color{red} b}){\color{blue} (\lambda xy.x)} \\
+        &\Rightarrow_\beta (\lambda {\color{blue} x}y.{\color{red} x}){\color{blue} (\lambda cd.c)}(\lambda xy.x) \\
+        &\Rightarrow_\beta (\lambda {\color{blue} y}.(\lambda cd.c)){\color{blue} (\lambda xy.x)} \\
+        &\Rightarrow_\beta (\lambda cd.c) \\
+        &=_\alpha \mathsf{T} \\
     \end{aligned}\]
-</p>
+</div>
 
 <div class="exercise">
     <b>(\(\lambda\)-circuits)</b>
