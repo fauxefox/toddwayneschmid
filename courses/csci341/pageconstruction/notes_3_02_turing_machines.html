@@ -1,0 +1,30 @@
+<h1>Turing Machines</h1>
+
+<p>
+    So far, we've seen what it means to design string representations of decision problems and functions. 
+    We also saw the \(\lambda\)-calculus, which is a way of writing down functions syntactically and using rewrite rules as a form of computation. 
+    This is one way to design string-functions \(g \colon A^* \to A^*\) (using rewrite rules). 
+    Today we're going to look at a different way, something called a <i>Turing machine</i>. 
+</p>
+
+<p>
+    Roughly, a Turing machine is a kind of "mathematical model of computer hardware". 
+    It beefs up the stack automaton concept by adding a more powerful type of data structure to automata: a <i>tape machine</i>.
+</p>
+
+<h3>Tape Machines</h3>
+
+<p>
+    In the case of stacks, these were three basic commands, including \(\mathtt{skip}\), \(\mathtt{pop}~\sigma\), and \(\mathtt{push}~\sigma\), that operated on a finite list of symbols that represented a stack.
+    A <i>tape machine</i> (as we will define below) is a lot like a stack: it can run a set of basic commands that alter the state of a particular type of memory, which can be combined in sequence to form programs.
+    We fix ahead of time a set \(\Sigma\) of <i>tape symbols</i>.
+    The set of <i>tape head programs</i> \(\mathtt{Tape}\) is derived from the following grammar:
+    \[
+        E \to \mathtt{skip} \mid \mathtt{write}~\sigma \mid \mathtt{move~left} \mid \mathtt{move~right} \mid E.E
+    \]
+    
+</p>
+
+<div class="remark">
+    Strangely, in the history of computing, Turing machines came <i>after</i> the \(\lambda\)-calculus, and a little while later it was shown that they are equally as powerful as the \(\lambda\)-calculus, in the sense that they can solve all of the same problems.
+</div>

@@ -146,10 +146,10 @@ def run_wb(codelines, tape=Tape(track=True)) :
             if command == "moveto" :
                 tape.moveto(int(argument))
 
-            if command == "move" and argument == "left" :
+            if command == "move" and argument[0] == "l" :
                 tape.move_left()
 
-            if command == "move" and argument == "right" :
+            if command == "move" and argument[0] == "r" :
                 tape.move_right()
 
             if command == "write" :

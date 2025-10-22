@@ -1,4 +1,4 @@
-Running test_wb.machine
+Running test_wb.wb
 write 0
       V
 end [ 0 |  ...
