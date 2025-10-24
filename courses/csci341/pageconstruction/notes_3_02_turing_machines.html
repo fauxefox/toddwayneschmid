@@ -18,11 +18,162 @@
     In the case of stacks, these were three basic commands, including \(\mathtt{skip}\), \(\mathtt{pop}~\sigma\), and \(\mathtt{push}~\sigma\), that operated on a finite list of symbols that represented a stack.
     A <i>tape machine</i> (as we will define below) is a lot like a stack: it can run a set of basic commands that alter the state of a particular type of memory, which can be combined in sequence to form programs.
     We fix ahead of time a set \(\Sigma\) of <i>tape symbols</i>.
-    The set of <i>tape head programs</i> \(\mathtt{Tape}\) is derived from the following grammar:
-    \[
-        E \to \mathtt{skip} \mid \mathtt{write}~\sigma \mid \mathtt{move~left} \mid \mathtt{move~right} \mid E{.}E
-    \]
+</p>
+
+<div class="definition">
+    <b>(Tape Machine)</b>
+    Given a set \(\Sigma\) of <i>tape symbols</i>, a <i>(two-way) tape machine</i> is a pair \((t, i)\) consisting of a function \(t \colon \mathbb Z \to \Sigma \cup \{\_\}\) called the <i>tape</i>, and an integer \(i\) called the <i>position (of the tape head)</i>.
+    The symbol \(\_\) is called <i>blank</i>.
     
+    <p>
+        The set of <i>tape head programs</i> \(\mathtt{Tape}\) is derived from the following grammar:
+        \[
+            E \to \mathtt{skip} \mid \mathtt{write}~\sigma \mid \mathtt{move~left} \mid \mathtt{move~right} \mid E{.}E
+        \]
+        Above, \(\sigma\) ranges over \(\Sigma \cup \{\_\}\).
+        Given a tape machine \((t, i)\), we define 
+        \[\begin{aligned}
+            (t,i).\mathtt{skip} &= (t, i) \\
+            (t,i).\mathtt{write}~\sigma &= (t', i) 
+            &\text{where } t'(j) = \begin{cases}
+                \sigma & \text{if } i = j \\
+                t(j) & \text{if } i \neq j 
+            \end{cases}\\
+            (t, i).\mathtt{move~left} &= (t, i-1) \\
+            (t, i).\mathtt{move~right} &= (t, i+1)
+        \end{aligned}\]
+    </p>
+
+    <p>
+        When convenient, we will use the notation 
+        <ul>
+            <li>\({\downarrow}\sigma = \mathtt{write}~\sigma\)</li>
+            <li>\(\mathtt{erase} = {\downarrow}\_ = \mathtt{write}~\_\)</li>
+            <li>\({\lhd} = \mathtt{move~left}\)</li>
+            <li>\({\rhd} = \mathtt{move~right}\)</li>
+        </ul>
+    </p>
+</div>
+
+<p>
+    Intuitively, \((t, i)\) represents a list of symbols (the tape) that stretches infinitely long in both directions, paired with a read/write-enabled device (the tape head).
+    At each position (represented as an integer), a symbol \(\sigma \in \Sigma\) can appear on the tape at that position, or the tape at that position could be blank (formally represented as "\(\_\)").
+    Below, the tape head is represented in pink/purple and the tape is represented as the array of squares (called <i>cells</i>) that streches in both directions.
+    <img src="../imgs/tape_machine.svg" />
+    For an example of a tape machine running a tape program, let the tape machine directly above be called \((t, 0)\).
+    Then \(t(0) = 0\), \(t(1) = 1\), and \(t(-1) = 0\).
+    Running the program \((t, 0).p\) where
+    \[
+        p = \mathtt{write}~1.\mathtt{move~right}.\mathtt{write}~0.\mathtt{move~left}.\mathtt{move~left}.\mathtt{write}~1
+    \]
+    flips all the bits. 
+    This would produce the tape below:
+    <img src="../imgs/tape_machine_2.svg" />
+</p>
+
+<div class="exercise">
+    <b>(Nuked Tape)</b>
+    Write a tape program that <i>clears</i> the tape in the image above, in the sense that it erases all three symbols on the tape.
+</div>
+
+<h2>Turing Machines</h2>
+
+<p>
+    A <i>Turing machine</i> is to tapes and automata what a stack automaton was to stacks and nondeterministic automata.
+</p>
+
+<div class="definition">
+    <b>(Turing Machine)</b>
+    A <i>Turing machine</i> is a triple \(\mathcal T = (Q, \Sigma, \delta)\), where 
+    <ul>
+        <li>\(Q\) is a set of <i>states</i>, or <i>programs</i>,</li>
+        <li>\(\Sigma\) is a set of <i>tape symbols</i>, and</li>
+        <li>\(\delta\) is a relation 
+            \[
+                \delta \subseteq Q \times (\Sigma \cup \{\_\}) \times \mathtt{Tape} \times Q  
+            \]
+            called the <i>transition relation</i>.
+        </li>
+    </ul>
+    If \((x, \sigma, p, y) \in \delta\), then we write \(x\xrightarrow{\sigma \mid p} y\) and say that \(x\) <i>runs \(p\) and transitions to \(y\) if \(a\) is read</i>.
+
+    <p></p>
+    A Turing machine \(\mathcal T = (Q, \Sigma, \delta)\) is <i>deterministic</i> if for any \(x \in Q\) and \(\sigma \in \Sigma \cup \{\_\}\), there is at most one transition of the form \(x \xrightarrow{\sigma \mid p} y\), i.e., if we write 
+    \[
+        \delta(x, \sigma) = \{y \in Q \mid \text{there exists \(p \in \mathtt{Tape}\) such that } x \xrightarrow{\sigma \mid p} y\}
+    \]
+    then
+    \[
+        |\delta(x, \sigma)| \le 1
+    \]
+    Note that we are allowing \(\delta(x, \sigma) = \{\}\) in the definition of deterministic.
+
+    <p>
+        We say that \(x\) <i>halts on input \(\sigma\)</i> if \(\delta(x, \sigma) = \{\}\).
+    </p>
+</div>
+
+<p>
+    The states of a Turing machine are honest-to-goodness programs, in the following sense:
+    the transition \(x \xrightarrow{a \mid \rhd{.}{\downarrow}0} y\) should really be interpreted as a "line of code in the program \(x\)", namely 
+    <div class="code">
+        <table>
+            <tr><td>x = </td><td>if a move right.write 0.goto y</td></tr>
+        </table>
+    </div>
+    or if we have a very complicated tape program, 
+    <div class="code">
+        <table>
+            <tr><td>x = </td>
+                <td>
+                    if a <br />
+                    move right.write 0.goto y
+                </td>
+            </tr>
+        </table>
+    </div>
+    Let's take a look at a bigger example.
+</p>
+
+<div class="example">
+    <b>(Halt, Accept, and Reject)</b>
+    In the coming days, you will see a number of examples of "special" Turing machine programs. 
+    Here is an easy example:
+    the program <i>halt</i> is the only state of the Turing machine \(\mathcal T_{\mathrm{halt}} = (\{\mathtt{halt}\}, \Sigma, \{\})\).
+    In code, this might look like
+    <div class="code">
+        <table>
+            <tr><td>x_hlt = </td>
+                <td>
+                    
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+</div>
+
+<p>
+     
+    <div class="code">
+        <table>
+            <tr>
+                <td>x = </td>
+                <td>
+                    if a move right.goto y <br />
+                    if 1 halt <br />
+                </td>
+            </tr>
+            <tr>
+                <td>y = </td>
+                <td>
+                    if a move right.goto x <br />
+                    if 1 halt <br />
+                </td>
+            </tr>
+        </table>
+    </div>
 </p>
 
 <div class="remark">

@@ -1,5 +1,5 @@
 <!-- THIS IS A COMPILED FILE 
- Compiled on 2025-10-22 -->
+ Compiled on 2025-10-24 -->
 
 
 
@@ -598,9 +598,10 @@
     \[\begin{aligned}
         \mathsf{C_0} &= \lambda fx.x \\
         \mathsf{C_1} &= \lambda fx.fx \\
-        \mathsf{C_2} &= \lambda fx.ffx \\
+        \mathsf{C_2} &= \lambda fx.f(fx) \\
+        \mathsf{C_3} &= \lambda fx.f(f(fx)) \\
                    &\vdots  \\
-        \mathsf{C_n} &= \lambda fx.\overbrace{ff\cdots ff}^{\text{\(n\) times}} x \\
+        \mathsf{C_n} &= \lambda fx.\overbrace{f(f\cdots f(f}^{\text{\(n\) times}} x) \cdots ) \\
     \end{aligned}\]
     The \(\lambda\)-term \(\mathsf{C_n}\) is called the <i>Church numeral of \(n\)</i>.
     The functions \(\mathbb N \to \mathbb N\) that are representable by \(\lambda\)-terms are called <i>Church-computable</i>, like the following example.
@@ -631,7 +632,7 @@
     <b>(Greg the Egg)</b>
     Evaluate the following \(\lambda\)-term to verify that it is the Church numeral for \(3\).
     \[
-        \mathsf{S}~\mathsf{S}~\mathsf{S}~\mathsf{C_0}   
+        \mathsf{S}~(\mathsf{S}~(\mathsf{S}~\mathsf{C_0} ) )
     \]  
 </div>
 
