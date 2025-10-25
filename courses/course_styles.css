@@ -114,6 +114,10 @@ img {
 	vertical-align: top;
 }
 
+.state {
+	text-align: right !important;
+}
+
 .exercise {
 	margin:10px;
 	margin-left: auto;

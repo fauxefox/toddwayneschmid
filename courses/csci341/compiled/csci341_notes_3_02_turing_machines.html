@@ -170,12 +170,12 @@
 <p>
     In the case of stacks, these were three basic commands, including \(\mathtt{skip}\), \(\mathtt{pop}~\sigma\), and \(\mathtt{push}~\sigma\), that operated on a finite list of symbols that represented a stack.
     A <i>tape machine</i> (as we will define below) is a lot like a stack: it can run a set of basic commands that alter the state of a particular type of memory, which can be combined in sequence to form programs.
-    We fix ahead of time a set \(\Sigma\) of <i>tape symbols</i>.
+    We fix ahead of time a set \(A\) of <i>tape symbols</i>.
 </p>
 
 <div class="definition">
     <b>(Tape Machine)</b>
-    Given a set \(\Sigma\) of <i>tape symbols</i>, a <i>(two-way) tape machine</i> is a pair \((t, i)\) consisting of a function \(t \colon \mathbb Z \to \Sigma \cup \{\_\}\) called the <i>tape</i>, and an integer \(i\) called the <i>position (of the tape head)</i>.
+    Given a set \(A\) of <i>tape symbols</i>, a <i>(two-way) tape machine</i> is a pair \((t, i)\) consisting of a function \(t \colon \mathbb Z \to A \cup \{\_\}\) called the <i>tape</i>, and an integer \(i\) called the <i>position (of the tape head)</i>.
     The symbol \(\_\) is called <i>blank</i>.
     
     <p>
@@ -183,7 +183,7 @@
         \[
             E \to \mathtt{skip} \mid \mathtt{write}~\sigma \mid \mathtt{move~left} \mid \mathtt{move~right} \mid E{.}E
         \]
-        Above, \(\sigma\) ranges over \(\Sigma \cup \{\_\}\).
+        Above, \(\sigma\) ranges over \(A \cup \{\_\}\).
         Given a tape machine \((t, i)\), we define 
         \[\begin{aligned}
             (t,i).\mathtt{skip} &= (t, i) \\
@@ -201,7 +201,7 @@
         When convenient, we will use the notation 
         <ul>
             <li>\({\downarrow}\sigma = \mathtt{write}~\sigma\)</li>
-            <li>\(\mathtt{erase} = {\downarrow}\_ = \mathtt{write}~\_\)</li>
+            <li>\(\not{\!\downarrow} = \mathtt{erase} = \mathtt{write}~\_\)</li>
             <li>\({\lhd} = \mathtt{move~left}\)</li>
             <li>\({\rhd} = \mathtt{move~right}\)</li>
         </ul>
@@ -210,7 +210,7 @@
 
 <p>
     Intuitively, \((t, i)\) represents a list of symbols (the tape) that stretches infinitely long in both directions, paired with a read/write-enabled device (the tape head).
-    At each position (represented as an integer), a symbol \(\sigma \in \Sigma\) can appear on the tape at that position, or the tape at that position could be blank (formally represented as "\(\_\)").
+    At each position (represented as an integer), a symbol \(\sigma \in A\) can appear on the tape at that position, or the tape at that position could be blank (formally represented as "\(\_\)").
     Below, the tape head is represented in pink/purple and the tape is represented as the array of squares (called <i>cells</i>) that streches in both directions.
     <img src="../imgs/tape_machine.svg" />
     For an example of a tape machine running a tape program, let the tape machine directly above be called \((t, 0)\).
@@ -246,13 +246,13 @@
 
 <div class="definition">
     <b>(Turing Machine)</b>
-    A <i>Turing machine</i> is a triple \(\mathcal T = (Q, \Sigma, \delta)\), where 
+    A <i>Turing machine</i> is a triple \(\mathcal T = (Q, A, \delta)\), where 
     <ul>
-        <li>\(Q\) is a set of <i>states</i>, or <i>programs</i>,</li>
-        <li>\(\Sigma\) is a set of <i>tape symbols</i>, and</li>
+        <li>\(Q\) is a finite set of <i>states</i>, or <i>programs</i>,</li>
+        <li>\(A\) is a set of <i>tape symbols</i>, and</li>
         <li>\(\delta\) is a relation 
             \[
-                \delta \subseteq Q \times (\Sigma \cup \{\_\}) \times \mathtt{Tape} \times Q  
+                \delta \subseteq Q \times (A \cup \{\_\}) \times \mathtt{Tape} \times Q  
             \]
             called the <i>transition relation</i>.
         </li>
@@ -260,7 +260,7 @@
     If \((x, \sigma, p, y) \in \delta\), then we write \(x\xrightarrow{\sigma \mid p} y\) and say that \(x\) <i>runs \(p\) and transitions to \(y\) if \(a\) is read</i>.
 
     <p></p>
-    A Turing machine \(\mathcal T = (Q, \Sigma, \delta)\) is <i>deterministic</i> if for any \(x \in Q\) and \(\sigma \in \Sigma \cup \{\_\}\), there is at most one transition of the form \(x \xrightarrow{\sigma \mid p} y\), i.e., if we write 
+    A Turing machine \(\mathcal T = (Q, A, \delta)\) is <i>deterministic</i> if for any \(x \in Q\) and \(\sigma \in A \cup \{\_\}\), there is at most one transition of the form \(x \xrightarrow{\sigma \mid p} y\), i.e., if we write 
     \[
         \delta(x, \sigma) = \{y \in Q \mid \text{there exists \(p \in \mathtt{Tape}\) such that } x \xrightarrow{\sigma \mid p} y\}
     \]
@@ -271,7 +271,7 @@
     Note that we are allowing \(\delta(x, \sigma) = \{\}\) in the definition of deterministic.
 
     <p>
-        We say that \(x\) <i>halts on input \(\sigma\)</i> if \(\delta(x, \sigma) = \{\}\).
+        We say that \(x\) <i>immediately halts on input \(\sigma\)</i> if \(\delta(x, \sigma) = \{\}\).
     </p>
 </div>
 
@@ -280,42 +280,251 @@
     the transition \(x \xrightarrow{a \mid \rhd{.}{\downarrow}0} y\) should really be interpreted as a "line of code in the program \(x\)", namely 
     <div class="code">
         <table>
-            <tr><td>x = </td><td>if a move right.write 0.goto y</td></tr>
+            <tr><td class="state">x = </td><td>if a move right.write 0.goto y</td></tr>
+            <tr><td class="state">y = </td><td>if a write 0.goto x</td></tr>
         </table>
     </div>
-    or if we have a very complicated tape program, 
+    <!-- or if we have a very complicated tape program, 
     <div class="code">
         <table>
-            <tr><td>x = </td>
+            <tr><td class="state">x = </td>
                 <td>
-                    if a <br />
-                    &emsp;move right <br />
-                    &emsp;write 0 <br />
-                    &emsp;goto y <br />
+                    if 0 <br />
+                    &emsp;&emsp;move right. <br />
+                    &emsp;&emsp;write 0. <br />
+                    &emsp;&emsp;goto y <br />
+                    if 1 <br />
+                    &emsp;&emsp;move left. <br />
+                    &emsp;&emsp;write 1. <br />
+                    &emsp;&emsp;goto x <br />
+                </td>
+            </tr>
+            <tr><td class="state">y = </td>
+                <td>
+                    if 0 <br />
+                    &emsp;&emsp;move right. <br />
+                    &emsp;&emsp;write 0. <br />
+                    &emsp;&emsp;goto y <br />
+                    if 1 <br />
+                    &emsp;&emsp;move left. <br />
+                    &emsp;&emsp;write 1. <br />
+                    &emsp;&emsp;goto x <br />
                 </td>
             </tr>
         </table>
-    </div>
-    Let's take a look at a bigger example.
+    </div> -->
+</p>
+
+<p>
+    Just like in ordinary programming, it's useful to have a library of "common procedures" at your disposal.
+    Let's take a look at a couple examples.
 </p>
 
 <div class="example">
-    <b>(Halt, Accept, and Reject)</b>
-    In the coming days, you will see a number of examples of "special" Turing machine programs. 
-    Here is an easy example:
-    the program <i>halt</i> is the only state of the Turing machine \(\mathcal T_{\mathrm{halt}} = (\{\mathtt{halt}\}, \Sigma, \{\})\).
+    <b>(Halt)</b>
+    The program <i>halt</i> is the only state of the Turing machine \(\mathcal T_{x_\mathtt{hlt}} = (\{x_\mathtt{hlt}\}, A, \{\})\).
+    The state \(x_{\mathtt{hlt}}\) halts on all inputs.
     In code, this might look like
     <div class="code">
         <table>
-            <tr><td>x_hlt = </td>
+            <tr><td class="state">x_hlt = </td>
                 <td>
                     
                 </td>
             </tr>
         </table>
     </div>
+    ... it's the program that does nothing and then stops!
+    This is such a special program that if we want it to appear as a state in another Turing machine, we'll just write \(\mathtt{halt}\) instead of \(\mathtt{goto~x\_hlt}\).
 
+    If we were to draw the program <i>halt</i> and its Turing machine, it would be pretty boring: a single, transition-less state.
+    <img src="../imgs/x_hlt.svg" />
+    If you look at the transition relation \(\delta\) one more time, you will notice that this state has no outgoing transitions.
+</div>
 
+<p>
+    In the next example, we revisit the program you wrote near the beginning, that "nukes" the tape.
+    As it is presented, we assume that \(A = \{0,1\}\) (more on that later), but it can be adapted to any set of tape symbols.
+</p>
+
+<div class="example">
+    <b>(Clear)</b>
+    The program <i>clear</i> moves to the nearest blank cell to the left, and then erases everything between that cell and the nearest blank cell on the right.
+    As a program, it can be written as follows:
+    <div class="code">
+        <table>
+            <tr><td class ="state">x_clr = </td>
+                <td>
+                    if _ move right.goto y <br />
+                    if 0 move left.goto x_clr <br />
+                    if 1 move left.goto x_clr <br />
+                </td>
+            </tr>
+            <tr><td class ="state">y = </td>
+                <td>
+                    if _ halt <br />
+                    if 0 erase.move right.goto y <br />
+                    if 1 erase.move right.goto y <br />
+                </td>
+            </tr>
+        </table>
+    </div>
+    This is also such a special program that if we want it to appear as a state in another Turing machine, we'll just write \(\mathtt{clear}\) instead of \(\mathtt{goto x_clr}\).
+
+    <p>
+        If we were to draw the program <i>halt</i> and its Turing machine, it would consist of <i>three</i> states (remember halt!).
+        <img src="../imgs/x_clr.svg" />
+    </p>
+
+    <p>
+        The program \(\mathtt{clear}\) is really useful if we are careful to have all of the cells used by our program appear contiguously.
+        Then it really clears the tape!
+    </p>
+</div>
+
+<div class="exercise">
+    <b>(Shift)</b>
+    Design a program <i>shift</i> that moves all of the symbols on the tape (i.e., between the nearest blank to the left, all the way to the nearest blank to the right) one index to the right. 
+</div>
+
+<!-- STRING TRANSFORMERS -->
+<h3>String Transformers and Decision Procedures</h3>
+
+<p>
+    So, we've focused a lot on decision procedures throughout the course, but at this point, Turing machines don't have any "accept" or "reject" states. 
+    What's up with that?
+</p>
+
+<p>
+    As we mentioned at the top, a state in a Turing machine (i.e., a program!) acts as a "string transformer".
+    The way this works goes like this: start by writing your desired <i>input string</i> to a tape machine, and move the tape head to \(0\).
+    Now! Run the machine until it halts!
+</p>
+
+<div class="definition">
+    <b>(Halting on Input)</b>
+    Let \(w \in A^*\) be a word (not including blank!), write \(w = a_1 \cdots a_n\), and let \(t \colon \mathbb{Z} \to A \cup \{\_\}\) be the tape 
+    \[
+        t(i) = \begin{cases}
+            a_i & \text{ if \(1 \le i \le n\)} \\
+            \mathtt{\_}  & \text{ otherwise} \\
+        \end{cases}
+    \]
+    Now let \(\mathcal T = (Q, A, \delta)\) be a deterministic Turing machine with a state \(x \in Q\).
+    
+    <p>
+        A <i>run of \(\mathcal T\) starting from \(x\) on input \(w\)</i> is a path through \(\mathcal T\) of the form
+        \[
+            (x, t, 0)
+            \xrightarrow{b_1 \mid p_1} (x_1, t_1, i_1)
+            \xrightarrow{b_2 \mid p_2} (x_2, t_2, i_2)
+            \xrightarrow{b_3 \mid p_3} \cdots
+            \xrightarrow{b_k \mid p_k} (x_k, t_k, i_k)
+            \qquad\qquad (\dagger)
+        \]
+        such that the following conditions are met: 
+        <ol>
+            <li>
+                for any \(0 \le j < k\), \(b_{j+1} = t_{j}(i_j)\)<br>
+                (i.e., the symbol read by the tape head at each position \(i_j\) is the input symbol for the next step \(b_{j}\))
+            </li>
+            <li>
+                for any \(0 \le j < k\), \((t_{j+1}, i_{j+1}) = (t_j, i_j).p_{j+1}\)<br>
+                (i.e., the state of the tape machine at each step is obtained by running the tape program on the previous state of the tape machine)
+            </li>
+        </ol>
+        Above, we are assuming \(t_0 = t\) and \(i_0 = 0\).
+    </p>
+    <p>
+        The run \((\dagger)\) is called a <i>halting run</i>, and we say that \(x\) <i>halts on input \(w\)</i>, if furthermore, 
+        <ol start="3">
+            <li>
+                \(x_{i_k}\) immediately halts on input \(t_{k}(i_k)\)<br>
+                (i.e., there are no outgoing transitions from \(x_k\) for the tape symbol under the tape head at the end of the run)
+            </li>
+        </ol>
+    </p>
+</div>
+
+<p>
+
+</p>
+
+<div class="definition">
+    <b>(Turing-computable)</b>
+    Let \(\mathcal T\) be a deterministic Turing machine with a state \(x\), and let \(w \in A^*\) be a word.
+    If \(x\) halts on input \(w\), and the non-blank cells on the tape at the end of the halting run spell out a word \(u \in A^*\), then we say that <i>\(u\) is the result of running \(x\) on input \(w\)</i>, and define 
+    \[
+        \mathcal T_x(w) = u
+    \]
+    In this way, \(\mathcal T_x\) is a <i>partial</i> function 
+    \[
+        \mathcal T_x \colon A^* \rightharpoonup A^*
+    \]
+    in the sense that it is a function that is only defined on some subset of \(A^*\) (as opposed to a function that is defined on all words).
+
+    <p></p>
+    A partial function \(f \colon A^* \to A^*\) is said to be <i>Turing computable</i> (or just <i>computable</i>) if there is a deterministic Turing machine \(\mathcal T\) with a state \(x\) such that \(f(w) = \mathcal T_x(w)\) for all \(w \in A^*\) at which \(f(w)\) is defined.
+</div>
+
+<p>
+    Given a deterministic Turing machine \(\mathcal T\) with a state \(x\), 
+    Indeed, it is easy to come up with programs that never halt!
+</p>
+
+<div class="individual-exercise">
+    <b>(No 1s allowed)</b>
+    Show that the following function is computable:
+    \[
+        g \colon A^* \to A^*
+        \quad 
+        g(w) = \begin{cases}    
+            0 u & w = 1u \\
+            1 u & w = 0u \\
+            \varepsilon & w = \varepsilon 
+        \end{cases}
+    \]
+    where \(A = \{0,1\}\).
+</div>
+
+<p>
+    The next example contains two programs that will come up a lot.
+</p>
+
+<div class="example">
+    <b>(Accept and Reject)</b>
+    The program <i>accept</i> is intended to clear the tape and then only leave a \(1\), indicating a "successful run", in the same sense as with stack automata.
+    As a program, it can be written as follows:
+    <div class="code">
+        <table>
+            <tr><td class ="state">x_acc = </td>
+                <td>
+                    clear.goto y
+                </td>
+            </tr>
+            <tr><td class ="state">y = </td>
+                <td>
+                    write \(1\).halt
+                </td>
+            </tr>
+        </table>
+    </div>
+    The <i>reject</i> program is similar but writes a \(0\).
+    <div class="code">
+        <table>
+            <tr><td class ="state">x_rej = </td>
+                <td>
+                    clear.goto y
+                </td>
+            </tr>
+            <tr><td class ="state">y = </td>
+                <td>
+                    write \(0\).halt
+                </td>
+            </tr>
+        </table>
+    </div>
+    These are also such special programs that they deserve their own names: we'll just write \(\mathtt{accept}\) and \(\mathtt{reject}\) instead of \(\mathtt{goto~x_acc}\) and \(\mathtt{goto~x_rej}\).
 </div>
 
 <p>
@@ -323,14 +532,14 @@
     <div class="code">
         <table>
             <tr>
-                <td>x = </td>
+                <td class="state">x = </td>
                 <td>
                     if a move right.goto y <br />
                     if 1 halt <br />
                 </td>
             </tr>
             <tr>
-                <td>y = </td>
+                <td class="state">y = </td>
                 <td>
                     if a move right.goto x <br />
                     if 1 halt <br />
