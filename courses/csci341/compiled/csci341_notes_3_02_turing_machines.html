@@ -1,5 +1,5 @@
 <!-- THIS IS A COMPILED FILE 
- Compiled on 2025-10-24 -->
+ Compiled on 2025-10-25 -->
 
 
 
@@ -446,12 +446,24 @@
     </p>
 </div>
 
+<h3>Recognizable Languages</h3>
 <p>
-
+    The languages that a particular program halts have a special name, which we can write down now.
 </p>
 
 <div class="definition">
-    <b>(Turing-computable)</b>
+    <b>(Recognizable)</b>
+    A language \(L \subseteq A^*\) is <i>Turing recognizable</i> (or just <i>recognizable</i>) if there is a Turing machine \(\mathcal T\) with a state \(x\) such that 
+    \[
+        L = \{w \in A^* \mid \text{\(x\) halts on input \(w\)}}
+    \]
+    The family of recognizable languages is denoted \(\mathsf{TRec}\).
+</div>
+
+<h3>Turing computable functions</h3>
+
+<div class="definition">
+    <b>(Turing computable)</b>
     Let \(\mathcal T\) be a deterministic Turing machine with a state \(x\), and let \(w \in A^*\) be a word.
     If \(x\) halts on input \(w\), and the non-blank cells on the tape at the end of the halting run spell out a word \(u \in A^*\), then we say that <i>\(u\) is the result of running \(x\) on input \(w\)</i>, and define 
     \[
@@ -473,7 +485,7 @@
 </p>
 
 <div class="individual-exercise">
-    <b>(No 1s allowed)</b>
+    <b>(2's Complement)</b>
     Show that the following function is computable:
     \[
         g \colon A^* \to A^*
