@@ -323,7 +323,7 @@
     <b>(String Transformer, Turing computable)</b>
     A <i>string transformer</i> is a partial function \(f \colon A^* \rightharpoonup A^*\).
     This means that it is a relation \(f \subseteq A^* \times A^*\) such that if \((x, y) \in f\) and \((x, y') \in f\), then \(y = y'\).
-    If \((x, y) \in f\), we say that \(f(x)\) is <i>well-defined at \(x\)</i>.
+    If \((x, y) \in f\), we say that \(f(x)\) is <i>well-defined at \(x\)</i> and write \(f(x) = y\).
 
     <p></p>
     Let \(\mathcal T\) be a deterministic Turing machine with a state \(x\).
@@ -348,7 +348,21 @@
     \[
         L = \{w \in A^* \mid \text{\(x\) halts on input \(w\)}\}
     \]
+    In general, we write 
+    \[
+        \mathcal R(\mathcal T, x) = \{w \in A^* \mid \text{\(x\) halts on input \(w\)}\}
+    \]
     The family of recognizable languages is denoted \(\mathsf{TRec}\).
+</div>
+
+<div class="individual-exercise">
+    <b>(Recognition = Definition)</b>
+    Given a string transformer \(f \colon A^* \rightharpoonup A^*\), define the <i>domain of \(f\)</i> to be 
+    \[
+        \mathrm{dom}(f) = \{w \in A^* \mid \text{\(f\) is well-defined at \(w\)}\}
+    \]
+    Let \(\mathcal T\) be a Turing machine with a state \(x\).
+    Show that \(\mathrm{dom}(\mathcal T_x) = \mathcal R(\mathcal T, x)\).
 </div>
 
 <p>
