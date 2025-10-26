@@ -162,10 +162,24 @@
 </p>
 
 <p>
-    Today, we are going to see that none of these choices matter in the end: no matter which "versions" of the Turing machine concept we 
+    Today, we are going to see that none of these choices matter in the end: no matter which "versions" of the Turing machine concept we choose, the same string transformers are computable.
+    In fact, it is thought that <i>any</i> physically implementable model of computation that is at least as <i>expressive</i> (in the precise sense we will define below) as the Turing machine model is actually <i>equivalent</i> to the basic Turing machine model.
+    This is what is known as the <i>Church-Turing Thesis</i>, which we will state more precisely at the end of today.
 </p>
 
-<h2>Binary All the Way</h2>
+<p>
+    Today, we're going to make our way through a couple of different variations on the Turing machine theme, and show that they are all equivalent to the basic version of the Turing machine that we considered last time.
+    More precisely:
+</p>
+
+<div class="definition">
+    <b>(Turing Complete)</b>
+    Let \(A\) and \(B\) be any two alphabets of tape symbols, and let \(\mathsf{Comp} = \{g \colon A^* \rightharpoonup A^*\}\) 
+    and \(T\) be any set of string transformers \(A^* \rightharpoonup A^*\). 
+    We say that \(T\) is <i>Turing complete</i> if
+</div>
+
+<h2>Multiple-to-2</h2>
 
 <p>
     As our first example, let's argue that we can always 
