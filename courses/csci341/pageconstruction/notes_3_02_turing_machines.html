@@ -388,7 +388,22 @@
     Decision procedures are a bit different: let's fix two symbols in our alphabet of tape symbols, call them <i>accept</i> \(\top \in A\) and <i>reject</i> \(\bot \in A\). 
 </p>
 
+<div class="definition">
+    <b>(Decider, Turing Decidable)</b>
+    A string transformer \(f \colon A^* \rightharpoonup A^*\) is called a <i>decider</i> if for any \(w \in A^*\), either \(f(w) = \bot\) (<i>\(f\) rejects \(w\)</i>) or \(f(w) = \top\) (<i>\(f\) accepts \(w\)</i>).
+    Note that a decider is a (<i>total</i>) function, in the sense that \(\mathrm{dom}(f) = A^*\).
 
+    <p></p>
+    If the decider \(f\) is computable and \(f = \mathcal T_x\) for some Turing machine \(\mathcal T\) with the state \(x\), then we write
+    \[
+        \mathcal L(\mathcal T, x) = \{w \in A^* \mid \}
+    \]
+    and say that <i>\(x\) is a decision procedure for \(\mathcal L(\mathcal T, x)\)</i>.
+    A language \(L \subseteq A^*\) is called <i>Turing deciable</i> (or just <i>decidable</i>) if it has a decision procedure.
+
+    <p></p>
+    The family of decision procedures is written \(\mathsf{Dec}\).
+</div>
 
 <p>
     The next example contains two programs that will come up a lot.
