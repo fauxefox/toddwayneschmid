@@ -458,21 +458,6 @@
     </p>
 </div>
 
-<p>
-    The languages that a particular program halts have a special name, which we can write down now.
-</p>
-
-<div class="definition">
-    <b>(Recognizable)</b>
-    A language \(L \subseteq A^*\) is <i>Turing recognizable</i> (or just <i>recognizable</i>) if there is a Turing machine \(\mathcal T\) with a state \(x\) such that 
-    \[
-        L = \{w \in A^* \mid \text{\(x\) halts on input \(w\)}\}
-    \]
-    The family of recognizable languages is denoted \(\mathsf{TRec}\).
-</div>
-
-<h3>Turing computable functions</h3>
-
 <div class="definition">
     <b>(Turing computable)</b>
     Let \(\mathcal T\) be a deterministic Turing machine with a state \(x\), and let \(w \in A^*\) be a word.
@@ -490,20 +475,39 @@
     A partial function \(f \colon A^* \to A^*\) is said to be <i>Turing computable</i> (or just <i>computable</i>) if there is a deterministic Turing machine \(\mathcal T\) with a state \(x\) such that \(f(w) = \mathcal T_x(w)\) for all \(w \in A^*\) at which \(f(w)\) is defined.
 </div>
 
+
+<p>
+    The languages that a particular program halts have a special name, which we can write down now.
+</p>
+
+<div class="definition">
+    <b>(Recognizable)</b>
+    A language \(L \subseteq A^*\) is <i>Turing recognizable</i> (or just <i>recognizable</i>) if there is a Turing machine \(\mathcal T\) with a state \(x\) such that 
+    \[
+        L = \{w \in A^* \mid \text{\(x\) halts on input \(w\)}\}
+    \]
+    The family of recognizable languages is denoted \(\mathsf{TRec}\).
+</div>
+
+<p>
+    Note that recognizability has nothing to do with accept/reject.
+    It really just determines the set of strings that a given string transformer is defined on.
+</p>
+
 <p>
     Given a deterministic Turing machine \(\mathcal T\) with a state \(x\), 
     Indeed, it is easy to come up with programs that never halt!
 </p>
 
-<div class="individual-exercise">
+<div class="exercise">
     <b>(2's Complement)</b>
     Show that the following function is computable:
     \[
         g \colon A^* \to A^*
         \quad 
         g(w) = \begin{cases}    
-            0 u & w = 1u \\
-            1 u & w = 0u \\
+            0 g(u) & w = 1u \\
+            1 g(u) & w = 0u \\
             \varepsilon & w = \varepsilon 
         \end{cases}
     \]
