@@ -530,6 +530,16 @@
     We are going to call this program \(\mathtt{stretch}~b\).
 </div>
 
+<p>
+    As a brief aside, we can now define what it means for a general function to be computable.
+</p>
+
+<div class="definition">
+    <b>(General Computable Function)</b>
+    Let \(f \colon S_1 \to S_2\) be any function between two sets \(S_1\) and \(S_2\).
+    A <i>computable representation of \(f\)</i> is a representation of \(f\) \((\rho_1, g, \rho_2)\) such that \(g\) is computable.
+</div>
+
 <!--  -->
 <h3>Recognizability</h3>
 
@@ -672,13 +682,18 @@
     (2) if \(x_L\) rejects the word \(w\), then the tape head is reading \(\bot\) when \(x_L\) halts on the input \(w\).
 </div>
 
+<p>
+    That being said, basically every language we have seen so far is decidable!
+    The easiest examples to see are the regular languages, but I will let you figure that out yourself.
+</p>
+
 <div class="problem">
     <b>(Regular Languages are Decidable)</b>
     Prove that \(\mathsf{Reg} \subseteq \mathsf{Dec}\).
 </div>
 
 <div class="remark">
-    Strangely, in the history of computing, Turing machines came <i>after</i> the \(\lambda\)-calculus, and a little while later it was shown that they are equally as powerful as the \(\lambda\)-calculus, in the sense that they can solve all of the same problems.
+    Strangely, in the history of computing, Turing machines came <i>after</i> the \(\lambda\)-calculus, and a little while later it was shown that they are equally as powerful as the \(\lambda\)-calculus, in the sense that they compute all of the same functions on \(\mathbb N\).
 </div><div style="border: none; margin-bottom: -25px; padding: 0px; text-align: right;"><a href="../compiled/csci341_notes_3_01_lambda_calculus.html"><span class="link"> &larr; lambda calculus</span></a></div>
 
 
