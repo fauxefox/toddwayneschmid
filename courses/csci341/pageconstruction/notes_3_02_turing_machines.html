@@ -123,6 +123,13 @@
 </div>
 
 <p>
+    A Turing machine should be thought of as "hardware" (as opposed to \(\lambda\)-terms, which should be thought of as "software") in the sense that we would normally think of hardware.
+    Indeed, your actual, physical computer has a hard drive (or SSD, whatever) + RAM for its tape, and its states and transitions consist of all of the different programs that you can run on it.
+    In this picture of Turing machines, the tape programs themselves are the possible machine instructions, and the tape head is the <i>physical</i> position of the reader/writer in the memory hardware!
+</p>
+
+<h3>States as Programs</h3>
+<p>
     The states of a Turing machine are honest-to-goodness programs, in the following sense:
     the transition \(x \xrightarrow{a \mid \rhd{.}{\downarrow}0} y\) should really be interpreted as a "line of code in the program \(x\)", namely 
     <div class="code">
