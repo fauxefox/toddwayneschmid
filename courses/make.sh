@@ -1,15 +1,15 @@
 echo "Moving to $1"
-sleep 0.5
+sleep 0.1
 cd $1
 
 echo "Clearing compiled/"
-sleep 0.5
+sleep 0.1
 cd compiled/
 rm *.html
 echo "compiled/ cleared. I hope you didn't put anything important in there!"
 
 echo "\nRunning make script.\n"
-sleep 0.5
+sleep 0.1
 cd ../../
 python3 compilepages.py $1
 
