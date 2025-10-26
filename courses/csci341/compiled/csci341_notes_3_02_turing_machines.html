@@ -559,7 +559,11 @@
 </div>
 
 <p>
-    The next example contains two programs that will come up a lot.
+    We use \(\top\) and \(\bot\) just so that we can call these symbols whatever we like, but we'll usually take \(1 = \top\) and \(0 = \bot\).
+</p>
+
+<p>
+    The next example contains two programs that will come up a lot in the context of decision procedures.
 </p>
 
 <div class="example">
@@ -575,7 +579,7 @@
             </tr>
             <tr><td class ="state">y = </td>
                 <td>
-                    write \(1\).halt
+                    write \(\top\).halt
                 </td>
             </tr>
         </table>
@@ -590,13 +594,19 @@
             </tr>
             <tr><td class ="state">y = </td>
                 <td>
-                    write \(0\).halt
+                    write \(\bot\).halt
                 </td>
             </tr>
         </table>
     </div>
     These are also such special programs that they deserve their own names: we'll just write \(\mathtt{accept}\) and \(\mathtt{reject}\) instead of \(\mathtt{goto~x_acc}\) and \(\mathtt{goto~x_rej}\).
 </div>
+
+<p>
+    Note that in the programs above, we wrote \(\mathtt{clear.goto y}\).
+    This doesn't quite make sense at this point, because \(\mathtt{clear}\) is the program corresponding to a state, not a tape program.
+    The way you should read this is <i>run program \(\mathtt{clear}\) and when it halts, runt he program \(\mathtt{y}\)</i>.
+</p>
 
 <p>
      
