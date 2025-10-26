@@ -636,26 +636,46 @@
 </p>
 
 <p>
-     
+    Decidability is a much stronger condition than recognizability.
+</p>
+
+<div class="lemma">
+    <b>(Decidable Languages are Recognizable)</b>
+    Let \(L \subeteq A^*\) be a decidable language. 
+    Then \(L\) is recognizable as well.
+    In other words, \[\mathsf{Dec} \subseteq \mathsf{Rec}\]
+</div>
+
+<div class="proof">
+    Since \(L\) is decidable, it has a decision procedure.
+    Let \(\mathcal T\) be a Turing machine with a state \(x_L\) that is a decision procedure for the language \(L\).
+    Call the decision procedure \(\mathtt{decide}~L\).
+    Without loss of generality, we can assume that the tape head is either reading \(\top\) or \(\bot\) when it halts.
+    Consider the following Turing program:
     <div class="code">
         <table>
             <tr>
-                <td class="state">x = </td>
-                <td>
-                    if a move right.goto y <br />
-                    if 1 halt <br />
-                </td>
+                <td>x = </td>
+                <td>decide \(L\).goto y</td>
             </tr>
             <tr>
-                <td class="state">y = </td>
-                <td>
-                    if a move right.goto x <br />
-                    if 1 halt <br />
-                </td>
+                <td>y = </td>
+                <td>if \(\top\) halt</td>
+                <td>if \(\bot\) diverge</td>
             </tr>
         </table>
     </div>
-</p>
+    You made the program \(\mathtt{diverge}\) Divergent Loop exercise.
+    The state \(x\) halts on an input word \(w\) if and only if \(x_L\) halts and accepts the word \(w\).
+    This is because 
+    (1) if \(x_L\) accepts the word \(w\), then the tape head is reading \(\top\) when \(x_L\) halts on the input \(w\), and 
+    (2) if \(x_L\) rejects the word \(w\), then the tape head is reading \(\bot\) when \(x_L\) halts on the input \(w\).
+</div>
+
+<div class="problem">
+    <b>(Regular Languages are Decidable)</b>
+    Prove that \(\mathsf{Reg} \subseteq \mathsf{Dec}\).
+</div>
 
 <div class="remark">
     Strangely, in the history of computing, Turing machines came <i>after</i> the \(\lambda\)-calculus, and a little while later it was shown that they are equally as powerful as the \(\lambda\)-calculus, in the sense that they can solve all of the same problems.
