@@ -305,23 +305,38 @@
     </p>
 </div>
 
+<p>
+    If a program halts on <i>every</i> input string, it really determines a <i>string function</i>:
+    given a string \(w\), we run the program \(x\) in the machine \(\mathcal T\) on input \(w\), and then when it halts, we read the tape again. 
+    If we ignore all of the blanks (remove all the whitespace), then we obtain a new string, \(u\), and call it \(\mathcal T_x(u)\). 
+    The only technicality to take care of is the awkward issue of halting. 
+    Indeed, it is easy to come up with programs that never halt!
+</p>
+
+<div class="individual-exercise">
+    <b>(Divergent Loop)</b>
+    Write a program that never halts.
+    In the future, we're going to call this program \(\mathtt{diverge}\).
+</div>
+
 <div class="definition">
-    <b>(Turing computable)</b>
-    Let \(\mathcal T\) be a deterministic Turing machine with a state \(x\), and let \(w \in A^*\) be a word.
-    If \(x\) halts on input \(w\), and the non-blank cells on the tape at the end of the halting run spell out a word \(u \in A^*\), then we say that <i>\(u\) is the result of running \(x\) on input \(w\)</i>, and define 
+    <b>(String Transformer, Turing computable)</b>
+    A <i>string transformer</i> is a partial function \(f \colon A^* \hookrightarrowup A^*\).
+    This means that it is a relation \(f \subseteq A^* \times A^*\) such that if \((x, y) \in f\) and \((x, y') \in f\), then \(y = y'\).
+    If \((x, y) \in f\), we say that \(f(x)\) is <i>well-defined at \(x\)</i>.
+
+    <p></p>
+    Let \(\mathcal T\) be a deterministic Turing machine with a state \(x\).
+    We define the string transformer \(\mathcal T_x \colon A^* \hookrightarrowup A^*\) as follows:
+    let \(w \in A^*\) be a word.
+    If \(x\) halts on input \(w\), and the non-blank cells on the tape at the end of the halting run spell out a word \(u \in A^*\) (i.e., after removing whitespace), then we say that <i>\(u\) is the result of running \(x\) on input \(w\)</i>, and define 
     \[
         \mathcal T_x(w) = u
     \]
-    In this way, \(\mathcal T_x\) is a <i>partial</i> function 
-    \[
-        \mathcal T_x \colon A^* \rightharpoonup A^*
-    \]
-    in the sense that it is a function that is only defined on some subset of \(A^*\) (as opposed to a function that is defined on all words).
-
+    
     <p></p>
-    A partial function \(f \colon A^* \to A^*\) is said to be <i>Turing computable</i> (or just <i>computable</i>) if there is a deterministic Turing machine \(\mathcal T\) with a state \(x\) such that \(f(w) = \mathcal T_x(w)\) for all \(w \in A^*\) at which \(f(w)\) is defined.
+    A string transformer \(f \colon A^* \hookrightarrowup A^*\) is said to be <i>Turing computable</i> (or just <i>computable</i>) if there is a deterministic Turing machine \(\mathcal T\) with a state \(x\) such that \(f = \mathcal T_x\).
 </div>
-
 
 <p>
     The languages that a particular program halts have a special name, which we can write down now.
@@ -339,11 +354,6 @@
 <p>
     Note that recognizability has nothing to do with accept/reject.
     It really just determines the set of strings that a given string transformer is defined on.
-</p>
-
-<p>
-    Given a deterministic Turing machine \(\mathcal T\) with a state \(x\), 
-    Indeed, it is easy to come up with programs that never halt!
 </p>
 
 <div class="exercise">
