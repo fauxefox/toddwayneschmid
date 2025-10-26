@@ -498,13 +498,37 @@
         g \colon A^* \to A^*
         \quad 
         g(w) = \begin{cases}    
-            0 g(u) & w = 1u \\
-            1 g(u) & w = 0u \\
+            0~g(u) & w = 1~u \\
+            1~g(u) & w = 0~u \\
             \varepsilon & w = \varepsilon 
         \end{cases}
     \]
     where \(A = \{0,1\}\).
+    To check your construction, compute \(g(0100110)\).
+
+    <p></p>
+    We are going to call this program \(\mathtt{complement}\).
 </div>
+
+<div class="exercise">
+    <b>(\(b\)-Stretch)</b>
+    Let \(b \in A\).
+    Show that the following function is computable:
+    \[
+        g \colon A^* \to A^*
+        \quad 
+        g(w) = \begin{cases}    
+            0~b~g(u) & w = 0~u \\
+            1~b~g(u) & w = 1~u \\
+            \varepsilon & w = \varepsilon 
+        \end{cases}
+    \]
+    where \(A = \{0,1\}\).
+
+</div>
+
+<!--  -->
+<h3>Recognizability</h3>
 
 <p>
     The languages that a particular program halts have a special name, which we can write down now.
