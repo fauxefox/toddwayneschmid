@@ -1,0 +1,260 @@
+\documentclass[11pt]{article}
+
+\newcommand{\pset}{
+    7
+}
+\newcommand{\subtitle}{
+     Beyond \(\mathsf{CFL}\) and the Nature of Computation
+}
+\newcommand{\duedate}{
+    Friday, October 31
+}
+
+% Page Setup
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    margin={2.5cm}
+}
+
+% Basic Packages
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathpartir}
+\usepackage{enumitem}
+\usepackage{mathabx}
+
+% Font
+\usepackage{charter}
+
+% Bibliography and index
+\usepackage[backend=biber, style=numeric]{biblatex}
+\addbibresource{refs.bib}
+\usepackage{makeidx}
+\makeindex
+
+% Colors and Graphics
+\usepackage[dvipsnames, x11names]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{
+    cd,
+    fit,
+    calc,
+    positioning,
+    arrows,
+    automata,
+    shapes
+}
+\tikzset{
+    baseline = (current bounding box.center),
+    every state/.append style = {
+        rectangle,
+        rounded corners=5pt,
+		inner sep = 3pt,
+		minimum size = 18pt,
+		initial text = {},
+        fill=Azure1
+	},
+	every edge/.append style = {
+		->,
+		>=stealth,
+		bend angle=10,
+		thick
+	}
+}
+\usepackage{musicography}
+\usepackage{graphicx}
+\usepackage{svg}
+\graphicspath{../imgs/}
+
+% Hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    linkcolor   = black,
+    filecolor   = RubineRed,
+    urlcolor    = RubineRed,
+    citecolor   = RubineRed,
+    pdftitle    = {CSCI 341 Course Materials}
+}
+\usepackage[capitalize]{cleveref}
+
+% Environments
+\theoremstyle{theorem} % In Italics
+\newtheorem{theorem}                    {{\color{Purple}Theorem}}[section]
+\newtheorem{lemma}          [theorem]   {{\color{Magenta}Lemma}}
+\newtheorem{proposition}    [theorem]   {Proposition}
+\newtheorem{corollary}      [theorem]   {Corollary}
+\newtheorem{question}                   {{\color{red}Question}}
+
+\theoremstyle{definition} % Not in italics
+\newtheorem{definition}     [theorem]   {{\color{NavyBlue}Definition}}
+\newtheorem{example}        [theorem]   {{\color{ForestGreen}Example}}
+\newtheorem{problem}                    {{\color{BurntOrange}Problem}}
+
+\theoremstyle{remark} % Subdued label
+\newtheorem{remark}[theorem]        {{\color{Gray}Remark}}
+
+% (1), (2), ...
+\renewcommand\labelenumi{(\theenumi)}
+
+% Go nuts with line breaks 
+\allowdisplaybreaks
+
+%%%%%%%%%%
+% MACROS %
+%%%%%%%%%%
+
+\newcommand{\op}{\mathrm{op}}               % Opposite
+\newcommand{\inv}{{-1}}                     % Inverse
+\newcommand{\id}{\mathsf{id}}               % Identity f(x) = x
+\newcommand{\Det}{\mathrm{Det}}             % determinize
+\newcommand{\Lang}{\mathcal{L}}             % Language
+
+\newcommand{\incl}{\mathsf{incl}}           % Inclusion
+\newcommand{\proj}{\mathsf{proj}}           % Projection
+
+% Numbers and Standard notation
+\newcommand{\NN}{\mathbb{N}}                % 0, 1, 2, 3, 4, ...
+\newcommand{\ZZ}{\mathbb{Z}}                % ..., -2, -1, 0, 1, 2, ...
+\newcommand{\QQ}{\mathbb{Q}}                % n/m for n and m in \NN and m > 0
+\newcommand{\RR}{\mathbb{R}}                % real numbers
+\newcommand{\pRR}{\mathbb{R}_{+}}           % positive real numbers
+
+\newcommand{\dom}{\mathrm{dom}}             % Domain
+\newcommand{\cod}{\mathrm{cod}}             % Codomain
+
+\newcommand{\Grph}{\operatorname{Grph}}     % Graph of a function
+
+% Transitions
+\newcommand{\tr}[1]{
+    \mathrel{
+        \raisebox{-1pt}{
+            \(\xrightarrow{#1}\)
+        }
+    }
+}
+\newcommand{\bisim}{\mathrel{\raisebox{1pt}{\(\underline{\leftrightarrow}\)}}}
+
+% Text
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\codeblock}[1]{
+    \begin{center}
+        \parbox{0.8\textwidth}{
+            \ttfamily
+            #1
+        }
+    \end{center}
+}
+
+% Boolean statements
+\newcommand{\OR}{~\mathrm{or}~}
+\newcommand{\AND}{~\mathrm{and}~}
+\newcommand{\NOT}{\mathrm{not}~}
+\newcommand{\IMPLIES}{~\mathrm{implies}~}
+\newcommand{\FORALL}{\mathrm{for\ all}~}
+\newcommand{\EXISTS}{\mathrm{there\ exists}~}
+\newcommand{\SUCHTHAT}{~\mathrm{such\ that}~}
+
+
+
+% Title
+\title{CSCI 341 Problem Set \pset}
+\author{\subtitle}
+\date{Due
+    \duedate
+}
+
+\begin{document}
+
+\maketitle
+
+Don't forget to check the webspace for hints and additional context for each problem!
+
+\begin{problem}
+    [Three's a Crowd]
+    Prove that the following language in the alphabet \(0,1\) is not context-free:
+    \[
+        L = \{w 0 w 0 w \mid w \in \{0,1\}^*\}
+    \]
+\end{problem}
+
+\begin{proof}[Solution.]
+    
+\end{proof}
+
+\begin{problem}
+    [5 out of 16]
+    Consider the decision problem 
+    \[
+        D_5 = \{5n \mid n \in \mathbb N\} \subseteq \mathbb{N}
+    \]
+    Given a natural number \(n\in \mathbb N\), let \(\mathsf{hex}(n)\) be the hexidecimal representation of \(n\). 
+    Find a regular expression \(r\) such that \((\mathsf{hex}, \mathcal L(r))\) is a faithful representation of \(D_5\).
+\end{problem}
+
+\begin{proof}[Solution.]
+    
+\end{proof}
+
+\begin{problem}
+    [Composing Representations]
+    In this problem, we are going to show that representations of functions ``compose''.
+    We need a bit of notation: given functions \(f_1 \colon S_1 \to S_2\) and \(f_2 \colon S_2 \to S_3\), we are going to define \(f_2 \circ f_1 \colon S_1 \to S_3\) to be the function defined by 
+    \[
+        f_2 \circ f_1(s) = f_2(f_1(s))
+    \]
+    This function, \(f_2 \circ f_1\), is called the <i>composition of \(f_1\) and \(f_2\)</i>.
+
+    Now on to the problem.
+    Let \(S_1,S_2,S_3\) be sets and let \(A\) be an alphabet.
+    Let \(\rho_i \colon S_i \to A^*\) be a string representation for each \(i = 1,2,3\), and let \(f_1 \colon S_1 \to S_2\) and \(f_2 \colon S_2 \to S_3\) be functions. 
+    \[
+        S_1 \xrightarrow{f_1} S_2 \xrightarrow{f_2} S_3
+    \]
+    Given a representation \((\rho_1, g_1, \rho_2)\) of \(f_1\) and another a representation \((\rho_2, g_2, \rho_3)\) of \(f_2\), prove that \((\rho_1, g_2 \circ g_1, \rho_3)\) is a representation of \(f_2 \circ f_1\).
+\end{problem}
+
+\begin{proof}
+    [Solution.]
+\end{proof}
+
+\begin{problem}
+    [OR WHAT]
+    Let \(\vee \colon B \times B \to B\) be the logical ``or'' function. 
+    Find a \(\lambda\)-representation \(\mathsf{OR}\) of \(\vee\), and evaluate its truth table.
+\end{problem}
+
+\begin{proof}
+    [Solution.]
+\end{proof}
+
+\begin{problem}
+    [Multipy by Three]
+    Find a \(\lambda\)-term \(\mathsf{M}_3\) that represents multiplication by \(3\). 
+    That is, if \(\mathsf{C} \colon \mathbb N \to \lambda\mathit{Term}\) is the Church-numeral representation of natural numbers, find \(\mathsf{M_3}\) such that 
+    \[
+        \mathsf{M}_3\mathsf{C_n} \Downarrow \mathsf{C_{3n}}
+    \]
+    Verify that \(\mathsf{M_3} \mathsf{C_3} = \mathsf{C_9}\) using your definition of \(\mathsf{M_3}\).
+\end{problem}
+
+\begin{proof}
+    [Solution.]
+\end{proof}
+
+\begin{problem}
+    [(BONUS) 3 out of 2]
+    Let \(D = \{3n \mid n \in \mathbb N\}\).
+    Find a language \(L \subseteq \{0,1\}^*\) such that \((\mathsf{bin}, L)\) is a faithful representation of \(D\).
+    Find a stack automaton \(\mathcal S\) with a state \(x\) such that \(L = \mathcal L(\mathcal S, x)\).
+\end{problem}
+
+\begin{proof}
+    [Solution.]
+\end{proof}
+
+\end{document}
