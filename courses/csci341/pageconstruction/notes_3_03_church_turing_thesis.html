@@ -16,24 +16,318 @@
 
 <p>
     Today, we're going to make our way through a couple of different variations on the Turing machine theme, and show that they are all equivalent to the basic version of the Turing machine that we considered last time.
-    More precisely:
+    <!-- To make this more precise, we set the following definition. -->
+</p>
+
+<!-- <div class="definition">
+    <b>(Computational Equivalence)</b>
+    Let \(C_1\) and \(C_2)
+</div> -->
+
+
+<h2>Binary Suffices</h2>
+
+<p>
+    As our first example, let's argue that every computable function is representable by a Turing machine over the binary alphabet \(\{0, 1\}\).
+</p>
+
+<div class="theorem">
+    <b>(Binary Suffices)</b>
+    Let \(f \colon S_1 \to S_2\) be any function between sets \(S_1\) and \(S_2\).
+    If \(f\) is Turing computable (in general, possibly with a Turing machine with many tape symbols), then there is a Turing machine \(\mathcal T = (Q, \{0,1\}, \delta)\) with a state \(x\) such that \(\mathcal T_x\) represents \(f\).
+</div>
+
+<div class="proof">
+    We are going to argue directly that for every Turing machine \(\mathcal T = (Q, A, \delta)\) with a state \(x\), there exists a Turing machine \(\mathcal T^\dagger = (Q^\dagger, \{0,1\}, \delta^\dagger)\) and a string representation \(\rho \colon A^* \to \{0,1\}^*\) that \((\rho, \mathcal T^\dagger_{x}, \rho)\) is a representation of \(\mathcal T_x\).
+    To then see that this produces a representation of \(f\), we just need to compose the two representations:
+    <img src="../imgs/01-rep-compose.svg" />
+
+    <p></p>
+    First of all, let \(|A| = n\).
+    Then there is a binary representation for each \(a \in A\) with \(\lfloor\log(n)\rfloor + 1\) many bits: specifically, if \(A = \{a_1, \dots, a_n\}\), then we can let \(\rho(a_i) = \mathsf{bin}(i)\).
+    This allows us to define \(\rho \colon A^* \to \{0,1\}^*\) by 
+    \[
+        \rho(b_1b_2 \dots, b_m) = \rho(b_1) ~\rho(b_2) ~ \cdots ~\rho(b_m)
+    \]
+    For example, if \(A = \{a,b,c\}\), then \(\lfloor\log(n)\rfloor + 1 = 2\), and we have 
+    \[
+        \rho(a) = 00
+        \qquad 
+        \rho(b) = 01
+        \qquad
+        \rho(c) = 10
+    \]
+    so that 
+    \[
+        \rho(bbac) = 01~01~00~10
+    \]
+    This takes care of the string representation.
+
+    <p></p>
+    Now we get to the hard part of defining \(\mathcal T^\dagger\).
+    Fix \(\ell = \log(n) + 1\).
+    The general idea is going to be to treat each block of \(\ell\) consecutive cells as one cell in the Turing machine \(\mathcal T\).
+    This means that every move command has to move \(\ell\) spaces instead of \(1\), and every reading of the tape has to be replaced with \(\ell\) reading steps.
+    Formally, the construction of \(Q^\dagger\) and \(\delta^\dagger\) happens in three stages:
+    <ol>
+        <li>
+            In the first stage, we replace every move right/left with \(\ell\) of the same move.
+            That is, we replace \(\mathtt{move~right}\) with \(\mathtt{move~right}~\ell\), which we define to be 
+            \[
+                \mathtt{move~right}~\ell
+                = \overbrace{\mathtt{move~right}{.}\mathtt{move~right} \dots \mathtt{move~right}}^{\ell \text{ times}}
+            \]
+            and similarly we replace every \(\mathtt{move~left}\) with \(\mathtt{move~left}~\ell\).
+        </li>
+        <li>
+            In the second stage, we replace every write with the binary representation of the written letter.
+            That is, if \(\rho(a) = b_1b_2\cdots b_\ell\), we replace \(\mathtt{write}~a\) with \(\mathtt{write}~b_1b_2\dots b_\ell\), which we define to be 
+            \[\begin{aligned}
+                &\mathtt{write}~b_1b_2\dots b_\ell \\
+                &= 
+                \mathtt{write}~b_1{.}\mathtt{move~right}{.}\mathtt{write}~b_2\dots
+                \mathtt{move~right}{.}\mathtt{write}~b_\ell{.}\mathtt{move~left}~(\ell-1)
+            \end{aligned}\]
+        </li>
+        <li>
+            In the last step, for each state \(y \in Q\) and bitstring \(b_1b_2\dots b_\ell\), we add a path 
+            \[
+                y \xrightarrow{b_1 \mid \rhd} 
+                y_{b_1} \xrightarrow{b_2 \mid \rhd} 
+                \cdots
+                y_{b_1b_2\dots b_{\ell-1}} \xrightarrow{b_{\ell-1} \mid \rhd} 
+                y_{b_1b_2\dots b_\ell} 
+            \]
+            Then for each transition \(y \xrightarrow{a \mid p} z\), if \(\rho(a) = b_1\dots b_\ell\), then we replace that transition with the transition 
+            \[
+                y_{b_1\dots b_\ell} \xrightarrow{\lhd^\ell{.}p} z 
+            \]
+            Notice that the transition is taken regardless of what is under the tape head.
+            Above, we are using the shorthand \({\lhd^\ell} = \mathtt{move~left}~\ell\).
+        </li>
+    </ol>
+    Let us now observe that \(\rho(\mathcal T_x(w)) = \mathcal T^\dagger_x(\rho(w))\) for any \(w \in A^*\) where \(\mathcal T_x(w)\) is well-defined.
+
+    <p></p>
+    Imagine running \(\mathcal T\) on a tape \((t, i)\) and \(\mathcal T^\dagger\) on a tape \((t', \ell i)\) at the same time, where for all \(k\),
+    \[
+        t'(\ell k + j) = b_{j-1} \qquad\qquad \text{(*)}
+    \]
+    where \(\rho(t(k)) = b_1 \dots b_\ell\).     
+    Each transition \(y \xrightarrow{a \mid p} z\) corresponds to the \(\ell\) transitions
+    \[
+        y \xrightarrow{b_1 \mid \rhd} 
+        y_{b_1} \xrightarrow{b_2 \mid \rhd} 
+        \cdots
+        \xrightarrow{b_{\ell-1} \mid \rhd} 
+        y_{b_1b_2\dots b_\ell} 
+        \xrightarrow{\lhd^\ell{.}p'} z
+    \]
+    where \(p'\) is \(p\) but with the moves and writes adjusted as in stages 1 and 2 above. 
+    We just need to argue that, up to representation, the effect of \(p\) and \(p'\) on \((t, i)\) and \((t', \ell i)\) is the same.
+    
+    <p></p>
+    More precisely, we are going to prove that for any tape program \(p\), \((t, i).p\) and \((t', \ell i){.}p'\) also satisfy the property stated in (*).
+    To that end, we proceed by induction on \(p\). 
+    <ol>
+        <li>
+            Base Case 1.
+            If \(p = \mathtt{skip}\), then \((t, i){.}\mathtt{skip} = (t,i)\) and  \((t', \ell i){.}\mathtt{skip} = (t',\ell i)\) and we are done.
+        </li>
+        <li>
+            Base Case 2.
+            If \(p = \mathtt{move~right}\) (equiv., \mathtt{left}), then \(p' = \mathtt{move~right}~\ell\), so that 
+            \((t, i).p = (t, i+1)\) and 
+            \((t', \ell i){.}p' = (t', \ell i + \ell) = (t', \ell (i + 1))\) and we are done.
+        </li>
+        <li>
+            Base Case 3.
+            If \(p = \mathtt{write}~a\), then \(p' = \mathtt{write}~b_1b_2\dots b_\ell\) where \(\rho(a) = b_1b_2\dots b_\ell\).
+            In that case,
+            \[
+                t'(\ell i + j) = b_{j-1}
+            \]
+            for each \(1 \le j \le \ell\), and the position of \((t', \ell i).\mathtt{write}~b_1\dots b_\ell\) is \(\ell i\), by design (see the definition of \(\mathtt{write}~b_1\dots b_\ell\) above). 
+        </li>
+        <li>
+            Induction Step.
+            Finally, suppose that \(p = p_1{.}p_2\), and that the statement is true for \(p_1\) and \(p_2\).
+            Then \(p' = p_1'{.}p_2'\), where \(p_1'\) and \(p_2'\) were obtained from \(p_1\) and \(p_2\) via stages 1 and 2 above. 
+            Using the induction hypothesis twice, we see that \((t, i){.}p_1\) and \((t', \ell i){.}p_1'\) satisfy (*), and therefore \((t, i){.}p_1{.}p_2\) and \((t', \ell i){.}p_1'{.}p_2'\) satisfy (*).
+        </li>
+    </ol>
+    This finishes the proof.
+</div>
+
+<div class="exercise">
+    <b>(Simulating ABCs by Hand)</b>
+    Consider the Turing machine over the alphabet \(A = \{a,b,c\}\) below.
+    <div class="code">
+        <table>
+            <tr>
+                <td>
+                    x = 
+                </td>
+                <td>
+                    if blank goto y <br>
+                    if \(a\) write \(b\).move right.goto x <br>
+                    if \(b\) write \(c\).move right.goto x <br>
+                    if \(c\) write \(a\).move right.goto x <br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    y = 
+                </td>
+                <td>
+                    if blank move left.halt
+                </td>
+            </tr>
+        </table>
+    </div>
+    <ol>
+        <li>Draw a state diagram of this Turing machine.</li>
+        <li>Use the construction in the proof of the Binary Suffices theorem to simulate a Turing machine over the alphabet \(\{0,1\}\) that computes the same string transformer.</li>
+    </ol>
+    
+</div>
+
+<h2>One-sided Tapes Suffice</h2>
+
+<p>
+    We chose to define our Turing machines to have 2-sided tapes, but we could just as well have restricted ourselves to a one-sided tape.
+    Indeed, the two resulting models of comutation are equivalent!
 </p>
 
 <div class="definition">
-    <b>(Turing Complete)</b>
-    Let
+    <b>(One-way Tape Machines)</b>
+    A <i>one-way tape machine</i> is a pair \((t,i)\) consisting of a function \(t \colon \mathbb N \to A \cup \{\_\}\) called the <i>tape</i> and a nonnegative (!) integer \(i\) called the <i>position (of the tape head)</i>.
+    
+    <p></p>
+    One-way tape machines also run \(\mathtt{Tape}\) programs, with one difference: the semantics of \(\mathtt{move~left}\) is different at position \(0\).
     \[
-        \mathsf{Comp} = \{g \mid g\colon \{0,1\}^* \rightharpoonup \{0,1\}^* \text{ and \(g\) is Turing computable}\}
+        (t, 0).\mathtt{move~left} = (t, 0)
     \]
-    A set of string transformers \(T \subseteq \{f \mid f \colon A^* \rightharpoonup A^*\}\) is called <i>Turing complete</i> if 
-    <ol>
-        
-    </ol>every \(f \in T\) is Turing computable and
-    We say that \(T\) is <i>Turing complete</i> if
 </div>
 
-<h2>Multiple-to-2</h2>
+<p>
+    The notion of Turing machine for a one-way tape machine is exactly the same as for the two-way tape machine.
+    Also, the definition of \(\mathcal T_x \colon A^* \rightharpoonup A^*\) for a given Turing machine \(\mathcal T\) with a state \(x\) (run on one-way tape machine) is the same.
+</p>
 
 <p>
-    As our first example, let's argue that we can always 
+    For one-sided tapes, we generally fix a particular symbol, \(\blacksquare \in A\), called the <i>end of the tape</i> (or \(\mathtt{end}\)), and immediately write this symbol to the beginning of the tape. 
+    This leaves us with the following picture of one-sided tape machines:
+    <img src="../imgs/one-way-tape.svg" />
+    It is also generally accepted practice to erase this symbol at the end of execution.
 </p>
+
+<div class="theorem">
+    <b>(One-way tapes suffice)</b>
+    Let \(f \colon S_1 \to S_2\) be any function between sets \(S_1\) and \(S_2\).
+    If \(f\) is Turing computable (with a Turing machine run on a two-way tape), then there is a Turing machine \(\mathcal T\) with a state \(x\) such that \(\mathcal T_x\) represents \(f\) (where \(\mathcal T_x\) is evaluated on a one-way tape machine).
+</div>
+
+<div class="proof">
+    Again, this is a matter of simulating one type of tape machine with another.
+    We are going to simulate a two-way tape machine \((t, i)\) with a one-way tape machine by inteleaving the positive indexed cells of \(t\) and the negative indexed cells of \(t\). 
+    In particular, if \(t\) is given by 
+    \[
+        t = \qquad [~\dots \mid -3 \mid -2 \mid -1 \mid 0 \mid 1 \mid 2 \mid 3 \mid \cdots~]
+    \]
+    then we are going to squeeze this into the tape 
+    \[
+        t' = \qquad  [~0 \mid -1 \mid 1 \mid -2 \mid 2 \mid -3 \mid 3 \mid \cdots~]
+    \]
+    Formally, this means that running our Turing machine needs to maintain the properties
+    \[\begin{aligned}
+        t'(2j) &= t(j) \\
+        t'(2j + 1) &= t(-j-1) \\
+        i' &= 2i &\text{if \(i \ge 0\)} \\
+        i' &= 2|i| - 1 &\text{if \(i < 0\)} 
+    \end{aligned}
+    \qquad \text{(*)}
+    \]
+    where \(j\) ranges over all \(j \in \mathbb N\).
+    Then, at the end of runtime, we are going to "shift everything over" until the string we are trying to represent is represented in-order on the one-way tape.
+</div>
+
+<h2>One Tape Machine Suffices</h2>
+
+<p>
+    Here is another idea: what if we wanted to have <i>two</i> tape machines going instead of one?
+</p>
+
+<div class="definition">
+    <b>(Multi-tape Machines)</b>
+    Given a natural number \(n \in \mathbb N\), an <i>(two-way) \(n\)-tape machine</i> is a tuple of \(n\) tape machines \(\langle (t_1, i_1), \dots, (t_n, i_n)\rangle\).
+    The set \(\mathtt{Tape}_n\) of <i>\(n\)-tape programs</i> is derived from the grammar
+    \[
+        E \to 
+        \mathtt{skip}
+        \mid \mathtt{move}~k~\mathtt{left}
+        \mid \mathtt{move}~k~\mathtt{right}
+        \mid \mathtt{write}~\sigma~\mathtt{to}~k
+        \mid E{.}E
+    \]
+    where \(1 \le k \le n\) and \(\sigma \in A\).
+    The semantics of \(n\)-tape programs is as follows: Given an \(n\)-tape machine \(\langle (t_1, i_1), \dots, (t_n, i_n)\rangle\), we define 
+        \[\begin{aligned}
+            \langle (t_1, i_1), \dots, (t_n, i_n)\rangle.\mathtt{skip} 
+            &= \langle (t_1, i_1), \dots, (t_n, i_n)\rangle \\
+            \langle (t_1, i_1), \dots, (t_n, i_n)\rangle.\mathtt{write}~\sigma~\mathtt{to}~k
+            &= \langle (t_1, i_1), \dots, (t_k,i_k).\mathtt{write}~\sigma, \dots, (t_n, i_n)\rangle \\
+            \langle (t_1, i_1), \dots, (t_n, i_n)\rangle.\mathtt{move}~k~\mathtt{left} 
+            &= \langle (t_1, i_1), \dots, (t_k, i_k - 1), \dots, (t_n, i_n)\rangle \\
+            \langle (t_1, i_1), \dots, (t_n, i_n)\rangle.\mathtt{move}~k~\mathtt{right} 
+            &= \langle (t_1, i_1), \dots, (t_k, i_k + 1), \dots, (t_n, i_n)\rangle
+        \end{aligned}\]
+</div>
+
+<p>
+    Again, the corresponding notion of Turing machine is the same, with the one exception that the transition relation of an \(n\)-tape Turing machine \(\mathcal T = (Q, A, \delta)\) is now 
+    \[
+        \delta \subseteq Q \times (A \cup \{\_\}) \times \mathtt{Tape}_n \times Q
+    \]
+    Lastly, we take the string transformer \(\mathcal T_x \colon A^* \rightharpoonup A^*\) defined by the state \(x\) of the \(n\)-tape Turing machine \(\mathcal T\) to be determined by the result of reading the first (index \(1\)) tape after a halting run.
+</p>
+
+<div class="theorem">
+    <b>(One Tapes Suffices)</b>
+    Let \(f \colon S_1 \to S_2\) be any function between sets \(S_1\) and \(S_2\).
+    If \(f\) is Turing computable on an \(n\)-tape Turing machine, then there is a single tape Turing machine \(\mathcal T\) with a state \(x\) such that \(\mathcal T_x\) represents \(f\).
+</div>
+
+<div class="proof">
+
+</div>
+
+<h2>The Church-Turing Thesis</h2>
+
+<p>
+    There are dozens more variations on the Turing machine <i>theme</i> that we could discuss here. 
+    You might even cover one in your project.
+    But the point is, they all seem to be beat by the vanilla Turing machine concept.
+</p>
+
+<p>
+    After all of that, you might be left wondering: <i>can we beat the single-tape Turing machine?</i>.
+    This is a good question as it is, but it also could use a bit more specificity: 
+    <div class="figure">
+        Is there an algorithm that is, ignoring finite differences, implementable on a physical device and cannot be represented on a Turing machine?
+    </div>
+    This is the central <i>scientific</i> question of theoretical computer science. 
+    The word <i>scientific</i> is used here in a very literal sense: it is not a mathematical question, because there is no mathematical definition of "ignoring finite differences, implementable on a physical device"---this is a question of practical measure.
+    The <i>Church-Turing thesis</i> is, and it is still widely believed to be correct, answers the question with a simple, "no."
+    <div class="figure">
+        <b>The Church-Turing Thesis:</b> Every algorithm that is implementable on a physical device can be represented on a Turing machine.
+    </div>
+    Indeed, every reasonable model of computation that has been discovered in the past century that is <i>at least</i> as powerful as the Turing machine has been proven to be <i>equivalent</i> to the Turing machine, including \(\lambda\)-terms.
+</p>
+
+<div class="theorem">
+    <b>(Church-Turing)</b>
+    Let \(f \colon S_1 \to S_2\) be any function between sets \(S_1, S_2\).
+    Then \(f\) is \(\lambda\)-representable if and only if it is Turing computable.
+</div>
+

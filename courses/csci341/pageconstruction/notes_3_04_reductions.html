@@ -1,0 +1,96 @@
+<h1>Reducing One Problem to Another</h1>
+
+<p>
+    The title of this section is likely something you do <i>all the friggin time</i>: take a solution to a problem that you already know how to solve, and then re-use it later when you are solving a more difficult problem.
+    A <i>reduction</i> of one problem to another, in the formal sense that we are just about to introduce, is not much more complicated than that.
+    In any case, it helps to see this happen in real time via an example.
+</p>
+
+<p>
+    We are going to start with the tasks of representing \(S(n) = n + 1\) and \(P(n) = \max(0, n - 1)\), i.e., <i>successor</i> and <i>predecessor</i>, in binary.
+</p>
+
+<p>
+    For <i>predecessor</i>, in pseudocode, one way to proceed would be to do the following.
+    <ol>
+        <li>If the only digit is \(0\), then halt.</li>
+        <li>If the only digit is \(1\), then flip it to a \(0\) and halt.</li>
+        <li>Move to the end of the string of \(0\)s and \(1\)s. </li>
+        <li>If the last digit is \(1\), flip it to a \(0\) and halt.</li>
+        <li>If the last digit is \(0\), then we change it to a \(1\) and move left. </li>
+        <li>If there are no digits to the left and the current digit is \(1\), erase the \(1\) and halt. </li>
+        <li>Otherwise, return to Step 4.</li>
+    </ol>
+    So, for example, if our number in binary is \(10000\), then it should go through the following changes:
+    \[\begin{array}{c c c c c}
+        \triangledown &  &  &  & \\
+        1 & 0 & 0 & 0 & 0 \\
+         &  &  &  & \triangledown & Step~3 \\
+        1 & 0 & 0 & 0 & 0 \\
+         &  &  & \triangledown &  & Step~5, 7\\
+        1 & 0 & 0 & 0 & 1 \\
+         &  &  \triangledown & &  & Step~5, 7\\
+        1 & 0 & 0 & 1 & 1 \\
+         &   \triangledown & & &  & Step~5, 7\\
+        1 & 0 & 1 & 1 & 1 \\
+           \triangledown & & & &  & Step~5, 7\\
+        1 & 1 & 1 & 1 & 1 \\
+           \triangledown & & & &  & Step~6\\
+         & 1 & 1 & 1 & 1 \\
+    \end{array}\]
+</p>
+
+<div class="exercise">
+    <b>(Formally Subtracting)</b>
+    Design an actual Turing machine that carries out the pseudocode above.
+</div>
+
+<div class="exercise">
+    <b>(Greg the Egg Returns)</b>
+    Design a Turing machine \(\mathcal T\) with a state \(x_{\mathtt{succ}}\) such that \[\mathcal T_{x_{\mathtt{succ}}}(\mathsf{bin}(n)) = \mathsf{bin}(n + 1)\]
+    We will call this function \(\mathtt{succ}\) for <i>successor</i>.
+</div>
+
+<p>
+    Next, we are going to represent addition, by reducing it to successor and predecessor.
+    Let \(\rho \colon \mathbb N \times \mathbb N \to \{0, 1, \#\}^*\) be the string representation 
+    \[
+        \rho(n, m) = \mathsf{bin}(n)~\#~\mathsf{bin}(m)
+    \]
+    We would like to find a Turing machine \(\mathcal T\) with a state \(x_+\) such that 
+    \[
+        \mathcal T_{x_+}(\rho(n,m)) = \mathsf{bin}(n + m)
+    \]
+    The pseudocode looks like this:
+    <ol>
+        <li>If the string before the \(\#\) is just \(0\), erase \(\#\) and everything to the left of it.</li>
+        <li>Subtract one from the string of \(0\)s and \(1\)s using the predecessor function, then add \(1\) to the string of \(0\)s and \(1\)s after the \(\#\). Return to Step 1.</li>
+    </ol>
+</p>
+
+<div class="exercise">
+    <b>(Unravelling Addition)</b>
+    Actually write out the full Turing machine that represents our procedure for computing addition.
+    How many states does it have?
+</div>
+
+<p>
+    Arithmetic is nice, because everything somehow reduces to the successor function.
+    Give it a try!
+</p>
+
+<div class="exercise">
+    <b>(They're multiplying!)</b>
+    Write out some pseudocode for a binary representation of multiplication by reducing it to predecessor and addition.
+    Give an estimate of how many states are in the machine.
+</div>
+
+<div class="problem">
+    <b>(One Further Step)</b>
+    Show that exponentiation, \(f(n,m) \colon \mathbb N \times \mathbb N \to \mathbb N\), is a computable function by reducing it to multiplication.
+</div>
+
+<p>
+    In general, <i>reducing one problem to another</i> can broadly be construed as stating that <i>if P is solvable, then Q is solvable</i>.
+    Today, we saw that we could reduce the problem of multiplication to addition, which itself could be reduced to successor and predecessor.
+</p>

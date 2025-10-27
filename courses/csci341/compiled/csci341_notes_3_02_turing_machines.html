@@ -390,8 +390,21 @@
 </div>
 
 <div class="exercise">
+    <b>(Rewind)</b>
+    Design a program <i>rewind</i> that moves the tape head all the way to the left, until it reaches the nearest blank. 
+</div>
+
+<div class="exercise">
     <b>(Shift)</b>
     Design a program <i>shift</i> that moves all of the symbols on the tape (i.e., between the nearest blank to the left, all the way to the nearest blank to the right) one index to the right. 
+</div>
+
+<div class="exercise">
+    <b>(Remove)</b>
+    Design a program <i>remove</i> that deletes a cell from the tape without introducing whitespace in the middle of other non-blank cells.
+    <div class="hint">
+        Similar to shift!
+    </div>
 </div>
 
 <p>
@@ -649,6 +662,11 @@
     This doesn't quite make sense at this point, because \(\mathtt{clear}\) is the program corresponding to a state, not a tape program.
     The way you should read this is <i>run program \(\mathtt{clear}\) and when it halts, runt he program \(\mathtt{y}\)</i>.
 </p>
+
+<div class="problem">
+    <b>(ABCs Done Right)</b>
+    Show that the language \(\{a^nb^nc^n \mid n \in \mathbb N\}\) is decidable.
+</div>
 
 <p>
     Decidability is a much stronger condition than recognizability.
