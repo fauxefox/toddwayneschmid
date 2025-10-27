@@ -213,7 +213,7 @@
 <div class="definition">
     <b>(\(\alpha\)-equivalence)</b>
     Let \(t,s\) be \(\lambda\)-terms and \(x,y\) be input variables.
-    If either \(y = x\) or \(y\) is not bound anywhere in \(t\), then we define the rewrite rule 
+    If either \(y = x\) or \(y\) is not free in \(t\), then we define the rewrite rule 
     \[
         \lambda x.t \to_\alpha \lambda y.(t[y/x])
     \]
