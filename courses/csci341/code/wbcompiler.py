@@ -19,21 +19,26 @@ class Tape :
         self._tape_list.append("_")
         self._tape_length += 1
 
-    def move_right(self, enroute = False) :
-        if self._tape_head >= self._tape_length - 1 :
-            self._extend_tape()
+    def move_right(self, multiple = 1, enroute = False) :
         
-        self._tape_head += 1
+        for _ in range(multiple) :
+            if self._tape_head >= self._tape_length - 1 :
+                self._extend_tape()
+            
+            self._tape_head += 1
 
-        if not enroute :
-            self._track_me("move right")
+            if not enroute :
+                self._track_me("move right")
 
-    def move_left(self, enroute = False) :
-        if self._tape_head > 0 :
-            self._tape_head -= 1
-        
-        if not enroute :
-            self._track_me("move left")
+    def move_left(self, multiple = 1, enroute = False) :
+        for _ in range(multiple) :
+            if self._tape_head > 0 :
+                self._tape_head -= 1
+            else : 
+                self._tape_list = [" "] + self._tape_list
+            
+            if not enroute :
+                self._track_me("move left")
 
     def get_value(self) :
         return self._tape_list[self._tape_head]
@@ -91,7 +96,69 @@ def read_code(filename) :
             code_lines.append(new_line.split())
 
     return code_lines
+
+def run_command(codeline, tape, line_number = 0) :
+    code_tokens = codeline
+
+    if len(code_tokens) > 0 and code_tokens[0] != "if" :
+
+        # In this situation, the command comes with a conditional.
+        condition = True
+        command = code_tokens[0]
+
+        # Some commands do not require arguments
+        try :
+            argument = code_tokens[1]
+        except :
+            argument = None
+
+
+    elif len(code_tokens) > 0 : 
+        # These commands are unconditional
+        condition = (code_tokens[1] == tape.get_value())
+        command = code[2]
+
+        # Some commands do not require arguments
+        try :
+            argument = code_tokens[3]
+        except :
+            argument = None
+
+    # In case the condition is met, continue. 
+    # Note that here, if no conditional is provided, the default
+    #  value of the conditional is True.
+    if condition :
+
+        if command == "moveto" :
+            tape.moveto(int(argument))
+
+        if command == "move" and argument[0] == "l" :
+            tape.move_left()
+
+        if command == "move" and argument[0] == "r" :
+            tape.move_right()
+
+        if command == "write" :
+            tape.write_value(str(argument))
+        
+
+        # The next three dictate halt conditions, which can accept, reject, 
+        #  or do neither
+        if command == "halt" and argument == "accept":
+            return True
+        
+        elif command == "halt" and argument == "reject" :
+            return False
+        
+        elif command == "halt" :
+            return -1
+
+        if command == "goto" :
+            return int(argument)
     
+    return line_number + 1
+
+
 def run_wb(codelines, tape=Tape(track=True)) :
     """
         This function receives a list of machine code isntructions,
@@ -113,86 +180,45 @@ def run_wb(codelines, tape=Tape(track=True)) :
 
         # The if/elif below checks if the code line is not blank,
         #  in which case we run the command on the code line.
+        after_number = run_command(code, tape, line_number=line_number)
 
-        if len(code) > 0 and code[0] != "if" :
-
-            # In this situation, the command comes with a conditional.
-            condition = True
-            command = code[0]
-
-            # Some commands do not require arguments
-            try :
-                argument = code[1]
-            except :
-                argument = None
-
-
-        elif len(code) > 0 : 
-            # These commands are unconditional
-            condition = (code[1] == tape.get_value())
-            command = code[2]
-
-            # Some commands do not require arguments
-            try :
-                argument = code[3]
-            except :
-                argument = None
-
-        # In case the condition is met, continue. 
-        # Note that here, if no conditional is provided, the default
-        #  value of the conditional is True.
-        if condition :
-
-            if command == "moveto" :
-                tape.moveto(int(argument))
-
-            if command == "move" and argument[0] == "l" :
-                tape.move_left()
-
-            if command == "move" and argument[0] == "r" :
-                tape.move_right()
-
-            if command == "write" :
-                tape.write_value(str(argument))
-            
-
-            # The next three dictate halt conditions, which can accept, reject, 
-            #  or do neither
-            if command == "halt" and argument == "accept":
-                return True
-            
-            elif command == "halt" and argument == "reject" :
-                return False
-            
-            elif command == "halt" :
-                return
-
-            if command == "goto" :
-                line_number = int(argument)
-            
-        line_number += 1
+        if type(after_number) == bool :
+            return after_number
+        else : 
+            line_number = after_number
 
 
 if __name__ == "__main__" :
     print("\n"*20)
 
-    print(sys.argv)
-
     try :
         inputfile = sys.argv[1]
         code = read_code(inputfile)
-        with open(inputfile+"_output.txt", "w") as outputfile :
+        with open(inputfile + "_output.txt", "w") as outputfile :
+            print("Found", inputfile)
             outputfile.write("Running " + inputfile + "\n")
 
+        try :
+            start_tape = sys.argv[2]
+            start_tape = list(start_tape)
+            tape = Tape(start_tape, track=True)
+        except :
+            tape = Tape(track=True)
+
+        print(f"Running code on\n{tape}\n\nStart:\n")
+        run_wb(code, tape=tape)
+
     except :
-        print("Did not provide existing machine file.")
+        print("Entering interactive mode. After entering a starting string, run commands one at a time.")
+        user_inp = input("Enter a starting string.\n")
+
+        interact_tape = Tape(user_inp, track=False)
+        command = ""
+
+        while not ("quit" in user_inp or "quit" in command):
+            print()
+            print(interact_tape)
+            command = input("> ")
+            run_command(command, interact_tape)
+
         quit()
-    
-    try :
-        start_tape = sys.argv[2]
-        start_tape = list(start_tape)
-        tape = Tape(start_tape, track=True)
-    except :
-        tape = Tape(track=True)
-    
-    run_wb(code, tape=tape)
