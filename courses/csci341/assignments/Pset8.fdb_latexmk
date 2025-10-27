@@ -1,25 +1,25 @@
 # Fdb version 4
-["biber Pset8"] 0 "Pset8.bcf" "Pset8.bbl" "Pset8" 0 0
+["biber Pset8"] 0 "Pset8.bcf" "Pset8.bbl" "Pset8" 1761532800.24349 0
   "Pset8.bcf" 0 -1 0 "pdflatex"
   "refs.bib" 0 -1 0 ""
   (generated)
   "Pset8.bbl"
   "Pset8.blg"
   (rewritten before read)
-["makeindex Pset8.idx"] 1761530684.80181 "Pset8.idx" "Pset8.ind" "Pset8" 1761530688.25521 0
-  "Pset8.idx" 1761530687 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+["makeindex Pset8.idx"] 1761530684.80181 "Pset8.idx" "Pset8.ind" "Pset8" 1761532800.2432 0
+  "Pset8.idx" 1761532799 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   (generated)
   "Pset8.ilg"
   "Pset8.ind"
   (rewritten before read)
-["pdflatex"] 1761530686.585 "c:/Users/toddw/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/Pset8.tex" "Pset8.pdf" "Pset8" 1761530688.25555 0
-  "Pset8.aux" 1761530687 349 71cc52a40976fac686e7dfa91b011dc9 "pdflatex"
+["pdflatex"] 1761532798.61661 "c:/Users/toddw/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/Pset8.tex" "Pset8.pdf" "Pset8" 1761532800.24401 0
+  "Pset8.aux" 1761532799 349 71cc52a40976fac686e7dfa91b011dc9 "pdflatex"
   "Pset8.bbl" 0 -1 0 "biber Pset8"
   "Pset8.ind" 1761530685 0 d41d8cd98f00b204e9800998ecf8427e "makeindex Pset8.idx"
-  "Pset8.out" 1761530687 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "Pset8.run.xml" 1761530687 2306 215baefa136a876e1cbc995583b66b56 "pdflatex"
-  "Pset8.tex" 1761530680 7365 8f19dd34be31c99675a39648a1b2e896 ""
-  "c:/Users/toddw/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/Pset8.tex" 1761530680 7365 8f19dd34be31c99675a39648a1b2e896 ""
+  "Pset8.out" 1761532799 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "Pset8.run.xml" 1761532799 2306 215baefa136a876e1cbc995583b66b56 "pdflatex"
+  "Pset8.tex" 1761532798 6896 34ad7251646a4e8c73282ccdf432097e ""
+  "c:/Users/toddw/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/Pset8.tex" 1761532798 6896 34ad7251646a4e8c73282ccdf432097e ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc" 1720999457 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1720999971 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/bitstrea/charter/bchb7t.tfm" 1720998754 2732 006d846b4d54f9b40899c7c3eecd771a ""
@@ -44,14 +44,12 @@
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr6.tfm" 1720998878 1300 b62933e007d01cfd073f79b963c01526 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr8.tfm" 1720998878 1292 21c1c5bfeaebccffdb478fd231a0997d ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmss10.tfm" 1720998878 1316 b636689f1933f24d1294acdf6041daaa ""
-  "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmss12.tfm" 1720998878 1324 37b971caf729d7edd9cbb9f9b0ea76eb ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmss8.tfm" 1720998878 1296 d77f431d10d47c8ea2cc18cf45346274 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm" 1720998878 1124 6c73e740cf17375f03eec0ee63599741 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm" 1720998878 1116 933a60c408fc0a863a92debe84b2d294 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm" 1720998878 1120 8b7d695260f3cff42e636090a8002094 ""
-  "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmti10.tfm" 1720998878 1480 aa8e34af0eb6a2941b776984cf1dfdc4 ""
-  "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmti7.tfm" 1720998878 1492 86331993fe614793f5e7e755835c31c5 ""
-  "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmti8.tfm" 1720998878 1504 1747189e0441d1c18f3ea56fafc1c480 ""
+  "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm" 1720998878 768 1321e9409b4137d6fb428ac9dc956269 ""
+  "c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm" 1720998878 768 d7b9a2629a0c353102ad947dc9221d49 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/mathabx/matha10.tfm" 1721001448 1372 84a1ef28ab0d13263326e8d7d854aaa0 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/mathabx/matha12.tfm" 1721001448 1380 ceb7b5923e3abb0aafa2e35608b22d77 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/mathabx/matha6.tfm" 1721001448 1380 5f328d9a92ea6dd75eba04691d285ce9 ""
@@ -73,16 +71,10 @@
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1720997948 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1720997948 35469 dcf3a5f2fc1862f5952e3ee5eb1d98c4 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1720997948 35752 024fb6c41858982481f6968b5fc26508 ""
-  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1720997948 32734 69e00a6b65cedb993666e42eedb3d48f ""
-  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1720997948 32726 39f0f9e62e84beb801509898a605dbd5 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb" 1720997948 24457 5cbb7bdf209d5d1ce9892a9b80a307cc ""
-  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb" 1720997948 24393 3b7eb51a67a0a62aec5849271bdb9c2e ""
-  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb" 1720997948 24420 52dbb8e8aa0069a1b987309557f8d303 ""
-  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1720997948 32569 5e5ddc8df908dea60932f3c484a54c0d ""
-  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb" 1720997948 37944 359e864bd06cde3b1cf57bb20757fb06 ""
+  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb" 1720997948 31099 342ef5a582aacbd3346f3cf4579679fa ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1720997948 34694 870c211f62cb72718a00e353f14f254d ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/mathabx-type1/matha10.pfb" 1721001450 90043 2bda701743526ed6f01ce1beda7e4064 ""
-  "c:/texlive/2024/texmf-dist/fonts/type1/public/mathabx-type1/matha8.pfb" 1721001450 92536 59bbce08c17dea073398ee5053f31619 ""
   "c:/texlive/2024/texmf-dist/fonts/vf/bitstrea/charter/bchb7t.vf" 1720998754 1372 ea6b112e4d27477183c2c2a90a3b7b01 ""
   "c:/texlive/2024/texmf-dist/fonts/vf/bitstrea/charter/bchr7t.vf" 1720998754 1372 955cf021d0094e95829436b7bdab6458 ""
   "c:/texlive/2024/texmf-dist/fonts/vf/bitstrea/charter/bchri7t.vf" 1720998754 1376 2c4801330fd387c4a485e772ce95483c ""
