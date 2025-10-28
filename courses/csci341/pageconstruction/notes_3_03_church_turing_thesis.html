@@ -38,7 +38,7 @@
 
     <p></p>
     First of all, let \(|A| = n\).
-    Then there is a binary representation for each \(a \in A\) with \(\lfloor\log(n)\rfloor + 1\) many bits: specifically, if \(A = \{a_1, \dots, a_n\}\), then we can let \(\rho(a_i) = \mathsf{bin}(i)\).
+    Then there is a binary representation for each \(a \in A\) with \(\lfloor\log(n)\rfloor + 1\) many bits: specifically, if \(A = \{a_1, \dots, a_n\}\), then we can let \(\rho(a_i) = \mathsf{bin}(i-1)\) (possibly with some leading \(0\)s to make the length of \(\rho(a_i)\) equal to \(\ell\)).
     This allows us to define \(\rho \colon A^* \to \{0,1\}^*\) by 
     \[
         \rho(b_1b_2 \dots, b_m) = \rho(b_1) ~\rho(b_2) ~ \cdots ~\rho(b_m)
