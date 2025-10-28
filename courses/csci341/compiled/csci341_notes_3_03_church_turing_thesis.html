@@ -214,7 +214,7 @@
     Now we get to the hard part of defining \(\mathcal T^\dagger\).
     Fix \(\ell = \lfloor\log(n)\rfloor + 1\).
     The general idea is going to be to treat each block of \(\ell\) consecutive cells as one cell in the Turing machine \(\mathcal T\).
-    This means that every move command has to move \(\ell\) spaces instead of \(1\), and every reading of the tape has to be replaced with \(\ell\) reading steps.
+    This means that every <i>move</i> command has to move \(\ell\) spaces instead of \(1\), and every reading of the tape has to be replaced with \(\ell\) reading steps.
     Formally, the construction of \(Q^\dagger\) and \(\delta^\dagger\) happens in three stages:
     <ol>
         <li>
