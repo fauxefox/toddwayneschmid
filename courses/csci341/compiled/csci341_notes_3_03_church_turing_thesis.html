@@ -381,23 +381,151 @@
     We are going to simulate a two-way tape machine \((t, i)\) with a one-way tape machine by inteleaving the positive indexed cells of \(t\) and the negative indexed cells of \(t\). 
     In particular, if \(t\) is given by 
     \[
-        t = \qquad [~\dots \mid -3 \mid -2 \mid -1 \mid 0 \mid 1 \mid 2 \mid 3 \mid \cdots~]
+        t = \qquad ~\dots \mid -3 \mid -2 \mid -1 \mid 0 \mid 1 \mid 2 \mid 3 \mid \cdots~
     \]
     then we are going to squeeze this into the tape 
     \[
-        t' = \qquad  [~0 \mid -1 \mid 1 \mid -2 \mid 2 \mid -3 \mid 3 \mid \cdots~]
+        t' = \qquad  [~\blacksquare ~\mid ~0 \mid -1 \mid 1 \mid -2 \mid 2 \mid -3 \mid 3 \mid \cdots~
     \]
-    Formally, this means that running our Turing machine needs to maintain the properties
-    \[\begin{aligned}
-        t'(2j) &= t(j) \\
-        t'(2j + 1) &= t(-j-1) \\
-        i' &= 2i &\text{if \(i \ge 0\)} \\
-        i' &= 2|i| - 1 &\text{if \(i < 0\)} 
-    \end{aligned}
-    \qquad \text{(*)}
+    Formally, given a two-way tape \((t, i)\), we transform it into the one-way tape \((t', i')\) defined as follows: the tape \(t'\) is given by
+    \[
+        \begin{gathered}
+            t'(j) &= \begin{cases}
+                \blacksquare & j = 0\\
+                t(i) & -2i = j \text{ and } i < 0 \\
+                t(i) & 2i + 1 = j \text{ and } i \ge 0 
+            \end{cases} \\
+        \end{gathered} 
+        \qquad \text{(*)}
+    \]
+    and the position \(i'\) by 
+    \[
+        \begin{aligned}
+            i' &= -2|i| &\text{if \(i < 0\)} \\
+            i' &= 2i + 1 &\text{if \(i \ge 0\)}
+        \end{aligned} 
+        \qquad \text{(*)}
     \]
     where \(j\) ranges over all \(j \in \mathbb N\).
-    Then, at the end of runtime, we are going to "shift everything over" until the string we are trying to represent is represented in-order on the one-way tape.
+    We are going to construct a Turing machine \(\mathcal T^\dagger = (Q^\dagger, A \cup \{\blacksquare\}, \delta^\dagger)\) such that \(\mathcal T_x = \mathcal T_x^\dagger\) for every \(x \in Q\) and corresponding state in \(Q^\dagger\).
+
+    <p></p>
+    Without loss of generality, we can assume that for any transition \(x \xrightarrow{a \mid p} y\) in the original \(\mathcal T\), \(p\) is a basic tape program (one of \(\mathtt{skip},\mathtt{move~left/right},\mathtt{write}~\sigma\)) (simply stretch out any composite tape programs into multiple transitions).
+    Here is the general idea behind the construction of \(\mathcal T^\dagger\): we are going to make two copies of \(Q\), one where "the original position \(i\) is nonnegative (\(\ge 0\))", and one where "the original position is negative", and switch back and forth when the original tape head changes between negative and positive.
+    We define
+    \[
+        Q^\dagger = (Q \times \{+\}) \cup (Q \times \{-\}) \cup Q^\spadesuit
+    \]
+    where \(Q^\spadesuit\) is a set of states we will mention momentarily, with a distinguished state \(z^\spadesuit \in Q^\spadesuit\).
+    The construction of \(\delta^\dagger\) now proceeds as follows: 
+    <ol>
+        <li>
+            For any transition \(x \xrightarrow{a \mid p} y\),
+            if \(p = \mathtt{move~right}\), then we add the transitions
+            \[
+                (x,+) \xrightarrow{a \mid \rhd.\rhd} (y,+)
+                \qquad 
+                (x,-) \xrightarrow{a \mid \lhd.\lhd} (y,-)
+            \]
+            and similarly, if \(p = \mathtt{move~left}\), then we add the transitions
+            \[
+                (x,+) \xrightarrow{a \mid \lhd.\lhd} (y,+)
+                \qquad 
+                (x,-) \xrightarrow{a \mid \rhd.\rhd} (y,-)
+            \]
+            These model the movement of the original tape head by squeezing the negative indices into the even indices and positive indices into the odd indices: if you want to move the tape head once in the original machine, you need to move twice in this one.
+            If \(p \in \{\mathtt{skip},\mathtt{write}~\sigma\}\), then we add both 
+            \[
+                (x,+) \xrightarrow{a \mid p} (y,+)
+                \qquad 
+                (x,-) \xrightarrow{a \mid p} (y,-)
+            \]
+            since neither move the tape head.
+        </li>
+        <li>
+            For every state \(x\), we add the transitions 
+            \[
+                (x, +) \xrightarrow{\blacksquare \mid \rhd.\rhd} (x,-)
+                \qquad
+                (x, -) \xrightarrow{\blacksquare \mid \rhd} (x,+)
+            \]
+            This implements the switching between positive and negative.
+        </li>
+        <li>
+            For any \(\sigma \in \{\_\} \cup A\) such that \(x\) immediately halts on input \(\sigma\), we add the transitions \((x, +) \xrightarrow{\sigma} z^\spadesuit\) and \((x, -) \xrightarrow{\sigma} z^\spadesuit\).
+        </li>
+    </ol>
+    Now let us describe the program \(z^\spadesuit\).
+    This program shifts the odd ("nonnegative index") symbols on the one-way tape over, making room for the even ("negative index") spaces.
+    The purpose of this is to make sure that the order in which the symbols appears on the output of running \(\mathcal T^\dagger_{(x, +)}(w)\) is the same order as \(\mathcal T_x(w)\).
+    Let us start with an example:
+    suppose that we had the following tape
+    \[
+        t = \qquad \cdots \mid \_ \mid a_{-2} \mid a_{-1} \mid a_0 \mid a_1 \mid a_2 \mid a_3 \mid \_ \mid \cdots
+    \]
+    This has been  squeeze this into the tape 
+    \[
+        t' = \qquad  [~\blacksquare \mid a_0 \mid a_{-1} \mid a_1 \mid a_{-2} \mid a_2 \mid \_ \mid a_3 \mid \_ \mid \_ \mid \cdots
+    \]
+    The program \(z^\spadesuit\) now acts on \(t'\) as follows:
+    <ol>
+        <li>
+            First, it tests whether there is a non-blank symbol on an even index greater than 0.
+            If this is not the case, then it erases \(\blacksquare\).
+            On this tape, \(a_{-1}\) is at index \(2\), so it does not erase \(\blacksquare\) and halt:
+            \[
+                t' = \qquad  [~\blacksquare \mid a_0 \mid {\color{blue} a_{-1}} \mid a_1 \mid a_{-2} \mid a_2 \mid \_ \mid a_3 \mid \_ \mid \_ \mid \cdots
+            \]
+        </li>
+        <li>
+            Otherwise, it moves the tape head back to index \(1\) (using \(\blacksquare\) as a landmark), and shifts all odd indexed symbols over by two cells.
+            In the example, this produces 
+            \[
+                [~\blacksquare \mid \_ \mid a_{-1} \mid a_0 \mid a_{-2} \mid a_1 \mid \_ \mid a_2 \mid \_ \mid a_3 \mid \cdots
+            \]
+        </li>
+        <li>
+            It then moves the item at index 2 left by one.
+            In the example, this produces
+            \[
+                [~\blacksquare \mid a_{-1} \mid \_ \mid a_0 \mid a_{-2} \mid a_1 \mid \_ \mid a_2 \mid \_ \mid a_3 \mid \cdots
+            \]
+        </li>
+        <li>
+            Finally, it moves all even indexed symbols with index greater than 2 to the left two squares, and then returns to step 1.
+            In the example, this produces
+            \[
+                [~\blacksquare \mid a_{-1} \mid a_{-2} \mid a_0 \mid \_ \mid a_1 \mid \_ \mid a_2 \mid \_ \mid a_3 \mid \cdots
+            \]
+        </li>
+    </ol>
+    Running the example above longer, we would have  
+    \[\begin{array}{c | c | c | c | c | c | c | c | c | c | c | c | c | r}
+        [~\blacksquare & a_{-1} & {\color{blue}a_{-2}} & a_0 & \_ & a_1 & \_ & a_2 & \_ & a_3 & \_ & \_ & \cdots & \text{step 1}\\
+        [~\blacksquare & \_ & a_{-2} & {\color{purple} a_{-1}} & \_ & {\color{purple} a_0} & \_ & {\color{purple} a_1} & \_ & {\color{purple} a_2} & \_ & {\color{purple} a_3} & \cdots & \text{step 2} \\
+        [~\blacksquare & {\color{purple} a_{-2}} & \_ & a_{-1} & \_ & a_0 & \_ & a_1 & \_ & a_2 & \_ & a_3 & \cdots & \text{step 3} \\
+        [~\blacksquare & a_{-2} & \_ & a_{-1} & \_ & a_0 & \_ & a_1 & \_ & a_2 & \_ & a_3 & \cdots & \text{step 4 (nothing happens)} \\
+        [~\_ & a_{-2} & \_ & a_{-1} & \_ & a_0 & \_ & a_1 & \_ & a_2 & \_ & a_3 & \cdots & \text{step 1 halts} \\
+    \end{array}\]
+    The set \(Q^\spadesuit\) is whatever number of states are necessary to implement the program \(z^\spadesuit\).
+
+    <p></p>
+    To see that the construction we have just proposed is correct, imagine running \(\mathcal T\) on a tape \((t, i)\) and \(\mathcal T^\dagger\) on the tape \((t', i')\) defined above in parallel.
+    Every movement of the two-way tape head by \(\mathcal T\) is matched by a movement of the one-way tape head by \(\mathcal T^\dagger\) such that the two properties labelled (*) above are preserved. 
+    This in particular means that \(\mathcal T\) writes to index \(i\) at the same time that \(\mathcal T^\dagger\) writes to \(i'\), where \(i'\) is as it was defined in (*) above.
+    This implies that if a state \(x\) in \(\mathcal T\) halts on input \(w\) with resulting tape given by 
+    \[
+        \cdots ~\mid a_{-m} \mid \cdots \mid a_{-1} \mid a_0 \mid a_1 \mid \cdots \mid a_n \mid \cdots
+    \]
+    then \((x, +)\) arrives at \(z^\spadesuit\) with the state of the tape machine being 
+    \[
+        [~\blacksquare ~\mid a_0 \mid a_{-1} \mid a_1 \mid \cdots a_{-m} \mid \cdots \mid a_n \mid \cdots
+    \]
+    Then running \(z^\spadesuit\) on the latter tape results in the tape
+    \[
+        [~\_ ~\mid a_{-m} \mid \_ \mid \cdots \mid \_ \mid a_{-1} \mid \_ \mid a_0 \mid \_ \mid a_1 \mid \_ \mid \cdots \mid \_ \mid a_n \mid \cdots
+    \]
+    Thus, if \(\mathcal T_x(w) = u\), then \(\mathcal T_{(x,+)}^\dagger(w) = u\).
 </div>
 
 <h2>One Tape Machine Suffices</h2>
