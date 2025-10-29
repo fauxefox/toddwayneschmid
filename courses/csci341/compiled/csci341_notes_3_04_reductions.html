@@ -159,6 +159,8 @@
     In any case, it helps to see this happen in real time via an example.
 </p>
 
+<h3>A Leading Example: Arithmetic</h3>
+
 <p>
     We are going to start with the tasks of representing \(S(n) = n + 1\) and \(P(n) = \max(0, n - 1)\), i.e., <i>successor</i> and <i>predecessor</i>, in binary.
 </p>
@@ -177,25 +179,40 @@
     So, for example, if our number in binary is \(10000\), then it should go through the following changes:
     \[\begin{array}{c c c c c}
         \triangledown &  &  &  & \\
+        \hline
         1 & 0 & 0 & 0 & 0 \\
+        \hline
          &  &  &  & \triangledown & Step~3 \\
+         \hline
         1 & 0 & 0 & 0 & 0 \\
+        \hline
          &  &  & \triangledown &  & Step~5, 7\\
+         \hline
         1 & 0 & 0 & 0 & 1 \\
+        \hline
          &  &  \triangledown & &  & Step~5, 7\\
+         \hline
         1 & 0 & 0 & 1 & 1 \\
+        \hline
          &   \triangledown & & &  & Step~5, 7\\
+         \hline
         1 & 0 & 1 & 1 & 1 \\
+        \hline
            \triangledown & & & &  & Step~5, 7\\
+           \hline
         1 & 1 & 1 & 1 & 1 \\
+        \hline
            \triangledown & & & &  & Step~6\\
+           \hline
          & 1 & 1 & 1 & 1 \\
+         \hline
     \end{array}\]
 </p>
 
 <div class="exercise">
     <b>(Formally Subtracting)</b>
     Design an actual Turing machine that carries out the pseudocode above.
+    Submit your code as a BuckLang program.
 </div>
 
 <div class="exercise">

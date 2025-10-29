@@ -313,7 +313,7 @@
     <div class="code">
         <table>
             <tr>
-                <td>
+                <td class="state">
                     x = 
                 </td>
                 <td>
@@ -324,7 +324,7 @@
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class="state">
                     y = 
                 </td>
                 <td>
@@ -565,27 +565,136 @@
     \[
         \delta \subseteq Q \times (A \cup \{\_\})^n \times \mathtt{Tape}_n \times Q
     \]
-    Given that \((x, (\sigma_1, \sigma_2, \dots, \sigma_n), (p_1, \dots, p_n), y) \in \delta\), we write 
+    Given that \((x, (\sigma_1, \sigma_2, \dots, \sigma_n), p, y) \in \delta\), we write 
     \[
-        x \xrightarrow{\sigma_1, \sigma_2, \dots, \sigma_n \mid p_1, \dots, p_n} y
+        x \xrightarrow{\sigma_1, \sigma_2, \dots, \sigma_n \mid p} y
     \]
-    Lastly, we take the string transformer \(\mathcal T_x \colon A^* \rightharpoonup A^*\) defined by the state \(x\) of the \(n\)-tape Turing machine \(\mathcal T\) to be determined by the result of reading the first (index \(1\)) tape after a halting run.
+    The tuple \(\sigma_1,\dots,\sigma_n\) in the transition denotes
+    \[
+        \mathtt{if}~(\sigma_1~\mathtt{on~tape~}1~\mathtt{and}~\cdots~\mathtt{and}~\sigma_n~\mathtt{on~tape~}n)
+    \]
+    Lastly, we take the string transformer \(\mathcal T_x \colon A^* \rightharpoonup A^*\) defined by the state \(x\) of the \(n\)-tape Turing machine \(\mathcal T\) to be determined by inputting our string to the first indexed tape and reading the result from the first indexed tape after a halting run.
 </p>
 
 <div class="theorem">
-    <b>(One Tapes Suffices)</b>
+    <b>(One Tape Suffices)</b>
     Let \(f \colon S_1 \to S_2\) be any function between sets \(S_1\) and \(S_2\).
     If \(f\) is Turing computable on an \(n\)-tape Turing machine, then there is a single tape Turing machine \(\mathcal T\) with a state \(x\) such that \(\mathcal T_x\) represents \(f\).
 </div>
 
 <div class="proof">
     It actually suffices to show that a \(2\)-tape Turing machine can be simulated with a \(1\)-tape (vanilla) Turing machine.
+    We sketch the construction here and let you, the diligent reader, fill in the details.
+    Similar to the two-way to one-way construction, the idea is to squeeze two tapes into one:
+    given a pair of tape machines \(((t_1, i_1), (t_2, i_2))\),
+    \[\begin{array}{l l | c | c | c | c | r}
+        t_1 = &\cdots & a_1 & a_2 & a_3 & a_4 & \cdots \\
+        \hline
+        t_2 = &\cdots & b_1 & b_2 & b_3 & b_4 & \cdots 
+    \end{array}\]
+    we are going to squeeze them into 
+    \[\begin{array}{l  l | c | c | c | c | c | c | c | c | c | r}
+        t' =& \cdots & a_1 & b_1 & a_2 & b_2 & a_3 & b_3 & a_4 & b_4 & \cdots
+    \end{array}\]
+    The only tricky part is that we only have one tape head now! 
+    This can be fixed as follows: we need to add more sybmols.
+    Let \(A\) be the original alphabet of tape symbols, and define 
+    \[
+        A^\bullet = A \cup \{\sigma^\framebox{1} \mid \sigma \in \{\_\} \cup A\} \cup \{\sigma^\framebox{2} \mid \sigma \in \{\_\} \cup A\}
+    \]
+    This triples the alphabet by adding in <i>marked</i> letters \(a^\framebox{1}\) and \(a^{\framebox{2}}\) for every letter \(a \in A\).
+    A marked letter \(a^\framebox{1}\) is going to tell us "where the first tape head is", and a marked letter \(a^\framebox{2}\) is going to tell us "where the second tape head is".
+    We therefore represent \(\langle (t_1,i_i), (t_2, i_2)\rangle\) on a single tape \((t', i')\) as 
+    \[
+        t'(j) = \begin{cases}
+            t_1(k) & j = 2k \text{ and } i_1 \neq k\\
+            t_1(k)^\framebox{1} & j = 2k \text{ and } i_1 = k\\
+            t_2(k) & j = 2k + 1 \text{ and } i_1 \neq k\\
+            t_2(k)^\framebox{2} & j = 2k + 1 \text{ and } i_1 = k
+        \end{cases}
+        \qquad 
+        i' = 0
+    \]
+    The choice of \(i'\) is somewhat arbitrary; the point is that the tape head will move to whichever marked letter is mimicking a tape head command at a given moment, wherever it is needed.
+    It is also worth noting that one could get away with only one marker, since the first tape appears in even cells and the second in odd cells (thus allowing the machine to tell the difference).
+
+    <p></p>
+    We can now define our Turing machine \(\mathcal T^\dagger = (Q^\dagger, A^\bullet, \delta^\dagger)\).
+    We can assume without loss of generality that in the original Turing machine \(\mathcal T\), for any transition \(x \xrightarrow{a_1, a_2 \mid p}\), \(p\) is a basic \(n\)-tape program.
+    The construction of \(\mathcal T^\dagger\) now looks like this: 
+    <ol>
+        <li>
+            We add two programs, \(z_{\mathtt{sc1}}\) and \(z_{\mathtt{sc2}}\), that do the following:
+            \(z_{\mathtt{sc1}}\) scans the cells of the tape (from the left-most empty to the right-most) and immediately halts on any marked symbol \(\sigma^\framebox{1}\).
+            Similarly for \(z_{\mathtt{sc2}}\). 
+            We call these \(\mathtt{scan1}\) and \(\mathtt{scan2}\).
+        </li>
+        <li>
+            For each transition \(x \xrightarrow{\sigma_1,\sigma_2 \mid \mathtt{move}~1~\mathtt{right}} y\) in \(\mathcal T\), we append the following program to \(\mathcal T^\dagger\):
+            <div class="code">
+                <table>
+                    <tr>
+                        <td class="state">x = </td>
+                        <td>
+                            scan1.goto x\(_{\sigma_1}\)<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="state">x\(_{\sigma_1}\) = </td>
+                        <td>
+                            if \(\sigma_1^\framebox{1}\) scan2.goto x\(_{(\sigma_1,\sigma_2)}\)<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="state">x\(_{(\sigma_1,\sigma_2)}\) = </td>
+                        <td>
+                            if \(\sigma_2^\framebox{2}\) scan1.write \(\sigma_1\).move right \(2\).goto x\(_{(\sigma_1,\sigma_2)}\)<br>
+                            if \(\tau\) (i.e., unmarked) write \(\tau^\framebox{1}\).goto y
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            We would append similar programs for transitions of the form \(x \xrightarrow{\sigma_1,\sigma_2 \mid \mathtt{move}~2~\mathtt{right}} y\), as well as for move-left commands, in \(\mathcal T\).
+        </li>
+        <li>
+            For a transition \(x \xrightarrow{\sigma_1,\sigma_2 \mid \mathtt{write}~\tau~\mathtt{to}~1} y\), we append
+            <div class="code">
+                <table>
+                    <tr>
+                        <td class="state">x = </td>
+                        <td>
+                            scan1.goto x\(_{\sigma_1}\)<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="state">x\(_{\sigma_1}\) = </td>
+                        <td>
+                            if \(\sigma_1^\framebox{1}\) scan2.goto x\(_{(\sigma_1,\sigma_2)}\)<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="state">x\(_{(\sigma_1,\sigma_2)}\) = </td>
+                        <td>
+                            if \(\sigma_2^\framebox{2}\) scan1.write \(\tau^\framebox{1}\).goto y
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            A similar program is appended for writing to the second tape.
+        </li>
+        <li>
+            Finally, since the output tape of \(\mathcal T\) is just the first tape, we append to \(\mathcal T\) a program that erases all odd-indexed cells, as well as changes every marked symbol \(\sigma^\framebox{1}\) to its unmarked companion \(\sigma\).
+        </li>
+    </ol>
+    The gist of why this works is simply that we have squeezed two tapes into one tape and successfully kept track of both tape heads.
+    This ensures that \(\mathcal T\) writes to its first tape precisely when \(\mathcal T^\dagger\) writes to an even indexed cell. 
+    Since the final step in \(\mathcal T^\dagger\) is to erase the odd-indexed cells, \(\mathcal T_x(w) = \mathcal T_x^\dagger(w)\) for all \(w\) recognized by \(x\) in \(\mathcal T\).
 </div>
 
 <div class="exercise">
     <b>(Two-to-One)</b>
     Simulate the following \(2\)-tape Turing machine with a \(1\)-tape Turing machine.
-
+    <img src="../imgs/two-to-one.svg" />
 </div>
 
 <div class="individual-exercise">
