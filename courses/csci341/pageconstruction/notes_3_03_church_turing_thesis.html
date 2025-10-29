@@ -410,7 +410,11 @@
 <p>
     Again, the corresponding notion of Turing machine is the same, with the one exception that the transition relation of an \(n\)-tape Turing machine \(\mathcal T = (Q, A, \delta)\) is now 
     \[
-        \delta \subseteq Q \times (A \cup \{\_\}) \times \mathtt{Tape}_n \times Q
+        \delta \subseteq Q \times (A \cup \{\_\})^n \times \mathtt{Tape}_n \times Q
+    \]
+    Given that \((x, (\sigma_1, \sigma_2, \dots, \sigma_n), (p_1, \dots, p_n), y) \in \delta\), we write 
+    \[
+        x \xrightarrow{\sigma_1, \sigma_2, \dots, \sigma_n \mid p_1, \dots, p_n} y
     \]
     Lastly, we take the string transformer \(\mathcal T_x \colon A^* \rightharpoonup A^*\) defined by the state \(x\) of the \(n\)-tape Turing machine \(\mathcal T\) to be determined by the result of reading the first (index \(1\)) tape after a halting run.
 </p>
@@ -422,10 +426,16 @@
 </div>
 
 <div class="proof">
-
+    It actually suffices to show that a \(2\)-tape Turing machine can be simulated with a \(1\)-tape (vanilla) Turing machine.
 </div>
 
 <div class="exercise">
+    <b>(Two-to-One)</b>
+    Simulate the following \(2\)-tape Turing machine with a \(1\)-tape Turing machine.
+
+</div>
+
+<div class="individual-exercise">
     <b>(All the tapes!)</b>
     In the proof above, we only showed that \(2\)-tape Turing machines could be simulated with ordinary Turing machines. 
     How might we prove that an arbitrary \(n\)-tape Turing machine can be simulated by an ordinary Turing machine?
