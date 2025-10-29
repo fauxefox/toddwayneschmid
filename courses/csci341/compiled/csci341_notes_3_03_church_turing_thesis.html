@@ -588,14 +588,21 @@
     We sketch the construction here and let you, the diligent reader, fill in the details.
     Similar to the two-way to one-way construction, the idea is to squeeze two tapes into one:
     given a pair of tape machines \(((t_1, i_1), (t_2, i_2))\),
-    \[\begin{array}{l l | c | c | c | c | r}
-        t_1 = &\cdots & a_1 & a_2 & a_3 & a_4 & \cdots \\
+    \[t_1 = \begin{array}{ l | c | c | c | c | r}
         \hline
-        t_2 = &\cdots & b_1 & b_2 & b_3 & b_4 & \cdots 
+        &\cdots & {\color{blue} a_1} & {\color{blue} a_2} & {\color{blue} a_3} & {\color{blue} a_4} & \cdots \\ 
+        \hline
+    \end{array}\]
+    \[t_2 = \begin{array}{ l | c | c | c | c | r}
+    \hline
+        \cdots & b_1 & b_2 & b_3 & b_4 & \cdots \\ 
+        \hline
     \end{array}\]
     we are going to squeeze them into 
-    \[\begin{array}{l  l | c | c | c | c | c | c | c | c | c | r}
-        t' =& \cdots & a_1 & b_1 & a_2 & b_2 & a_3 & b_3 & a_4 & b_4 & \cdots
+    \[t' =\begin{array}{l | c | c | c | c | c | c | c | c | c | r}
+        \hline
+        \cdots & {\color{blue} a_1} & b_1 & {\color{blue} a_2} & b_2 & {\color{blue} a_3} & b_3 & {\color{blue} a_4} & b_4 & \cdots \\
+        \hline
     \end{array}\]
     The only tricky part is that we only have one tape head now! 
     This can be fixed as follows: we need to add more sybmols.
@@ -696,6 +703,8 @@
     <b>(Two-to-One)</b>
     Simulate the following \(2\)-tape Turing machine with a \(1\)-tape Turing machine.
     <img src="../imgs/two-to-one.svg" />
+    Above, the \(*\) means "any symbol".
+    If the Turing machine above is \(\mathcal T\), run \(\mathcal T(111,0000)\) in parallel with \(\mathcal T^\dagger(101010\_0)\) (note that \(\_\) is not officially a letter in \(A\), but we use it here for the sake of specifying a tape).
 </div>
 
 <div class="individual-exercise">
