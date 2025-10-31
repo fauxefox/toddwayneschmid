@@ -80,8 +80,8 @@
     \]
     The pseudocode looks like this:
     <ol>
-        <li>If the string before the \(\#\) is just \(0\), erase \(\#\) and everything to the left of it.</li>
-        <li>Subtract one from the string of \(0\)s and \(1\)s using the predecessor function, then add \(1\) to the string of \(0\)s and \(1\)s after the \(\#\). Return to Step 1.</li>
+        <li>If the string before the \(\#\) is just \(0\), erase \(\#\) and everything to the left of it and halt.</li>
+        <li>Otherwise, subtract \(1\) from the string of \(0\)s and \(1\)s using the predecessor function, then add \(1\) to the string of \(0\)s and \(1\)s after the \(\#\). Return to Step 1.</li>
     </ol>
 </p>
 
@@ -104,7 +104,7 @@
 
 <div class="problem">
     <b>(One Further Step)</b>
-    Show that exponentiation, \(f(n,m) \colon \mathbb N \times \mathbb N \to \mathbb N\), is a computable function by reducing it to multiplication.
+    Show that exponentiation, \(f(n,m) \colon \mathbb N \times \mathbb N \to \mathbb N\) given by \(f(n,m) = n^m\) is a computable function by reducing it to multiplication.
 </div>
 
 <p>
