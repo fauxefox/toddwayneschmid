@@ -1,5 +1,5 @@
 <!-- THIS IS A COMPILED FILE 
- Compiled on 2025-11-01 -->
+ Compiled on 2025-11-02 -->
 
 
 
@@ -447,6 +447,19 @@
             In this scenario, \(\mathcal T\) is a Turing machine with state \(x\) such that the program corresponding to \(x\) clears the tape and then writes \(\lfloor\mathcal U\rfloor\mathtt{*}c\mathtt{*}\varepsilon\) to the the tape.
         </li>
     </ol>
+</div>
+
+<div class="problem">
+    <b>(Virtual Writing)</b>
+    In the buckleng_public repo in the "/examples" folder, you will see a BuckLang program called "tape_program_interpreter.buck". 
+    Currently, this program simulates tape machine programs that only include the \(\mathtt{move~right}\)" command.
+    After line 265 in the program, you will find a few state names and some pseudocode for adding the virtual \(\mathtt{write}\) tape command. 
+    Complete the \(\mathtt{virt\_write}\) program in "tape_program_interpreter.buck".
+</div>
+
+<div class="bonus-problem">
+    <b>(Wirtually Moving Left)</b>
+    Complete the "virt_move_left" program in "tape_program_interpreter.buck" (see line 254).
 </div><div style="border: none; margin-bottom: -25px; padding: 0px; text-align: right;"><a href="../compiled/csci341_notes_3_04_reductions.html"><span class="link"> &larr; reductions</span></a><a href="../compiled/csci341_notes_3_06_the_halting_problem.html"><span class="link">the halting problem &rarr;</span></a></div>
 
 
