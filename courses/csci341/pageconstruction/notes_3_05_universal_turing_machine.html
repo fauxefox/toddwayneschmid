@@ -1,1 +1,297 @@
 <h1>A Universal Turing Machine</h1>
+
+<p>
+    So we've been saying up till now that a Turing machine can accomplish anything your computer can.
+    But... we've also been simulatinng Turing machines on our computers (think about what Bucklang does).
+    Does that mean there's a Turing machine out there that can... simulate other Turing machines?
+    The answer to this question is "yes!!", and marks a very important turning point in this course that will very quickly bring us to a core concept of computing: the ability for computable functions to exhibit "self-reference".
+</p>
+
+<h2>A String Representation of Turing Machines</h2>
+
+<p>
+    The language BuckLang (and many others) are really just notations for Turing machines.
+    If I write 
+
+    <div class="code">
+        state x <br>
+        if _ : write 1.goto y <br>
+        if 0 : write _.goto x<br>
+        <br>
+        state y <br>
+        if 1 : write 0.goto x
+    </div>
+
+    you know that this BuckLang script represents a 2-state Turing machine with three transitions. 
+    In other words, this is a string representation of a Turing machine. 
+</p>
+
+<p>
+    To make it a little easier to see how to fit this on a tape (due to its line breaks and stuff) we are going to remove unnecessary spaces, replace the syntactical whitespace with \({\#}\), and write line breaks with \({/}\).
+    Then as a string, this can be written to a tape as 
+    \[\begin{aligned}
+        &w =  \\
+        &\mathtt{state{\#} x {/}
+        if{\#} \_ {:} write{\#} 1.goto{\#} y {/}
+        if{\#} 0 {:} write{\#} \_.goto{\#} x{/}
+        state{\#} y {/}
+        if{\#} 1 {:} write{\#} 0.goto{\#} x}
+    \end{aligned}
+    \qquad (*)\]
+    This string exists in the alphabet 
+    \[
+            A_{\mathcal U} = \{\mathtt{a}, \dots, \mathtt{z}, \mathtt{:}, \mathtt{\_}, \mathtt{{/}}, \mathtt{{\#}}, \mathtt{*}, 0, 1 \} 
+    \]
+    which we will call the <i>programming alphabet</i>.
+    Notice that \(\mathtt{\_}\) is an explicit symbol now, separate from a proper blank.
+    Note also that we have not used the symbol \(\mathtt{*}\) yet. 
+    It will play a role in a moment.
+</p>
+
+<div class="definition">
+    <b>(BuckLang Representation)</b>
+    Let \(\mathcal T\) be a Turing machine. 
+    Then a <i>BuckLang encoding</i> (or just <i>encoding</i>) <i>of \(\mathcal T\)</i> is a word \(w \in A_{\mathcal U}\) obtained from a BuckLang program that compiles to \(\mathcal T\), as in (*).
+    We write \(\lfloor \mathcal T\rfloor\) to denote an encoding of \(\mathcal T\).
+</div>
+
+<div class="exercise">
+    <b>(Finally, a Use for BuckLang)</b>
+    Find encodings \(\lfloor \mathcal T_i\rfloor\) of the following Turing machines \(\mathcal T_i\) below (you don't have to write the whole thing down).
+    <ol>
+        <li>
+            \(\mathcal T_1 = \) 
+            <img src="../imgs/x_hlt.svg" />
+        </li>
+        <li>
+            \(\mathcal T_2 = \)
+            <img src="../imgs/x_clr.svg" />
+        </li>
+    </ol>
+    
+</div>
+
+<p>
+    The following theorem tells us that there is a Turing machine out there on which the "code" for any other Turing machine can be run.
+</p>
+
+<div class="theorem">
+    <b>(Turing's Fixed Point)</b>
+    There exists a Turing machine \(\mathcal U = (Q_{\mathcal U}, A_{\mathcal U}, \delta_{\mathcal U})\) with a state \(c \in Q_{\mathcal U}\) such that for any Turing machine \(\mathcal T\) with a state \(x\) and any word \(w \in \{0,1\}^*\),
+    \[
+        \mathcal U_c(\lfloor \mathcal T\rfloor \mathtt{*x*}w) = \mathcal T_x(w)
+    \]
+    where \(\mathtt{state\# x}\) is the string representation of the state \(x\) in \(\mathcal T\).
+    This Turing machine, \(\mathcal U\), is called a <i>universal</i> Turing machine, and \(c\) its <i>universal program</i> (we say "a" and not "the" because there are in fact many).
+</div>
+
+<p>
+    There are also a couple things to note about the statement above, based on <a href="../compiled/csci341_notes_3_03_church_turing_thesis.html" target="_blank">Church-Turing thesis</a>:
+    first, we could have entirely used \(0\)s and \(1\)s. 
+    In fact, this is what your actual physical computer does: it represents every program in binary, including compilers and shells and the operating system itself.
+    So the shell in your computer is a binary string representing a program that takes other binary string representations of programs as input and outputs binary strings representing the outputs of the programs run in the shell.
+    Second, the choice of the BuckLang encoding wasn't exactly Turing's original choice... that is something we came up with. 
+    But this just goes to show that there are also many different possible encodings of Turing machines; our specific choice of encoding was somewhat arbitrary.
+</p>
+<p>
+    The proof obligation for Turing's Fixed Point theorem is simply to build one. 
+    So let's see how that might be done, shall we?
+</p>
+
+<h2>Building a Universal Turing Machine</h2>
+
+<p>
+    There are a couple assumptions we are going to make right off the bat, to make things a bit easier for ourselves.
+    <ol type="A">
+        <li>
+            We are going to use three tapes for this task.
+            I will leave it to you to work out how this construction would operate for a single tape Turing machine (like in the statement of Turing's Fixedpoint theorem).
+        </li>
+        <li>
+            We are going to assume in our Bucklang program that every state specification is of the form 
+            <div class="code">
+                state statename <br>
+                if _ : (tape program).goto otherstatename1<br>
+                if 0 : (tape program).goto otherstatename2<br>
+                if 1 : (tape program).goto otherstatename3<br>
+            </div>
+            other than \(\mathtt{state~halt}\), which has no transition specifications. 
+            It is not terribly difficult to adapt the construction to the more general syntax (for example, that bucklang.py can manage), but this assumption will significantly reduce the amount of headache to come.
+        </li>
+    </ol>
+     <!-- and refer back to <a href="../compiled/csci341_notes_3_03_church_turing_thesis.html" target="_blank">the Church-Turing thesis</a> for a construction of the single-tape machine. -->
+    So, let's fix a Turing machine \(\mathcal T\) with a state \(x\), and let's fix a word \(w \in \{0,1\}^*\).
+    On tape \(1\), we are going write the input word \(w\) (remember that tape \(1\) is where the output is written), and on tape \(2\) we are going to write the encoding of our Turing machine and state, \(\lfloor\mathcal T\rfloor\).
+</p>
+
+<div class="figure">
+    <img src="../imgs/tapes_for_universal.svg" />
+    Two tapes for building a universal Turing machine that takes BuckLang encodings of Turing machines.
+    Tape \(t_3\) contains the starting state name, \(t_2\) contains the encoding of \(\mathcal T\), and \(t_1\) contains the input of the program.
+</div>
+
+<p>
+    Roughly, the program \(c\) in \(\mathcal U\) (the <i>compiler program</i>) will operate as follows:
+    tape \(t_3\) stores the <i>virtual state</i>, tape \(t_2\) stores the <i>virtual Turing machine</i> \(\mathcal T\), and tape \(t_1\) stores the <i>virtual tape</i>, on which we are going to simulate the operation of \(\mathcal T\).
+    The program starts with the state \(\mathtt{check\_halt}\) below.
+    <ol>
+        <li>
+            \(\mathtt{check\_halt}\)<br>
+            If the virtual state, i.e., the content of \(t_3\), is \(\mathtt{halt}\), then halt.
+            Otherwise, go to \(\mathtt{find\_current\_state}\).
+            <i>This ensures that the current virtual state is not the virtual halting state.</i>
+        </li>
+        <li>
+            \(\mathtt{find\_current\_state}\)<br> 
+            Rewind tape head \(t_2\), then scan it to the right until it has read the string \(\mathtt{state\#}s\mathtt{/}\), where \(s\) is the content stored on tape \(t_3\) (if it reaches the end of the tape, halt).
+            Now rewind \(t_3\) and goto \(\mathtt{check\_if\_blank}\).<br>
+            The tapes should now look like this: 
+            \[\tt\begin{array}{l c c c c c c c c c c c r}
+                 & \triangledown &  &  &  &  &  &  &  & & &  & t_3 \\
+                \hline
+                \cdots & s &  &  &  &  &  &  &  &  &  &  & \cdots \\
+                \hline
+                 &  &  &  &  &  &  &  &  & \triangledown &  &  & t_2 \\
+                \hline
+                \cdots & \mathtt{s} & \mathtt{t} & \mathtt{a} & \mathtt{t} & \mathtt{e} & \mathtt{\#} & s & \mathtt{/} & \mathtt{i} & \mathtt{f} & \mathtt{\#} &\cdots \\
+                \hline
+                %  &  &  &  &  &  &  &  &  & & &  & t_1 \\
+                % \hline
+                % \cdots & a_1 & a_2 &  &  &  &  &  & & & &  & \cdots \\
+                % \hline
+            \end{array}\]
+            <i>
+                This readies the tape head on \(t_2\) to read the tape program associated with the current virtual state.
+                Concretely, the tape head is situated above the \(\mathtt{i}\) in "\(\mathtt{if\#\_{:}}\)".
+            </i>
+        </li>
+        <li>
+            \(\mathtt{check\_if\_blank}\)<br>
+            Now we check the virtual tape. 
+            If the tapehead of \(t_1\) is reading a blank, then scan \(t_2\) to the right until it has read \(\mathtt{if\#\_{:}}\), and then goto \(\mathtt{run\_tape\_program}\).
+            Otherwise, goto \(\mathtt{check\_if\_0}\).
+        </li>
+        <li>
+            \(\mathtt{check\_if\_0}\)<br>
+            Again, we check the virtual tape. 
+            If the tapehead of \(t_1\) is reading a \(0\), then scan \(t_2\) to the right until it has read \(\mathtt{if\#0{:}}\), and then goto \(\mathtt{run\_tape\_program}\).
+            Otherwise, goto \(\mathtt{check\_if\_1}\).
+        </li>
+        <li>
+            \(\mathtt{check\_if\_1}\)<br>
+            Again, we check the virtual tape. 
+            If the tapehead of \(t_1\) is reading a \(1\), then scan \(t_2\) to the right until it has read \(\mathtt{if\#1{:}}\), and then goto \(\mathtt{run\_tape\_program}\).
+            Otherwise, halt (if the original program is correctly formatted, then we will never reach this point).
+        </li>
+        <li>
+            \(\mathtt{run\_tape\_program}\)<br>
+            The current position of the tape head on \(t_2\) is just to the right of \(\mathtt{if\#}x\mathtt{:}\), where \(x\) is the virtual tape symbol that \(t_1\) is reading.
+            For example, tapes \(t_1\) and \(t_2\) might look like
+            \[\tt\begin{array}{l c c c c c c c c c c c r}
+                %  & \triangledown &  &  &  &  &  &  &  & & &  & t_3 \\
+                % \hline
+                % \cdots & s &  &  &  &  &  &  &  &  &  &  & \cdots \\
+                % \hline
+                 &  &  &  &  &  & \triangledown  &  &  &  &  &  & t_2 \\
+                \hline
+                \cdots 
+                    & \mathtt{i} 
+                    & \mathtt{f} 
+                    & \mathtt{\#} 
+                    & x 
+                    & \mathtt{:} 
+                    & \mathtt{m} 
+                    & \mathtt{o} 
+                    & \mathtt{v}
+                    & \mathtt{e} 
+                    & \mathtt{\#} 
+                    & \mathtt{r} 
+                    &\cdots \\
+                \hline
+                 & \triangledown  &  &  &  &  &  &  &  & & &  & t_1 \\
+                \hline
+                \cdots & x & \cdots &  &  &  &  &  & & & &  &  \\
+                \hline
+            \end{array}\]
+            We then enter one of the following cases, where we run the virtual program on the <i>actual</i> tape \(t_1\):
+            <ol type="i">    
+                <li>
+                    if, scanning forward, \(t_2\) reads \(\mathtt{move\#left.}\), then move the tape head of \(t_1\) to the left one cell.
+                    Then goto \(\mathtt{run\_tape\_program}\).
+                </li>
+                <li>
+                    if, scanning forward, \(t_2\) reads \(\mathtt{move\#right.}\), then move the tape head of \(t_1\) to the right one cell.
+                    Then goto \(\mathtt{run\_tape\_program}\).
+                </li>
+                <li>
+                    if, scanning forward, \(t_2\) reads \(\mathtt{write\#}y\mathtt{.}\), then have the tape head of \(t_1\) write a \(y\) to its current position, where \(y \in \{\mathtt{\_},\mathtt{0},\mathtt{1}\}\).
+                    Then goto \(\mathtt{run\_tape\_program}\).
+                </li>
+                <li>
+                    if, scanning forward, \(t_2\) reads \(\mathtt{goto\#}t\mathtt{/}\), then have the tape head of \(t_3\) (the virtual state tape) replace its current contents with the string \(t\).
+                    In this case, we goto \(\mathtt{find\_current\_state}\).
+                </li>
+                <li>Otherwise, halt (again, if the virtual program is formatted correctly, then we will never reach this point.)</li>
+            </ol>
+        </li>
+    </ol>
+    In this construction, the state \(c\) is techincally the program \(\mathtt{check\_halt}\), although it does more than that! 
+    Each of \(\mathtt{find\_current\_state}\), \(\mathtt{check\_if\_blank}\), \(\mathtt{check\_if\_0}\), \(\mathtt{check\_if\_1}\), and \(\mathtt{run\_tape\_program}\) are the other "main" states of \(\mathcal U\), each of which branches off into a number of other states needed to accomplish the task they are assigned (as described above).
+</p>
+
+<p>
+    As you can likely imagine, the state space of \(\mathcal U\) is rather large, and fitting it all onto a single tape makes the situation somewhat more complex. 
+    The important thing here is that the construction above gives a clear sequence of instructions for actually programming \(\mathcal U\) (as a side-note, it would be extremely cool to see this machine actually implemented in BuckLang!). 
+</p>
+
+<div class="exercise">
+    <b>(One-free)</b>
+    Consider the program 
+    <div class="code">
+        state f <br>
+        if \_ : goto halt <br>
+        if 0 : move right.goto f <br>
+        if 1 : write 0.move right.goto f <br>
+        <br>
+        state halt <br>
+    </div>
+    Run the universal Turing program on the string \(1010\), where the set up to the runtime is as it is described in the construction of \(\mathcal U\) above:
+    \[
+        \begin{array}{llr}
+        &\!\triangledown & t_3 \\
+        \hline
+        \cdots & \mathtt{f} & \cdots \\
+        \hline
+        &\!\triangledown & t_2 \\
+        \hline
+        \cdots & \mathtt{
+            state \# f /
+            if \# \_ {:} goto \# halt /
+            if \# 0 {:} move \# right{.}goto \# f /
+        } & \cdots \\
+        \hline
+        &\!\triangledown & t_1 \\
+        \hline
+        \cdots & 1010 & \cdots \\
+        \hline
+        \end{array}
+    \]
+    What is the output (remember that the output is the contents on tape \(t_1\) after the machine halts)?
+</div>
+
+<div class="exercise">
+    <b>(Tabula Rasa)</b>
+    Determine the following outputs of the universal Turing machine \(\mathcal U\) above. 
+    <ol>
+        <li>
+            \(\mathcal U_c(\varepsilon)\), i.e., all three tapes are blank.
+        </li>
+        <li>
+            \(\mathcal U_c(\lfloor \mathcal U\rfloor \mathtt{*}c\mathtt{*}\varepsilon)\)
+        </li>
+        <li>
+            \(\mathcal U_c(\mathcal U_c(\lfloor \mathcal T\rfloor \mathtt{*} x \mathtt{*} \varepsilon))\) <br>
+            In this scenario, \(\mathcal T\) is a Turing machine with state \(x\) such that the program corresponding to \(x\) clears the tape and then writes \(\lfloor\mathcal U\rfloor\mathtt{*}c\mathtt{*}\varepsilon\) to the the tape.
+        </li>
+    </ol>
+</div>
