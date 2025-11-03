@@ -1,0 +1,250 @@
+<!-- THIS IS A COMPILED FILE 
+ Compiled on 2025-11-02 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<head>
+	
+	<meta charset="UTF-8">
+	<meta name="author" content="Todd Schmid">
+	
+	<!-- Renders latex formulas -->
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+	<!-- Renders tikz figures mid page -->
+    <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
+    <script src="https://tikzjax.com/v1/tikzjax.js"></script>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="stylesheet" href="../../../styles.css" />
+	<link rel="stylesheet" href="../../course_styles.css" />
+	<link rel="icon" href="../../../squidab.png" />
+	
+	<!-- * Customize for each course * -->
+	<title>CSCI 341 Theory of Computation</title>
+	<meta name="description" content="Course pages for CSCI 341.">
+	<meta name="keywords" content="bucknell,theory,computer,science,schmid,csci341">
+	<!-- ***************************** -->
+</head>
+
+<body>
+
+<div id="content">
+
+<!-- Header Section -->
+<div id="course_head" style="text-align: left;">
+	<h1 style="margin-bottom: 0; text-align: left;">CSCI 341 Theory of Computation</h1>
+	<i>Fall 2025, with <a href="../../../teaching.html">Schmid</a></i>
+	<div id="links">
+		<!-- * Customize for each course * -->
+		<a href="csci341_index.html"><span class="link">Syllabus</span></a>
+		<a href="csci341_contents.html"><span class="link">Notes</span></a>
+		<a href="csci341_resources.html"><span class="link">Resources</span></a>
+		<a href= "csci341_assignments.html"><span class="link">Assignments</span></a>
+		<!-- ***************************** -->
+	</div>
+</div>
+
+
+
+<div id="stuff">
+
+
+<!-- BEGINNING OF BODY -->
+<div style="border: none; margin-bottom: -25px; padding: 0px; text-align: right;"><a href="../compiled/csci341_notes_3_06_the_halting_problem.html"><span class="link"> &larr; the halting problem</span></a><a href="../compiled/csci341_notes_3_08_post_correspondence_problem.html"><span class="link">post correspondence problem &rarr;</span></a></div><h1>Undecidability via the Halting Problem</h1>
+
+<p>
+    The undecidability of the Halting problem has many severe consequences!
+    In a previous lecture, we already briefly talked about "reductions", where we were able to solve a problem \(P_1\) using a pre-existing solution to \(P_2\), i.e., we <i>reduced \(P_1\) to \(P_2\)</i>.
+    Many other languages (decision problems) can be shown to be undecidable by reducing them to the halting problem.
+</p>
+
+<div class="example">
+    <b>(Halting on the Empty Word)</b>
+    Consider the language below, called the <i>halt-on-empty language</i>:
+    \[
+        L_{\varepsilon Halt} = \{\lfloor \mathcal T\rfloor \mathtt{*x} \mid \text{Turing machine \(\mathcal T\) at state \(x\) halts on input \(\varepsilon\)}\}
+    \]
+    What we are going to prove is the following statement: <i>if \(L_{\varepsilon Halt}\) is decidable, then \(L_{Halt}\) is undecidable</i>. 
+    Let's see how this works: suppose for a contradiction that \(\mathcal E\) is a Turing machine with a state \(x_\varepsilon\) that decides the language \(L_{\varepsilon Halt}\).
+    We are going show how to use \(\mathcal E\) to design a Turing machine \(\mathcal H\) with a state \(x_{hlt}\) that decides \(L_{Halt}\).
+    
+    <p></p>
+    Unlike the halt-on-empty problem, the input to the ordinary halting problem includes an input string in addition to the encoding of the Turing machine and state name.
+    The general idea behind the construction is to take a string of the form \(\lfloor \mathcal T \rfloor \mathtt{*x*}w\) and add to \(\lfloor T \rfloor\) a string of code that represents some states that write \(w\) to its tape.
+    Specifically, let \(\mathcal W\) with state \(y_{write}\) be a Turing program that satisfies 
+    \[\begin{aligned}
+        &\mathcal W_{y_{write}}(u \mathtt{*} x \mathtt{*} a_1a_2\cdots a_n) \\
+        &= \mathtt{state\# x_{new} {/} write\# a_1.write\# a_2\dots write\# a_n.goto\# x{/}}u\mathtt{*x_{new}}
+    \end{aligned}\]
+    Then we can directly define \(\mathcal H\) and \(x_{hlt}\) by setting 
+    \[
+        \mathcal H_{x_{hlt}} ( w ) 
+        = \mathcal E_{x_{\varepsilon}} (\mathcal W_{y_{write}} ( w ))
+    \]
+    By composing, we obtain the following:
+    \[\begin{aligned}
+        &\mathcal H_{x_{hlt}}(\lfloor \mathcal T \rfloor \mathtt{*x*}w) \\
+        &= \mathcal E_{x_{\varepsilon}}\big( \mathcal W_{y_{write}}(\lfloor \mathcal T \rfloor \mathtt{*x*}w) \big) \\
+        &= \mathcal E_{x_{\varepsilon}}\big( \mathtt{state\# x_{new} {/} write\# a_1.write\# a_2\dots write\# a_n.goto\# x{/}} \lfloor \mathcal T \rfloor \mathtt{*x_{new}} \big) \\
+    \end{aligned}\]
+    Since \(\mathcal E\) at \(x_{\varepsilon}\) decides \(L_{\varepsilon Halt}\), this shows us that \(\mathcal H_{x_{hlt}}(\lfloor \mathcal T \rfloor \mathtt{*x*}w) = 1\) if \(x\) in \(\mathcal T\) halts on input \(w\), and \(\mathcal H_{x_{hlt}}(\lfloor \mathcal T \rfloor \mathtt{*x*}w) = 0\) if \(x\) in \(\mathcal T\) does not halt on input \(w\).
+    In other words, \(\mathcal H\) at \(x_{hlt}\) is a decider for the halting problem, which does not exist.
+    It follows that \(L_{\varepsilon Halt}\) is undecidable.
+</div>
+
+<p>
+    The rest of this lecture is just a list of undecidable/unrecognizable problems!
+</p>
+
+<div class="problem">
+    <b>(Getting Even)</b>
+    Let \[
+        L = \big\{\lfloor \mathcal T \rfloor \mathtt{*x} \mid \text{\(\mathcal T\) at \(x\) accepts an even-length word }\big\}
+    \]
+    Show that \(L\) is undecidable.
+</div>
+
+<div class="exercise">
+    <b>(Empty Language Problem)</b>
+    The language below consists of all encodings of Turing machines (and states) that do not recognize any words.
+    \[
+        L_\emptyset = \big\{\lfloor \mathcal T\rfloor \mathtt{*x} \mid \mathcal R(\mathcal T, x) = \{\}\big\}
+    \]
+    Show that \(L_\emptyset\) is undecidable.
+</div>
+
+<div class="exercise">
+    <b>(Equivalence Problem)</b>
+    The language below consists of all pairs of encodings of Turing machines (and states) that recognize exactly the same words.
+    \[
+        L_= = \big\{\lfloor \mathcal T_1\rfloor \mathtt{*x_1\#}\lfloor \mathcal T_2\rfloor \mathtt{*x_2} \mid \mathcal R(\mathcal T_1, x_1) = \mathcal R(\mathcal T_2, x_2)\big\}
+    \]
+    Show that \(L_=\) is undecidable.
+</div>
+
+<h3>Rice's Theorem</h3>
+
+<p>
+    You might have noticed that all of these undecidable problems are of a similar flavour: they're all "about machines".
+    This is not a coincidence, as the theorem we are about to state shows. 
+    It's called Rice's Theorem, named after <a href="https://en.wikipedia.org/wiki/Henry_Gordon_Rice">Henry Gordon Rice</a>.
+</p>
+
+<p>
+    The theorem requires some terminology to state precisely.
+</p>
+
+<!-- NOT DONE YET --><div style="border: none; margin-bottom: -25px; padding: 0px; text-align: right;"><a href="../compiled/csci341_notes_3_06_the_halting_problem.html"><span class="link"> &larr; the halting problem</span></a><a href="../compiled/csci341_notes_3_08_post_correspondence_problem.html"><span class="link">post correspondence problem &rarr;</span></a></div>
+
+
+<!-- END OF BODY -->
+    <div style="height: 50px;border-top: 1px solid rgb(131, 131, 131);margin-top: 50px; padding: 20px; text-align: right;">
+        <a href=""><span class="link">Top</span></a>
+    </div>
+</div>
+</div>
+</body>
+
+
+</html>

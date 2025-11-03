@@ -1,5 +1,207 @@
 <h1>The Halting Problem</h1>
 
 <p>
-    Let's start with a practical problem.
+    Let's start with a practical scenario.
 </p>
+<p>
+    You work for some big tech company, [redacted], that offers a service that allows users to upload and run their own software in the cloud.
+    The way that this works is that after a user uploads some code to the server, they can edit it, compile, and allow their own clients to run it.
+    When a client requests to run a user's program, that program gets put on a queue somewhere and waits for its turn to complete whatever task it has been assigned. 
+</p>
+
+<p>
+    This is a wonderfully successful service, and something like 60% of the internet makes its way onto the servers! 
+    This is great and all, but it turns out that the average user is not a great programmer: their programs are often buggy, and the worst are the ones that loop forever, i.e., they <i>never halt</i>.
+    This is bad because it effectively means that nothing else on the queue after it gets to run!
+    Your boss, [redacted], doesn't like this, and isn't pleased. 
+    So he asks you, his best programmer, to fix it.
+</p>
+
+<p>
+    One solution is of course to only let each program run for a certain amount of time. 
+    There are several issues with this, but suffice it to say that certain very important bits of software need to be allowed more time than others to get their tasks completed, and it's hard to know in adv ance how much time exactly that is.
+    So your boss, [redacted], wants you to be smarter about it (the irony is not lost on you), and write some program that takes a block of code as input and <b>decides</b> whether or not that block of code compiles to a program that halts.
+</p>
+
+<div class="definition">
+    <b>(The Halting Problem)</b>
+    <i>The Halting problem</i> \(L_{Halt}\) is the language of all string representations of Turing machine programs that halt on a given input. 
+    Formally, \(L_{Halt}\) is the set of all strings \(\lfloor \mathcal T\rfloor\mathtt{*x*}w\) such that \(w \in A^*\),  \(\mathtt{x}\) is the string representation a state of \(\mathcal T\), and \(x\) halts on input \(w\).
+</div>
+
+<p>
+    Effectively, what [redacted] is asking you to do is to design a decision procedure for \(L_{Halt}\).
+    Unfortunately for your boss, this task is not possible.
+</p>
+
+<h3>Uncedidability of the Halting Problem</h3>
+
+<p>
+    Recall that we write \(\mathsf{Dec}\) for the family of all languages \(L \subseteq A^*\) such that there is a Turing machine \(\mathcal T\) with a state \(x\) such that \(x\) decides \(L\), i.e., 
+    \[
+        L = \{w \in A^* \mid \mathcal T_x(w) = 1\}
+        \quad \text{and} \quad 
+        A^*\setminus L = \{w \in A^* \mid \mathcal T_x(w) = 0\}
+    \]
+    Then \(L_{Halt} \notin \mathsf{Dec}\).
+    In other words, the halting problem is <i>undecidable</i>.
+</p>
+
+<div class="theorem">
+    <b>(Halting is Undecidable)</b>
+    The Halting problem \(L_{Halt}\) is not decidable, i.e., \(L_{Halt} \notin \mathsf{Dec}\).
+</div>
+
+<p>
+    The proof is by contradiction: we are going to begin by assuming that \(L_{Halt}\) <i>is</i> decidable, and from that assumption conclude something absurd, like \(1 = 0\).
+    <b>If there is any proof in this class that you should pay attention to, it is this one!</b>
+</p>
+
+<div class="proof">
+    Assume for a contradiction that \(L_{Halt} \in \mathsf{Dec}\).
+    Then there is a Turing machine \(\mathcal H\) with a state \(x_{hlt}\) such that \(\mathcal H_{x_{hlt}}(w) = 1\) if \(w \in L_{Halt}\) and \(\mathcal H_{x_{hlt}}(w) = 0\) if \(w \notin L_{Halt}\).
+    We are going to use \(x_{hlt}\) as a subroutine in a different program that exhibits an impossible behaviour!
+
+    <p></p>
+    Let \(\mathtt{double\_input}\) be a Turing machine program that doubles the input string on the tape, i.e., turns the tape containing \(w\) into the tape containing \(ww\).
+    Now consider the following Turing machine program, which we will call \(\mathcal D\):
+    <div class="code">
+        <table>
+            <tr>
+                <td>x_diag = </td>
+                <td>
+                    double_input.x_hlt.goto liar
+                </td>
+            </tr>
+            <tr>
+                <td>liar = </td>
+                <td>
+                    if 0 : halt <br>
+                    if 1 : goto loop
+                </td>
+            </tr>
+            <tr>
+                <td>loop = </td>
+                <td>
+                    move right.move left.goto loop
+                </td>
+            </tr>
+        </table>
+    </div>
+    In the code for \(\mathcal D\) above, \(\mathtt{double\_input{.}x\_halt}\) doubles the input string on the tape and then decides whether the resulting string is of the form \(\lfloor \mathcal T\rfloor \mathtt{* x *} w\) for some Turing machine \(\mathcal T\) with state \(x\) that halts on input \(w\).
+    It is important to note that the state \(x_{diag}\) (corresponding to \(\mathtt{x\_diag}\) in \(\mathcal D\)) halts on a given input \(u\) <i>if and only if</i> \(u = \lfloor \mathcal T\rfloor \mathtt{*x*}w\) and \(\mathcal T\) at state \(x\) <i>does not</i> halt on input \(w\) (because \(x_{hlt}\) needs to output \(0\) to avoid the loop).
+    
+    <p></p>
+    Now consider the input word 
+    \[
+        w = \lfloor \mathcal D\rfloor \mathtt{* x_{diag} *}
+    \]
+    (the "input" is the empty word, \(\varepsilon)\).
+    Does \(x_\mathtt{diag}\) halt on input \(\lfloor \mathcal D \rfloor \mathtt{* x_{diag} *} \)?
+    Let's check!
+    We'll split this into two cases.
+        
+    <p></p>
+    <b>Case 1:</b>
+    If \(x_\mathtt{diag}\) halts on input \(\lfloor \mathcal D \rfloor \mathtt{* x_{diag} *}\), then we must have
+    \[
+        0 
+        = \mathcal H_{x_{hlt}}(ww) 
+        = \mathcal H_{x_{hlt}}(
+            {\color{blue}\lfloor \mathcal D \rfloor} \mathtt{* {\color{red} x_{diag}} *} {\color{purple}\lfloor \mathcal D \rfloor \mathtt{* x_{diag} *}}
+        ) 
+    \]
+    But this word is a representation of a Turing machine, state, and input! 
+    Namely,
+    \[
+        u = {\color{blue}\lfloor \mathcal D \rfloor} \mathtt{* {\color{red} x_{diag}} *} {\color{purple} w }
+    \]
+    By definition of \(\mathcal H\) and \(x_{hlt}\), this would imply that \(x_{diag}\) does not halt on \(w = \lfloor \mathcal D\rfloor \mathtt{* x_{diag} *}\).
+    This contradicts the assumption at the beginning of this case.
+
+    <p></p>
+    <b>Case 2:</b>
+    If \(x_\mathtt{diag}\) does not halt on input \(\lfloor \mathcal D \rfloor \mathtt{* x_{diag} *}\), then 
+    \[
+        1 
+        = \mathcal H_{x_{hlt}}(ww) 
+        = \mathcal H_{x_{hlt}}(
+            {\color{blue}\lfloor \mathcal D \rfloor} \mathtt{* {\color{red} x_{diag}} *} {\color{purple}\lfloor \mathcal D \rfloor \mathtt{* x_{diag} *}}
+        ) 
+    \]
+    Again, this word is a representation of a Turing machine, state, and input, 
+    \[
+        u = {\color{blue}\lfloor \mathcal D \rfloor} \mathtt{* {\color{red} x_{diag}} *} {\color{purple} w }
+    \]
+    By definition of \(\mathcal H\) and \(x_{hlt}\), this implies that \(x_{diag}\) halts on input \(w = \lfloor \mathcal D\rfloor \mathtt{* x_{diag} *}\).
+    This contradicts the assumption at the beginning of this case.
+
+    <p></p>
+    ...wait, but then we have shown that \(x_{diag}\) does not and also does halt on input \(w\)?
+    Since this is not possible, our initial assumption that \(\mathcal H\) and \(x_{hlt}\) exist must have been false. 
+    Therefore, \(L_{Halt}\) is not decidable; formally, \(L_{Halt} \notin \mathsf{Dec}\).
+</div>
+
+<div class="exercise">
+    <b>(Arguing)</b>
+    With your team, comb through the proof above and make sure everybody understands each step. 
+    Drawing a picture of the Turing machine \(\mathcal D\), for example, and talk about what a literal implementation (given the "black box" that is \(\mathcal H\)) would look like.
+</div>
+
+<div class="remark">
+    The type of argument that is used to prove the undecidability of the halting problem is called a "diagonal argument", because it uses the "diagonal relation" (this refers to any relation of all the identical pairs \((x, x)\), because it looks like the graph of \(f(x) = x\)).
+    The diagonal formally appears in the argument when we double the input string and use it as an input.
+    <a href="https://en.wikipedia.org/wiki/Diagonal_argument" target="_blank">arguments are extremely popular in logic (and other areas of mathematics and computer science)</a>. 
+</div>
+
+<h2>Recognizability vs. Decidability</h2>
+
+<p>
+    Recall that a language \(L\) is <i>recognizable</i> if there is a Turing machine \(\mathcal T\) with a state \(x\) such that \(L = \{w \in A^* \mid \text{\(x\) halts on input \(w\)}\}\).
+    While it is true that \(L_{Halt}\) is not decidable, there is a recognition procedure for \(L_{Halt}\).
+    Indeed, a universal Turing machine \(\mathcal U\) can be used for this purpose.
+</p>
+
+<div class="exercise">
+    <b>(Universally Recognized)</b>
+    Show that \(L_{Halt} \in \mathsf{Rec}\) using a universal Turing program \(c\) in \(\mathcal U\).
+</div>
+
+<p>
+    The issue here is that while \(\mathcal L_{Halt}\) is recognizable, it is not additionally <i>co-recognizable</i>. 
+    The terminology "co-recognizable" just means that the complement is also recognizable.
+</p>
+
+<div class="theorem">
+    <b>(Recognizable + Corecognizable = Decidable)</b>
+    Let \(L \subseteq A^*\) be a language. 
+    If \(L\) is both recognizable and co-recognizable (meaning that \(A^*\setminus L\) is recognizable), then \(L\) is decidable.
+</div>
+
+<div class="problem">
+    <b>(C + R = D)</b>
+    Prove that if \(L \subseteq A^*\) is both recognizable and co-recognizable, then \(L\) is decidable.
+    <div class="hint">
+        You are essentially given two Turing machines here: one that recognizes \(L\) and one that recognizes \(A^*\setminus L\).
+        Run them "in parallel".
+    </div>
+</div>
+
+<p>
+    This has a number of nice consequences, including the statement in the following exercise.
+    Write \(\mathsf{coRec}\) for the family of co-recognizable languages.
+</p>
+
+<div class="individual-exercise">
+    <b>(Switching Sides)</b>
+    Show that if \(L \in \mathsf{Rec}\), then \(A^* \setminus L \in \mathsf{coRec}\).
+</div>
+
+<p>
+    An immediate consequence of this fact is that we have also encountered our first unrecognizable language!
+</p>
+
+<div class="theorem">
+    <b>(Halting co-Problem is Unecognizable)</b>
+    The language \(A^* \setminus L_{Halt}\) is unrecognizable, i.e., \(A^* \setminus L_{Halt} \notin \mathsf{Rec}\).
+</div>
