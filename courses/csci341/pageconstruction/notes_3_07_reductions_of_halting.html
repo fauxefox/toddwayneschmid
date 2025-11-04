@@ -69,7 +69,7 @@
 </div>
 
 <p>
-    Many other problems that deal with "static analysis" (i.e., to encodings of Turing machines) can be reduced to the halting problem in the same way as the halting-on-empty problem.
+    The halting problem can be reduced to many other problems that deal with "static analysis" (i.e., to encodings of Turing machines) in the same way as the halting-on-empty problem.
 </p>
 
 <div class="exercise">
@@ -79,6 +79,18 @@
         L_\emptyset = \big\{\lfloor \mathcal T\rfloor \mathtt{*x} \mid \mathcal R(\mathcal T, x) = \{\}\big\}
     \]
     Show that \(L_\emptyset\) is undecidable.
+    <div class="hint">
+        Reduce \(L_\emptyset\) to \(L_{\varepsilon Halt}\) as follows:
+        Let \(\mathtt{det\_empty}\) be a decision procedure for \(L_\emptyset\).
+        Consider the program \(\mathtt{append\_clear}\) that takes in a string \(\mathtt{u * x}\) and outputs \(s\mathtt{/}u\mathtt{*x}\), where \(s\) is the string below:
+        <div class="code">
+            state clear <br>
+            if _ : goto x
+            if 0 : erase.move right.goto clear<br>
+            if 1 : erase.move right.goto clear
+        </div>
+        Notice that \(s\mathtt{/}\lfloor \mathcal T\rfloor\mathtt{*x}\) is an encoding of the program that clears the tape and then runs \(\mathcal T\) from state \(x\).
+    </div>
 </div>
 
 <h3>Rice's Theorem</h3>
