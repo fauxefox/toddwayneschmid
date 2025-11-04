@@ -199,7 +199,7 @@
     
     <p></p>
     Unlike the halt-on-empty problem, the input to the ordinary halting problem includes an input string in addition to the encoding of the Turing machine and state name.
-    The general idea behind the construction is to take a string of the form \(\lfloor \mathcal T \rfloor \mathtt{*x*}w\) and add to \(\lfloor T \rfloor\) a string of code that represents some states that write \(w\) to its tape.
+    The general idea behind the construction is to take a string of the form \(\lfloor \mathcal T \rfloor \mathtt{*x*}w\) and add to \(\lfloor \mathcal T \rfloor\) a string of code that represents some states that write \(w\) to its tape.
     Specifically, let \(\mathcal W\) with state \(y_{write}\) be a Turing program that satisfies 
     \[\begin{aligned}
         &\mathcal W_{y_{write}}(u \mathtt{*} x \mathtt{*} a_1a_2\cdots a_n) \\
