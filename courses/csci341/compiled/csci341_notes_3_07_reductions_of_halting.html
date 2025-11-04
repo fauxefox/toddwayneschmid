@@ -252,12 +252,7 @@
         </li>
         <li>
             \(P\) is <i>extensional</i> if the following holds: 
-            for any \((\mathcal T, x) \in P\) and any \((\mathcal S, y) \in \mathbf{TM}\), if \((\mathcal S, y)\) satisfies 
-            \[\begin{aligned}
-                \{w \mid \mathcal T_x(w) = 1\} &= \{w \mid \mathcal S_y(w) = 1\} \\
-                \{w \mid \mathcal T_x(w) = 0\} &= \{w \mid \mathcal S_y(w) = 0\} 
-            \end{aligned}\] 
-            then \((\mathcal S, y) \in P\) also.
+            for any \((\mathcal T, x) \in P\) and any \((\mathcal S, y) \in \mathbf{TM}\), if \(\mathcal T_x = \mathcal S_y\) (i.e., they compute the same string transformer), then \((\mathcal S, y) \in P\) also.
         </li>
     </ul>
 </div>
