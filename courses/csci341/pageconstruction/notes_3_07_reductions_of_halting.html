@@ -40,7 +40,7 @@
     \[
         L_{\varepsilon Halt} = \{\lfloor \mathcal T\rfloor \mathtt{*x} \mid \text{Turing machine \(\mathcal T\) at state \(x\) halts on input \(\varepsilon\)}\}
     \]
-    What we are going to prove is the following statement: <i>if \(L_{\varepsilon Halt}\) is decidable, then \(L_{Halt}\) is undecidable</i>. 
+    We are going to argue that \(L_{Halt}\) reduces to \(L_{\varepsilon Halt}\). 
     Let's see how this works: suppose for a contradiction that \(\mathcal E\) is a Turing machine with a state \(x_\varepsilon\) that decides the language \(L_{\varepsilon Halt}\).
     We are going show how to use \(\mathcal E\) to design a Turing machine \(\mathcal H\) with a state \(x_{hlt}\) that decides \(L_{Halt}\).
     
