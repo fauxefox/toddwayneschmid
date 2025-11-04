@@ -151,16 +151,44 @@
 
 
 <!-- BEGINNING OF BODY -->
-<div style="border: none; margin-bottom: -25px; padding: 0px; text-align: right;"><a href="../compiled/csci341_notes_3_06_the_halting_problem.html"><span class="link"> &larr; the halting problem</span></a><a href="../compiled/csci341_notes_3_08_post_correspondence_problem.html"><span class="link">post correspondence problem &rarr;</span></a></div><h1>Undecidability via the Halting Problem</h1>
+<div style="border: none; margin-bottom: -25px; padding: 0px; text-align: right;"><a href="../compiled/csci341_notes_3_06_the_halting_problem.html"><span class="link"> &larr; the halting problem</span></a><a href="../compiled/csci341_notes_3_08_recognizability_and_enumerability.html"><span class="link">recognizability and enumerability &rarr;</span></a></div><h1>Undecidability via the Halting Problem</h1>
 
 <p>
-    The undecidability of the Halting problem has many severe consequences!
+    The undecidability of the Halting problem has many severe consequences.
     In a previous lecture, we already briefly talked about "reductions", where we were able to solve a problem \(P_1\) using a pre-existing solution to \(P_2\), i.e., we <i>reduced \(P_1\) to \(P_2\)</i>.
-    Many other languages (decision problems) can be shown to be undecidable by reducing them to the halting problem.
+    Many other languages (decision problems) can be shown to be undecidable by reducing the halting problem to them.
+</p>
+
+<div class="definition">
+    <b>(Decidability Reduction)</b>
+    Let \(L_1,L_2 \subseteq A^*\) be languages. 
+    We say that <i>\(L_1\) reduces to \(L_2\)</i> if the following statement holds: if \(L_2\in \mathsf{Dec}\), then \(L_1 \in \mathsf{Dec}\).
+</div>
+
+<p>
+    Intuitively, \(L_1\) reduces to \(L_2\) if any decision procedure for \(L_2\) can be used to build a decision procedure for \(L_1\).
+    Reducing the halting problem to a given decision problem is a standard technique for showing that a given language is not decidable.
+</p>
+
+<div class="lemma">
+    <b>(Reduction to the Halting Problem)</b>
+    Let \(L \subseteq A^*\).
+    If \(L_{Halt}\) reduces to \(L\), then \(L \notin \mathsf{Dec}\).
+</div>
+
+<div class="proof">
+    Suppose that \(L \in \mathsf{Dec}\) (i.e., that \(L\) is decidable). 
+    Then, if \(L_{Halt}\) reduces to \(L\), we must also have \(L_{Halt} \in \mathsf{Dec}\).
+    This last statement is false by the undecidability of the halting problem. 
+    Therefore, \(L \notin\mathsf{Dec}\).
+</div>
+
+<p>
+    This is a very handy lemma! 
 </p>
 
 <div class="example">
-    <b>(Halting on the Empty Word)</b>
+    <b>(Halting on Empty Problem)</b>
     Consider the language below, called the <i>halt-on-empty language</i>:
     \[
         L_{\varepsilon Halt} = \{\lfloor \mathcal T\rfloor \mathtt{*x} \mid \text{Turing machine \(\mathcal T\) at state \(x\) halts on input \(\varepsilon\)}\}
@@ -194,16 +222,8 @@
 </div>
 
 <p>
-    The rest of this lecture is just a list of undecidable/unrecognizable problems!
+    Many other problems that deal with "static analysis" (i.e., to encodings of Turing machines) can be reduced to the halting problem in the same way as the halting-on-empty problem.
 </p>
-
-<div class="problem">
-    <b>(Getting Even)</b>
-    Let \[
-        L = \big\{\lfloor \mathcal T \rfloor \mathtt{*x} \mid \text{\(\mathcal T\) at \(x\) accepts an even-length word }\big\}
-    \]
-    Show that \(L\) is undecidable.
-</div>
 
 <div class="exercise">
     <b>(Empty Language Problem)</b>
@@ -214,28 +234,69 @@
     Show that \(L_\emptyset\) is undecidable.
 </div>
 
+<h3>Rice's Theorem</h3>
+
+<p>
+    These "static-analysis" undecidability results are not coincidental, as the theorem we are about to state shows. 
+    It's called Rice's Theorem, named after <a href="https://en.wikipedia.org/wiki/Henry_Gordon_Rice">Henry Gordon Rice</a>.
+    The theorem requires some terminology to state precisely.
+</p>
+
+<div class="definition">
+    <b>(Non-trivial and Extensional)</b>
+    Let \(\mathbf{TM}\) be the set of all pairs \((\mathcal T, x)\) where \(\mathcal T\) is a Turing machine and \(x\) is a state of \(\mathcal T\).
+    Let \(P \subseteq \mathbf{TM}\).
+    <ul>
+        <li>
+            \(P\) is <i>nontrivial</i> if \(P \neq \{\}\) and \(P \neq \mathbf{TM}\).
+        </li>
+        <li>
+            \(P\) is <i>extensional</i> if the following holds: 
+            for any \((\mathcal T, x) \in P\) and any \((\mathcal S, y) \in \mathbf{TM}\), if \((\mathcal S, y)\) satisfies 
+            \[\begin{aligned}
+                \{w \mid \mathcal T_x(w) = 1\} &= \{w \mid \mathcal S_y(w) = 1\} \\
+                \{w \mid \mathcal T_x(w) = 0\} &= \{w \mid \mathcal S_y(w) = 0\} 
+            \end{aligned}\] 
+            then \((\mathcal S, y) \in P\) also.
+        </li>
+    </ul>
+</div>
+
+<div class="theorem">
+    <b>(Rice's)</b>
+    Let \(P \subseteq \mathbf{TM}\) be nontrivial and extensional. 
+    Then the language 
+    \[
+        L_P = \{\lfloor T \rfloor \mathtt{* x} \mid (\mathcal T, x) \in P\}
+    \]
+    is undecidable.
+</div>
+
 <div class="exercise">
+    <b>(Nonempty Language Problem)</b>
+    This language consists of all encodings of Turing machines (and states) that recognizes <i>at least one word</i>.
+    \[
+        L_\bullet = \big\{\lfloor \mathcal T\rfloor \mathtt{*x} \mid \mathcal R(\mathcal T, x) \neq \{\}\big\}
+    \]
+    Use Rice's Theorem to show that \(L_\bullet\) is undecidable.
+</div>
+
+<div class="exercise">
+    <b>(Getting Even)</b>
+    Let \[
+        L_{\exists2} = \big\{\lfloor \mathcal T \rfloor \mathtt{*x} \mid \text{\(\mathcal T\) at \(x\) accepts an even-length word }\big\}
+    \]
+    Use Rice's theorem to show that \(L\) is undecidable.
+</div>
+
+<div class="problem">
     <b>(Equivalence Problem)</b>
     The language below consists of all pairs of encodings of Turing machines (and states) that recognize exactly the same words.
     \[
         L_= = \big\{\lfloor \mathcal T_1\rfloor \mathtt{*x_1\#}\lfloor \mathcal T_2\rfloor \mathtt{*x_2} \mid \mathcal R(\mathcal T_1, x_1) = \mathcal R(\mathcal T_2, x_2)\big\}
     \]
     Show that \(L_=\) is undecidable.
-</div>
-
-<h3>Rice's Theorem</h3>
-
-<p>
-    You might have noticed that all of these undecidable problems are of a similar flavour: they're all "about machines".
-    This is not a coincidence, as the theorem we are about to state shows. 
-    It's called Rice's Theorem, named after <a href="https://en.wikipedia.org/wiki/Henry_Gordon_Rice">Henry Gordon Rice</a>.
-</p>
-
-<p>
-    The theorem requires some terminology to state precisely.
-</p>
-
-<!-- NOT DONE YET --><div style="border: none; margin-bottom: -25px; padding: 0px; text-align: right;"><a href="../compiled/csci341_notes_3_06_the_halting_problem.html"><span class="link"> &larr; the halting problem</span></a><a href="../compiled/csci341_notes_3_08_post_correspondence_problem.html"><span class="link">post correspondence problem &rarr;</span></a></div>
+</div><div style="border: none; margin-bottom: -25px; padding: 0px; text-align: right;"><a href="../compiled/csci341_notes_3_06_the_halting_problem.html"><span class="link"> &larr; the halting problem</span></a><a href="../compiled/csci341_notes_3_08_recognizability_and_enumerability.html"><span class="link">recognizability and enumerability &rarr;</span></a></div>
 
 
 <!-- END OF BODY -->

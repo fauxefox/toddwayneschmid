@@ -1,0 +1,268 @@
+<!-- THIS IS A COMPILED FILE 
+ Compiled on 2025-11-04 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<head>
+	
+	<meta charset="UTF-8">
+	<meta name="author" content="Todd Schmid">
+	
+	<!-- Renders latex formulas -->
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+	<!-- Renders tikz figures mid page -->
+    <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
+    <script src="https://tikzjax.com/v1/tikzjax.js"></script>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="stylesheet" href="../../../styles.css" />
+	<link rel="stylesheet" href="../../course_styles.css" />
+	<link rel="icon" href="../../../squidab.png" />
+	
+	<!-- * Customize for each course * -->
+	<title>CSCI 341 Theory of Computation</title>
+	<meta name="description" content="Course pages for CSCI 341.">
+	<meta name="keywords" content="bucknell,theory,computer,science,schmid,csci341">
+	<!-- ***************************** -->
+</head>
+
+<body>
+
+<div id="content">
+
+<!-- Header Section -->
+<div id="course_head" style="text-align: left;">
+	<h1 style="margin-bottom: 0; text-align: left;">CSCI 341 Theory of Computation</h1>
+	<i>Fall 2025, with <a href="../../../teaching.html">Schmid</a></i>
+	<div id="links">
+		<!-- * Customize for each course * -->
+		<a href="csci341_index.html"><span class="link">Syllabus</span></a>
+		<a href="csci341_contents.html"><span class="link">Notes</span></a>
+		<a href="csci341_resources.html"><span class="link">Resources</span></a>
+		<a href= "csci341_assignments.html"><span class="link">Assignments</span></a>
+		<!-- ***************************** -->
+	</div>
+</div>
+
+
+
+<div id="stuff">
+
+
+<!-- BEGINNING OF BODY -->
+<div style="border: none; margin-bottom: -25px; padding: 0px; text-align: right;"><a href="../compiled/csci341_notes_3_07_reductions_of_halting.html"><span class="link"> &larr; reductions of halting</span></a></div><h1>Recognizability and Enumerability</h1>
+
+<p>
+    Recall that a language \(L\) is <i>recognizable</i> if there is a Turing machine \(\mathcal T\) with a state \(x\) such that \(L = \{w \in A^* \mid \text{\(x\) halts on input \(w\)}\}\).
+    While it is true that \(L_{Halt}\) is not decidable, there is a recognition procedure for \(L_{Halt}\).
+    Indeed, a universal Turing machine \(\mathcal U\) can be used for this purpose.
+</p>
+
+<div class="exercise">
+    <b>(Universally Recognized)</b>
+    Show that \(L_{Halt} \in \mathsf{Rec}\) using a universal Turing program \(c\) in \(\mathcal U\).
+</div>
+
+<p>
+    The issue here is that while \(\mathcal L_{Halt}\) is recognizable, it is not additionally <i>co-recognizable</i>. 
+    The terminology "co-recognizable" just means that the complement is also recognizable.
+    Write \(\mathsf{coRec}\) for the family of co-recognizable languages.
+</p>
+
+<div class="individual-exercise">
+    <b>(Switching Sides)</b>
+    Check that if \(L \in \mathsf{Rec}\), then \(A^* \setminus L \in \mathsf{coRec}\).
+</div>
+
+<div class="theorem">
+    <b>(Recognizable + Corecognizable = Decidable)</b>
+    Let \(L \subseteq A^*\) be a language. 
+    If \(L\) is both recognizable and co-recognizable (meaning that \(A^*\setminus L\) is recognizable), then \(L\) is decidable.
+    Formally, \(\mathsf{Dec} = \mathsf{Rec} \cap \mathsf{coRec}\).
+</div>
+
+<p>
+    An immediate consequence of this fact is that we have also encountered our first unrecognizable language!
+</p>
+
+<div class="theorem">
+    <b>(Halting co-Problem is Unecognizable)</b>
+    The language \(A^* \setminus L_{Halt}\) is unrecognizable, i.e., \(A^* \setminus L_{Halt} \notin \mathsf{Rec}\).
+</div>
+
+<div class="problem">
+    <b>(C + R = D)</b>
+    Prove that if \(L \subseteq A^*\) is both recognizable and co-recognizable, then \(L\) is decidable.
+    Explain why this implies that \(A^*\setminus L_{Halt}\) is not recognizable.
+    <div class="hint">
+        For the first part, you are essentially given two Turing machines here: one that recognizes \(L\) and one that recognizes \(A^*\setminus L\).
+        Run them "in parallel".
+        For the second, argue by contradition using the first part.
+    </div>
+</div>
+
+<h3>Enumerators and Recognizability</h3>
+
+<p>
+    Recognizability is closely related to <i>enumerator programs</i>.
+    Roughly, an enumerator program is a program (state in a Turing machine) that eventually writes every word in a given language to a tape.
+    All of these can be built on the simplest enumerator program, which is \(\mathtt{enumerate\_all}\).
+    Recall the Turing program \(x_{\mathtt{succ}}\) that satisfies
+    \[
+        \mathcal T_{x_{\mathtt{succ}}}(\mathsf{bin}(n)) = \mathsf{bin}(n + 1)
+    \]
+    Then \(\mathtt{enumerate\_all}\) is the program
+    <div class="code">
+        state enumerate_all <br>
+        write 0.goto generate_next <br>
+        <br>
+        state generate_next <br>
+        succ.goto generate_next
+    </div>
+    Starting from the empty string, this eventually writes every string of \(0\)s and \(1\)s to the tape!
+</p>
+
+<div class="definition">
+    <b>(Enumerator)</b>
+    Let \(L = \{w_1, w_2, w_3, \dots\}\) be the language consisting of words \(w_1, w_2, \dots\).
+    An <i>enumerator for \(L\)</i> is a Turing program 
+    \(\mathtt{enumerate\_L}\) that never halts, but outputs the following tape on input \(\varepsilon\):
+    \[
+        w_1\mathtt{\#}
+    \]
+</div>
+
+<p>
+    If we really wanted to make use of this program though, we need to insert a line of code that we can adlib later: let's say "other program".
+    <div class="code">
+        state enumerate_all <br>
+        write 0.goto generate_next <br>
+        <br>
+        state generate_next <br>
+        other_program.succ.goto generate_next
+    </div>
+    This is the key to the following problem.
+</p>
+
+
+
+<p>
+    Again, we can 
+</p>
+
+<div class="definition">
+    A language is called <i>recursively enumerable</i> if there is an enumerator program \(\)
+</div><div style="border: none; margin-bottom: -25px; padding: 0px; text-align: right;"><a href="../compiled/csci341_notes_3_07_reductions_of_halting.html"><span class="link"> &larr; reductions of halting</span></a></div>
+
+
+<!-- END OF BODY -->
+    <div style="height: 50px;border-top: 1px solid rgb(131, 131, 131);margin-top: 50px; padding: 20px; text-align: right;">
+        <a href=""><span class="link">Top</span></a>
+    </div>
+</div>
+</div>
+</body>
+
+
+</html>
