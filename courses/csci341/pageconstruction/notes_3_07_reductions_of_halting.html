@@ -82,15 +82,28 @@
     Show that \(L_\emptyset\) is undecidable.
     <div class="hint">
         Reduce \(L_\emptyset\) to \(L_{\varepsilon Halt}\) as follows:
-        Let \(\mathtt{det\_empty}\) be a decision procedure for \(L_\emptyset\).
-        Consider the program \(\mathtt{append\_clear}\) that takes in a string \(u\mathtt{* x}\) and outputs \(s\mathtt{/}u\mathtt{*x}\), where \(s\) is the string below:
+        Let \(\mathcal E\) at \(y\) be a decision procedure for \(L_\emptyset\).
+        Consider any Turing machine \(\mathcal C\) with state \(z\) that takes in a string \(u\mathtt{* x}\) and outputs \(s\mathtt{/}u\mathtt{*x}\), where \(s\) is the string below:
         <div class="code">
             state clear <br>
             if _ : goto x <br>
             if 0 : erase.move right.goto clear<br>
             if 1 : erase.move right.goto clear
         </div>
+        That is, 
+        \[
+            \mathcal C_z(u\mathtt{* x}) = s\mathtt{/}u\mathtt{*x}
+        \]
         Notice that \(s\mathtt{/}\lfloor \mathcal T\rfloor\mathtt{*x}\) is an encoding of the program that clears the tape and then runs \(\mathcal T\) from state \(x\).
+        Show that 
+        \[
+            \mathcal E_y(\mathcal C_z(\lfloor \mathcal T\rfloor \mathtt{*x}))
+            = \begin{cases}
+                1 &\text{if }\varepsilon \in \mathcal R(\mathcal T, x) \\
+                0 &\text{if }\varepsilon \notin \mathcal R(\mathcal T, x) 
+            \end{cases}
+        \]
+        Conclude that \(L_{\emptyset} \notin \mathsf{Dec}\).
     </div>
 </div>
 
