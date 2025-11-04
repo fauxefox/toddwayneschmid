@@ -18,7 +18,7 @@
 </p>
 
 <div class="lemma">
-    <b>(Reduction to the Halting Problem)</b>
+    <b>(Reduction of the Halting Problem)</b>
     Let \(L \subseteq A^*\).
     If \(L_{Halt}\) reduces to \(L\), then \(L \notin \mathsf{Dec}\).
 </div>
@@ -64,8 +64,8 @@
         &= \mathcal E_{x_{\varepsilon}}\big( \mathtt{state\# x_{new} {/} write\# a_1.write\# a_2\dots write\# a_n.goto\# x{/}} \lfloor \mathcal T \rfloor \mathtt{*x_{new}} \big) \\
     \end{aligned}\]
     Since \(\mathcal E\) at \(x_{\varepsilon}\) decides \(L_{\varepsilon Halt}\), this shows us that \(\mathcal H_{x_{hlt}}(\lfloor \mathcal T \rfloor \mathtt{*x*}w) = 1\) if \(x\) in \(\mathcal T\) halts on input \(w\), and \(\mathcal H_{x_{hlt}}(\lfloor \mathcal T \rfloor \mathtt{*x*}w) = 0\) if \(x\) in \(\mathcal T\) does not halt on input \(w\).
-    In other words, \(\mathcal H\) at \(x_{hlt}\) is a decider for the halting problem, which does not exist.
-    It follows that \(L_{\varepsilon Halt}\) is undecidable.
+    In other words, \(\mathcal H\) at \(x_{hlt}\) is a decider for the halting problem.
+    By our Reduction of the Halting Problem lemma, it follows that \(L_{\varepsilon Halt}\) is undecidable.
 </div>
 
 <p>
