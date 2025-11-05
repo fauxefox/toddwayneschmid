@@ -140,6 +140,111 @@
     is undecidable.
 </div>
 
+<p>
+    Just a quick observation: 
+</p>
+
+<div class="individual-exercise">
+    If \(P \subseteq \mathbf{TM}\) is nontrivial and extensional, then \(\mathbf{TM}\setminus P\) is nontrivial and extensional.
+</div>
+
+<div class="proof">
+    Suppose for a contradiction that \(\mathcal P\) at state \(z\) is a decider for \(L_P\).
+    Since \(P\) is nontrivial, there is a Turing program \((\mathcal M, m) \in P\) and a Turing program \((\mathcal N, n) \notin P\). 
+    Without loss of generality, we can take \((\mathcal N, n) \notin P\) to be a (in fact, any, by extensionality) Turing program that never halts on any input (otherwise, we give the argument for \(\mathbf{TM}\setminus P\) instead). 
+    Then we have 
+    \[
+        \mathcal P_z(\lfloor \mathcal M\rfloor \mathtt{* m}) = 1
+        \qquad
+        \mathcal P_z(\lfloor \mathcal N\rfloor \mathtt{* n}) = 0
+    \]
+    We are going to use \(\mathcal P\) and \(z\) to construct a decider, a Turing machine \(\mathcal H\) with a state \(x_{hlt}\), for \(L_{Halt}\). 
+    In other words, we will show that \(L_{Halt}\) reduces to \(L_P\), which establishes that \(L_P\) is undecidable.
+
+    <p></p>
+    For any fixed word \(w \in \{0,1\}^*\) and Turing machine \(\mathcal T\) with a state \(x\), construct a Turing machine \(\mathcal D[\mathcal T, x, w]\) with state \(d\) such that
+    \[
+        \mathcal D[\mathcal T,x,w]_d (u)
+        = 
+        \begin{cases}
+            \mathcal P_z(u) &\text{if \(\mathcal T_x(w)\) is well-defined} \\
+            \text{undefined} &\text{if \(\mathcal T_x(w)\) undefined}
+        \end{cases}
+    \]
+    for any \(u \in A^*\).
+    Note the following:
+    <ol>
+        <li>
+            If \(\mathcal T_x(w)\) is well-defined (i.e., \(x\) halts on input \(w\)), then \(\mathcal D[\mathcal T, x, w] = \mathcal M_m\).
+            Since \(\lfloor \mathcal M\rfloor \mathtt{*}m \in L_P\) and \(P\) is extensional, we would have
+            \[
+                \lfloor \mathcal D[\mathcal T, x, w]\rfloor \mathtt{*d} 
+                \in L_P
+            \]
+        </li>
+        <li>
+            If \(\mathcal T_x(w)\) is undefined (i.e., \(x\) does not halt on input \(w\)), then \(\mathcal D[\mathcal T, x, w]_d = \mathcal N_n\), since \(\mathcal N\) at state \(n\) never halts on any input. 
+            Since \(\lfloor \mathcal N\rfloor \mathtt{*}n \notin L_P\) and \(P\) is extensional, we would have
+            \[
+                \lfloor \mathcal D[\mathcal T, x, w]\rfloor \mathtt{*d} 
+                \notin L_P
+            \]
+        </li>
+    </ol>
+    Therefore, if we can find a Turing machine \(\mathcal V\) with a state \(v\) such that 
+    \[
+        \mathcal V_v(\lfloor \mathcal T\rfloor \mathtt{*}x\mathtt{*}w)
+        = \lfloor \mathcal D[\mathcal T, x, w]\rfloor \mathtt{*}d
+    \]
+    then we can define our decider for the halting problem by composition: 
+    \[
+        \mathcal H_{x_{hlt}}
+        = \mathcal P_z \circ \mathcal V_v
+    \]
+    We will return to the point that explains how to build \(\mathcal V_v\) in a moment. 
+    First, let us see why \(\mathcal H\) at \(x_{hlt}\) is a decider for \(L_{Halt}\).
+
+    <p>
+        Suppose \(x\) is a state of a Turing machine \(\mathcal T\) that halts on input \(w\).
+        Then for any \(u \in \{0,1\}^*\), \(\mathcal D[\mathcal T, x, w]_d(u) = \mathcal M_m(u)\).
+        By extensionality of \(P\), and because \(\mathcal P\) at \(z\) is a decider for \(L_P\), \(\mathcal P_z(\lfloor \mathcal D[\mathcal T, x, w]\rfloor \mathtt{*}d) = 1\). 
+        By definition, we therefore have 
+        \[\begin{aligned}
+            \mathcal H_{x_{hlt}}(\lfloor \mathcal T\rfloor \mathtt{*}x\mathtt{*}w) 
+            &= \mathcal P_z \circ \mathcal V_v(\lfloor \mathcal T\rfloor \mathtt{*}x\mathtt{*}w) \\
+            &= \mathcal P_z(\lfloor \mathcal D[\mathcal T, x, w]\rfloor \mathtt{*}d) \\
+            &= \mathcal P_z(\lfloor \mathcal M\rfloor \mathtt{*}m) &\text{(extensionality)}\\
+            &= 1
+        \end{aligned}\]
+        This shows that if \(x\) halts on input \(w\), then \(\mathcal H_{x_{hlt}}(\lfloor \mathcal T\rfloor \mathtt{*}x\mathtt{*}w) = 1\).
+    </p>
+
+    <p>
+        Conversely, suppose \(x\) is a state of a Turing machine \(\mathcal T\) that does not halt on input \(w\).
+        Then for any \(u \in \{0,1\}^*\), \(\mathcal D[\mathcal T, x, w]_d(u) = \mathcal N_n(u)\).
+        By extensionality of \(P\), \(\mathcal P_z(\lfloor \mathcal D[\mathcal T, x, w]\rfloor \mathtt{*}d) = 0\). 
+        By definition, we therefore have 
+        \[\begin{aligned}
+            \mathcal H_{x_{hlt}}(\lfloor \mathcal T\rfloor \mathtt{*}x\mathtt{*}w) 
+            &= \mathcal P_z \circ \mathcal V_v(\lfloor \mathcal T\rfloor \mathtt{*}x\mathtt{*}w) \\
+            &= \mathcal P_z(\lfloor \mathcal D[\mathcal T, x, w]\rfloor \mathtt{*}d) \\
+            &= \mathcal P_z(\lfloor \mathcal N\rfloor \mathtt{*}n) &\text{(extensionality)}\\
+            &= 0
+        \end{aligned}\]
+        This shows that if \(x\) does not halt on input \(w\), then \(\mathcal H_{x_{hlt}}(\lfloor \mathcal T\rfloor \mathtt{*}x\mathtt{*}w) = 0\).
+    </p>
+
+    <p>
+        The previous two paragraphs establish that \(\mathcal H\) at \(x_{hlt}\) is a decider for \(L_{Halt}\). 
+        We are now tasked with constructing \(\mathcal V\) with state \(v\).
+        Let us sketch this quickly: we need \(v\) to (1) append the code of \(\mathcal P\) to \(\lfloor \mathcal T\rfloor\), as well as some programming to ensure that \(w\) gets written to a part of the tape, (2) augment the code of \(\mathcal T\) to only operate on the part of the tape that \(w\) gets written to, and (3) reroute all of the halting states of \(\mathcal T\) to a program that clears everything but \(u\) on the tape before running the program that corresponds to \(\mathcal P\).
+</div>
+
+<div class="challenge-exercise">
+    <b>(\(\mathcal D\)etails)</b>
+    Give a more detailed description of the Turing machine \(\mathcal V\) in the proof of Rice's theorem above.
+</div>
+
 <div class="exercise">
     <b>(Nonempty Language Problem)</b>
     This language consists of all encodings of Turing machines (and states) that recognizes <i>at least one word</i>.
