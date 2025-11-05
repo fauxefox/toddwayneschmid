@@ -190,10 +190,10 @@ Don't forget to check the webspace for hints and additional context for each pro
     [Equivalence Problem]
     The language below consists of all pairs of encodings of Turing machines (and states) that recognize exactly the same words.
     \[
-        L_= = \big\{\lfloor \mathcal T_1\rfloor \mathtt{*x_1\#}\lfloor \mathcal T_2\rfloor \mathtt{*x_2} \mid \mathcal R(\mathcal T_1, x_1) = \mathcal R(\mathcal T_2, x_2)\big\}
+        L_= = \big\{\lfloor \mathcal T_1\rfloor \mathtt{*}x_1\mathtt{*}\lfloor \mathcal T_2\rfloor \mathtt{*}x_2 \mid \mathcal R(\mathcal T_1, x_1) = \mathcal R(\mathcal T_2, x_2)\big\}
     \]
     \begin{enumerate}
-        \item Show that \(L_=\) is undecidable (I encourage you to use Rice's theorem).
+        \item Show that \(L_=\) is undecidable (I encourage you to use Rice's theorem somehow).
         \item Write a short reflection on what the impact of this undecidability result is. 
         For example, is it possible to write an algorithm to decide if two blocks of code accomplish the same task?
     \end{enumerate}

@@ -1,19 +1,19 @@
 # Fdb version 4
-["biber Pset9"] 0 "Pset9.bcf" "Pset9.bbl" "Pset9" 1762297705.3566 0
+["biber Pset9"] 0 "Pset9.bcf" "Pset9.bbl" "Pset9" 1762313156.26082 0
   "Pset9.bcf" 0 -1 0 "pdflatex"
   "refs.bib" 0 -1 0 ""
   (generated)
   "Pset9.bbl"
   "Pset9.blg"
   (rewritten before read)
-["makeindex Pset9.idx"] 1762282135.64919 "Pset9.idx" "Pset9.ind" "Pset9" 1762297705.35652 0
-  "Pset9.idx" 1762297704.50693 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+["makeindex Pset9.idx"] 1762282135.64919 "Pset9.idx" "Pset9.ind" "Pset9" 1762313156.26071 0
+  "Pset9.idx" 1762313155.40541 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   (generated)
   "Pset9.ilg"
   "Pset9.ind"
   (rewritten before read)
-["pdflatex"] 1762297703.99265 "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/Pset9.tex" "Pset9.pdf" "Pset9" 1762297705.35687 0
-  "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/Pset9.tex" 1762297703.74729 6355 42c1669ffcd85336bbf3545421590d53 ""
+["pdflatex"] 1762313154.875 "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/Pset9.tex" "Pset9.pdf" "Pset9" 1762313156.2611 0
+  "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/Pset9.tex" 1762313154.63512 6371 7e7c9fbf5477793e77068a716e0dd624 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/bitstrea/charter/bchb7t.tfm" 1136768653 2732 006d846b4d54f9b40899c7c3eecd771a ""
@@ -62,11 +62,9 @@
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/bitstrea/charter/bchri8a.pfb" 1136849748 35118 12369bddf1a14581d11fcdbf86619250 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1248133631 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1248133631 35469 70d41d2b9ea31d5d813066df7c99281c ""
-  "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb" 1248133631 31099 c85edf1dd5b9e826d67c9c7293b6786c ""
-  "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb" 1248133631 24287 6b803fa9eb1ddff9112e00519b09dd9e ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/mathabx-type1/matha10.pfb" 1295482684 90043 a01ee69dbd537ea8a0835a2b4841a64e ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/mathabx-type1/matha8.pfb" 1295482684 92536 122d225cdc6105aa1e30a312e405a45c ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/mathabx-type1/mathb10.pfb" 1295482684 89251 441f72450b980a987c1a89892f305fb3 ""
@@ -264,12 +262,12 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1721257481.80017 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1721257440 8221420 55780793342b43867148509ad7bdd958 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "Pset9.aux" 1762297705.15166 342 d319a37e5e7a7ebc697840efd320507f "pdflatex"
+  "Pset9.aux" 1762313156.0593 342 d319a37e5e7a7ebc697840efd320507f "pdflatex"
   "Pset9.bbl" 0 -1 0 "biber Pset9"
   "Pset9.ind" 1762282135.75641 0 d41d8cd98f00b204e9800998ecf8427e "makeindex Pset9.idx"
-  "Pset9.out" 1762297704.99094 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "Pset9.run.xml" 1762297705.15342 2306 482aafc4a84d699b8303655676b10403 "pdflatex"
-  "Pset9.tex" 1762297703.74729 6355 42c1669ffcd85336bbf3545421590d53 ""
+  "Pset9.out" 1762313155.89282 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "Pset9.run.xml" 1762313156.06109 2306 482aafc4a84d699b8303655676b10403 "pdflatex"
+  "Pset9.tex" 1762313154.63512 6371 7e7c9fbf5477793e77068a716e0dd624 ""
   (generated)
   "Pset9.aux"
   "Pset9.bcf"

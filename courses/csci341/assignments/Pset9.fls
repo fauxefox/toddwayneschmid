@@ -459,11 +459,9 @@ INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/bitstrea/charter/bchr8a.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/bitstrea/charter/bchri8a.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
-INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb
-INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/mathabx-type1/matha10.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/mathabx-type1/matha8.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/mathabx-type1/mathb10.pfb
