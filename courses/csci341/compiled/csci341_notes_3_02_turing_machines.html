@@ -1,5 +1,5 @@
 <!-- THIS IS A COMPILED FILE 
- Compiled on 2025-11-04 -->
+ Compiled on 2025-11-05 -->
 
 
 
@@ -556,6 +556,19 @@
 <div class="individual-exercise">
     <b>(Doubling is Computable)</b>
     Show that \(f \colon \mathbb N \to \mathbb N\) defined by \(f(n) = 2n\) is computable.
+</div>
+
+<div class="individual-exercise">
+    <b>(Composition of Computables)</b>
+    Let \(f \colon A^* \rightharpoonup A^*\) and \(g \colon A^* \rightharpoonup A^*\) be computable string transformers.
+    Prove that the composition \(g \circ f \colon A^* \rightharpoonup A^*\) defined by 
+    \[
+        g \circ f(w) = \begin{cases}
+            g(f(w)) & \text{if \(f(w)\) and \(g(f(w))\) are well-defined} \\
+            \text{undefined} & \text{otherwise}
+        \end{cases}
+    \]
+    is also computable.
 </div>
 
 <!--  -->
