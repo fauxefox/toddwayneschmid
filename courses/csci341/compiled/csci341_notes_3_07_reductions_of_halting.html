@@ -191,34 +191,96 @@
     <b>(Halting on Empty Problem)</b>
     Consider the language below, called the <i>halt-on-empty language</i>:
     \[
-        L_{\varepsilon Halt} = \{\lfloor \mathcal T\rfloor \mathtt{*x} \mid \text{Turing machine \(\mathcal T\) at state \(x\) halts on input \(\varepsilon\)}\}
+        L_{\varepsilon} = \{\lfloor \mathcal T\rfloor \mathtt{*}x \mid \text{Turing machine \(\mathcal T\) at state \(x\) halts on input \(\varepsilon\)}\}
     \]
-    We are going to argue that \(L_{Halt}\) reduces to \(L_{\varepsilon Halt}\). 
-    Let's see how this works: suppose for a contradiction that \(\mathcal E\) is a Turing machine with a state \(x_\varepsilon\) that decides the language \(L_{\varepsilon Halt}\).
+    We are going to argue that \(L_{Halt}\) reduces to \(L_{\varepsilon}\). 
+    Let's see how this works: suppose for a contradiction that \(\mathcal E\) is a Turing machine with a state \(x_\varepsilon\) that decides the language \(L_{\varepsilon}\).
     We are going show how to use \(\mathcal E\) to design a Turing machine \(\mathcal H\) with a state \(x_{hlt}\) that decides \(L_{Halt}\).
     
     <p></p>
     Unlike the halt-on-empty problem, the input to the ordinary halting problem includes an input string in addition to the encoding of the Turing machine and state name.
-    The general idea behind the construction is to take a string of the form \(\lfloor \mathcal T \rfloor \mathtt{*x*}w\) and add to \(\lfloor \mathcal T \rfloor\) a string of code that represents some states that write \(w\) to its tape.
-    Specifically, let \(\mathcal W\) with state \(y_{write}\) be a Turing program that satisfies 
+    The general idea behind the construction is to take a string of the form \(\lfloor \mathcal T \rfloor \mathtt{*}x\mathtt{*}w\) and add to \(\lfloor \mathcal T \rfloor\) a string of code that represents some states that write \(w\) to its tape before transitioning to \(x\).
+    Call this resulting program \(s\mathtt{/}\lfloor \mathcal T \rfloor\mathtt{*}y\), where \(y\) is the start state of the program encoded by \(s\).
+    Now, when we run this new program, encoded as \(s\mathtt{/}\lfloor \mathcal T \rfloor\mathtt{*}y\), on the empty string, this gives the same result as running \(\mathcal T\) starting from \(x\) on the input string \(w\).
+    Phrased in terms of a universal Turing machine,  
+    \[
+        \mathcal U_c(s\mathtt{/}\lfloor \mathcal T \rfloor\mathtt{*}y\mathtt{*}\varepsilon) = \mathcal T_x(w)
+    \]
+    What this allows us to do is use the decider for \(L_{\varepsilon}\), \(\mathcal E\) at state \(x_{\varepsilon}\), to check if the resulting program halts on an empty input. 
+    As we have just seen, the new program (with \(s\) attatched) halts on \(\varepsilon\) if and only if \(x\) halts on input \(w\).
+    This accomplishes our task.
+
+    <p></p>
+    Formally, let \(\mathcal W\) with state \(y\) be a Turing program that satisfies 
     \[\begin{aligned}
-        &\mathcal W_{y_{write}}(u \mathtt{*} x \mathtt{*} a_1a_2\cdots a_n) \\
-        &= \mathtt{state\# x_{new} {/} write\# a_1.write\# a_2\dots write\# a_n.goto\# x{/}}u\mathtt{*x_{new}}
+        &\mathcal W_{y}(u \mathtt{*} x \mathtt{*} a_1a_2\cdots a_n) \\
+        &= \mathtt{state\#} x_{new} \mathtt{/ write\# a_1.write\# a_2\dots write\# a_n.goto\#} x \mathtt{/} u \mathtt{*}x_{new}
     \end{aligned}\]
     Then we can directly define \(\mathcal H\) and \(x_{hlt}\) by setting 
     \[
         \mathcal H_{x_{hlt}} ( w ) 
-        = \mathcal E_{x_{\varepsilon}} (\mathcal W_{y_{write}} ( w ))
+        = \mathcal E_{x_{\varepsilon}} (\mathcal W_{y} ( w ))
     \]
     By composing, we obtain the following:
     \[\begin{aligned}
-        &\mathcal H_{x_{hlt}}(\lfloor \mathcal T \rfloor \mathtt{*x*}w) \\
-        &= \mathcal E_{x_{\varepsilon}}\big( \mathcal W_{y_{write}}(\lfloor \mathcal T \rfloor \mathtt{*x*}w) \big) \\
-        &= \mathcal E_{x_{\varepsilon}}\big( \mathtt{state\# x_{new} {/} write\# a_1.write\# a_2\dots write\# a_n.goto\# x{/}} \lfloor \mathcal T \rfloor \mathtt{*x_{new}} \big) \\
+        &\mathcal H_{x_{hlt}}(\lfloor \mathcal T \rfloor \mathtt{*} x \mathtt{*} w) \\
+        &= \mathcal E_{x_{\varepsilon}}\big( \mathcal W_{y}(\lfloor \mathcal T \rfloor \mathtt{*} x \mathtt{*} w) \big) \\
+        &= \mathcal E_{x_{\varepsilon}}\big( \mathtt{state\# x_{new} {/} write\# a_1.write\# a_2\dots write\# a_n.goto\# x{/}} \lfloor \mathcal T \rfloor \mathtt{*} x_{new} \big) \\
     \end{aligned}\]
-    Since \(\mathcal E\) at \(x_{\varepsilon}\) decides \(L_{\varepsilon Halt}\), this shows us that \(\mathcal H_{x_{hlt}}(\lfloor \mathcal T \rfloor \mathtt{*x*}w) = 1\) if \(x\) in \(\mathcal T\) halts on input \(w\), and \(\mathcal H_{x_{hlt}}(\lfloor \mathcal T \rfloor \mathtt{*x*}w) = 0\) if \(x\) in \(\mathcal T\) does not halt on input \(w\).
+    Since \(\mathcal E\) at \(x_{\varepsilon}\) decides \(L_{\varepsilon}\), this shows us that \(\mathcal H_{x_{hlt}}(\lfloor \mathcal T \rfloor \mathtt{*x*}w) = 1\) if \(x\) in \(\mathcal T\) halts on input \(w\), and \(\mathcal H_{x_{hlt}}(\lfloor \mathcal T \rfloor \mathtt{*} x \mathtt{*} w) = 0\) if \(x\) in \(\mathcal T\) does not halt on input \(w\).
     In other words, \(\mathcal H\) at \(x_{hlt}\) is a decider for the halting problem.
-    By our Reduction of the Halting Problem lemma, it follows that \(L_{\varepsilon Halt}\) is undecidable.
+    By our Reduction of the Halting Problem lemma, it follows that \(L_{\varepsilon}\) is undecidable.
+</div>
+
+<p>
+    The next two exercises are further steps toward understanding how the reduction in the example works.
+</p>
+
+<div class="exercise">
+    <b>(The Writer, Concretely)</b>
+    Consider the "writer" program \(\mathcal W_y\) in the example above. 
+    Test it on the following examples:
+    <ol>
+        <li>
+            \(\mathcal W_y(\mathtt{*x{*}0})=~\)
+        </li>
+        <li>
+            \(\mathcal W_y(\mathtt{state\#z/if\#\_{:}move\#left.goto\#z{*}z{*}01})=~\)
+        </li>
+        <li>
+            Consider the following code:
+            <div class="code">
+                state flip <br>
+                if _ : goto halt <br>
+                if 0 : write 1.move right.goto flip <br>
+                if 1 : write 0.move right.goto flip
+            </div>
+            Let \(s\) be the string of symbols in the code above.
+            Then \(\mathcal W_y(\mathtt{*flip*}11)=~\)
+        </li>
+    </ol>
+
+    <!-- \[\begin{gathered}
+        \mathcal W_y(\mathtt{*x{*}0}) 
+        % = \mathtt{state\#x\_new/write\#0.goto\#x/{*}x\_new} \\\\
+        \begin{aligned}
+            &\mathcal W_y(\mathtt{state\#z/if\#\_{:}move\#left.goto\#z{*}z{*}01}) \\
+            & = \mathtt{state\#x\_new/write\#0.write\#1.goto\#z/state\#z/if\#\_{:}move\#left.goto\#z{*}x\_new} 
+        \end{aligned}
+    \end{gathered}\] -->
+</div>
+
+<div class="exercise">
+    <b>(The Writer, Concretely)</b>
+    Consider the following program, 
+    <div class="code">
+        state flip <br>
+        if _ : goto halt <br>
+        if 0 : write 1.move right.goto flip <br>
+        if 1 : write 0.move right.goto flip
+    </div>
+    Let \(s\)
+    Calculate the string \(\)
 </div>
 
 <p>
@@ -230,24 +292,32 @@
     <b>(Empty Language Problem)</b>
     The language below consists of all encodings of Turing machines (and states) that do not recognize any words.
     \[
-        L_\emptyset = \big\{\lfloor \mathcal T\rfloor \mathtt{*x} \mid \mathcal R(\mathcal T, x) = \{\}\big\}
+        L_\emptyset = \big\{\lfloor \mathcal T\rfloor \mathtt{*}x \mid \text{\(x\) does not halt on any input}\big\}
     \]
     Show that \(L_\emptyset\) is undecidable.
     <div class="hint">
-        Reduce \(L_\emptyset\) to \(L_{\varepsilon Halt}\) as follows:
+        Reduce \(L_\varepsilon\) to \(L_{\emptyset}\) as follows:
         Let \(\mathcal E\) at \(y\) be a decision procedure for \(L_\emptyset\).
-        Consider any Turing machine \(\mathcal C\) with state \(z\) that takes in a string \(u\mathtt{* x}\) and outputs \(s\mathtt{/}u\mathtt{*x}\), where \(s\) is the string below:
+        Consider any Turing machine \(\mathcal C\) with state \(z\) that takes in a string \(u\mathtt{*}x\) and outputs \(s_x\mathtt{/}u\mathtt{*clear}\), where
         <div class="code" style="border: none;">
-            state clear <br>
-            if _ : goto x <br>
-            if 0 : erase.move right.goto clear<br>
-            if 1 : erase.move right.goto clear
+            <table>
+                <tr>
+                    <td>\(s_x =\)</td>
+                    <td>
+                        state%clear/<br>
+                        if%_:goto%\(x\)/ <br>
+                        if%0:erase.move%right.goto%clear/ <br>
+                        if%1:erase.move%right.goto%clear
+                    </td>
+                </tr>
+            </table>
         </div>
+        (without all of the whitespace and line breaks).
         That is, 
         \[
-            \mathcal C_z(u\mathtt{* x}) = s\mathtt{/}u\mathtt{*x}
+            \mathcal C_z(u\mathtt{* x}) = s_x\mathtt{/}u\mathtt{*clear}
         \]
-        Notice that \(s\mathtt{/}\lfloor \mathcal T\rfloor\mathtt{*x}\) is an encoding of the program that clears the tape and then runs \(\mathcal T\) from state \(x\).
+        Notice that \(s_x\mathtt{/}\lfloor \mathcal T\rfloor\mathtt{*x}\) is an encoding of the program that clears the tape and then runs \(\mathcal T\) from state \(x\).
         Show that 
         \[
             \mathcal E_y(\mathcal C_z(\lfloor \mathcal T\rfloor \mathtt{*x}))
