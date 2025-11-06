@@ -181,7 +181,7 @@
     Show that the language \(L_{AB} = \{a^n b^n \mid n \in \mathbb N\}\) is decidable.
 \end{problem}
 
-\vspace{20em}
+
 
 \begin{problem}
     We are going to show that the language 
@@ -190,46 +190,15 @@
     \]
     is undecidable as follows: 
     \begin{enumerate}
-        \item 
+        \item Design a Turing machine \(\mathcal C\) with a state \(\mathtt{rep\_11}\) that clears the tape and then prints \(11\) to the tape (i.e., \(\mathcal C_{\mathtt{rep\_11}}(w) = 11\) for any \(w \in A^*\)).
+
+        \item Design a Turing machine \(\mathcal W\) with a state \(y\) that 
+
     \end{enumerate}
 \end{problem}
 
 \pagebreak
 
-\begin{problem}
-    Design a stack automaton with 2 stack symbols that recognizes the following language.
-    \[
-        L_3 = \{w \mid w \text{ has the same \(\#\) of \(a\)s and \(b\)s }\}
-    \] 
-    How is this different than a counter-automaton?
-\end{problem}
-
-\vspace{20em}
-
-\begin{problem}
-    Design a stack automaton that recognizes the following language.
-    \[
-        L_4 = \{w \mid ww^{\text{op}}\}
-    \] 
-    These are the \emph{even-length palindromes}.
-\end{problem}
-
-\pagebreak
-
-\begin{problem}
-    Design a stack automaton that recognizes the language of \emph{pre-fix arithmetic expressions} for the alphabet \(A = \{\mathtt{ADD}, \mathtt{SUB}, \mathtt{DIV}, \mathtt{MUL}\} \cup \mathbb{N}\).
-    These are derived from the variable \(P\) in the grammar
-    \[\begin{aligned}
-        P &\to N \mid \mathtt{ADD}~P~P \mid \mathtt{SUB}~P~P \mid \mathtt{DIV}~P~P \mid \mathtt{MUL}~P~P \\
-        N &\to \mathtt{0} \mid \mathtt{1} \mid \mathtt{2} \mid \mathtt{3} \mid \dots
-    \end{aligned}\] 
-    Note the spaces (these are not letters, they're just there for clarity).
-    Now draw a parse tree that yields the following word: 
-    \[
-        \mathtt{ADD}~\mathtt{DIV}~9~31~\mathtt{MUL}~2~5
-    \]
-    Use the parse tree to find its value.
-\end{problem}
 
 
 \end{document}
