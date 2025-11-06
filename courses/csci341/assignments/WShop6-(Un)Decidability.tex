@@ -1,0 +1,235 @@
+\documentclass[11pt]{article}
+
+\newcommand{\wshop}{
+    5
+}
+\newcommand{\subtitle}{
+    Stack Automata
+}
+
+% Page Setup
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    margin={2.5cm}
+}
+
+% Basic Packages
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathpartir}
+\usepackage{enumitem}
+\usepackage{mathabx}
+
+% Font
+\usepackage{charter}
+
+% Bibliography and index
+\usepackage[backend=biber, style=numeric]{biblatex}
+\addbibresource{refs.bib}
+\usepackage{makeidx}
+\makeindex
+
+% Colors and Graphics
+\usepackage[dvipsnames, x11names]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{
+    cd,
+    fit,
+    calc,
+    positioning,
+    arrows,
+    automata,
+    shapes
+}
+\tikzset{
+    baseline = (current bounding box.center),
+    every state/.append style = {
+        rectangle,
+        rounded corners=5pt,
+		inner sep = 3pt,
+		minimum size = 18pt,
+		initial text = {},
+        fill=Azure1
+	},
+	every edge/.append style = {
+		->,
+		>=stealth,
+		bend angle=10,
+		thick
+	}
+}
+\usepackage{musicography}
+\usepackage{graphicx}
+\usepackage{svg}
+\graphicspath{../imgs/}
+
+% Hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    linkcolor   = black,
+    filecolor   = RubineRed,
+    urlcolor    = RubineRed,
+    citecolor   = RubineRed,
+    pdftitle    = {Notes on Behavioural PDEs}
+}
+\usepackage[capitalize]{cleveref}
+
+% Environments
+\theoremstyle{theorem} % In Italics
+\newtheorem{theorem}                    {{\color{Purple}Theorem}}[section]
+\newtheorem{lemma}          [theorem]   {{\color{Magenta}Lemma}}
+\newtheorem{proposition}    [theorem]   {Proposition}
+\newtheorem{corollary}      [theorem]   {Corollary}
+\newtheorem{question}                   {{\color{red}Question}}
+
+\theoremstyle{definition} % Not in italics
+\newtheorem{definition}     [theorem]   {{\color{NavyBlue}Definition}}
+\newtheorem{example}        [theorem]   {{\color{ForestGreen}Example}}
+\newtheorem{problem}                    {{\color{BurntOrange}Problem}}
+
+\theoremstyle{remark} % Subdued label
+\newtheorem{remark}[theorem]        {{\color{Gray}Remark}}
+
+% (1), (2), ...
+\renewcommand\labelenumi{(\theenumi)}
+
+% Go nuts with line breaks 
+\allowdisplaybreaks
+
+%%%%%%%%%%
+% MACROS %
+%%%%%%%%%%
+
+\newcommand{\op}{\mathrm{op}}               % Opposite
+\newcommand{\inv}{{-1}}                     % Inverse
+\newcommand{\id}{\mathsf{id}}               % Identity f(x) = x
+\newcommand{\Det}{\mathrm{Det}}             % determinize
+\newcommand{\Lang}{\mathcal{L}}             % Language
+
+\newcommand{\incl}{\mathsf{incl}}           % Inclusion
+\newcommand{\proj}{\mathsf{proj}}           % Projection
+
+% Numbers and Standard notation
+\newcommand{\NN}{\mathbb{N}}                % 0, 1, 2, 3, 4, ...
+\newcommand{\ZZ}{\mathbb{Z}}                % ..., -2, -1, 0, 1, 2, ...
+\newcommand{\QQ}{\mathbb{Q}}                % n/m for n and m in \NN and m > 0
+\newcommand{\RR}{\mathbb{R}}                % real numbers
+\newcommand{\pRR}{\mathbb{R}_{+}}           % positive real numbers
+
+\newcommand{\dom}{\mathrm{dom}}             % Domain
+\newcommand{\cod}{\mathrm{cod}}             % Codomain
+
+\newcommand{\Grph}{\operatorname{Grph}}     % Graph of a function
+
+% Transitions
+\newcommand{\tr}[1]{
+    \mathrel{
+        \raisebox{-1pt}{
+            \(\xrightarrow{#1}\)
+        }
+    }
+}
+\newcommand{\bisim}{\mathrel{\raisebox{1pt}{\(\underline{\leftrightarrow}\)}}}
+
+% Text
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\codeblock}[1]{
+    \begin{center}
+        \parbox{0.8\textwidth}{
+            \ttfamily
+            #1
+        }
+    \end{center}
+}
+
+% Boolean statements
+\newcommand{\OR}{~\mathrm{or}~}
+\newcommand{\AND}{~\mathrm{and}~}
+\newcommand{\NOT}{\mathrm{not}~}
+\newcommand{\IMPLIES}{~\mathrm{implies}~}
+\newcommand{\FORALL}{\mathrm{for\ all}~}
+\newcommand{\EXISTS}{\mathrm{there\ exists}~}
+\newcommand{\SUCHTHAT}{~\mathrm{such\ that}~}
+
+
+
+% Title
+\title{CSCI 341 Workshop \wshop}
+\author{\subtitle}
+% \date{
+%     \today
+% }
+
+\pagestyle{empty}
+
+\begin{document}
+
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% START OF WORK SHOP.                                      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{problem}
+    Show that the language \(L_{AB} = \{a^n b^n \mid n \in \mathbb N\}\) is decidable.
+\end{problem}
+
+\vspace{20em}
+
+\begin{problem}
+    We are going to show that the language 
+    \[
+        L_{11?} = \{\lfloor \mathcal T \rfloor \mathtt{*}x \mid \text{\(x\) halts on input \(11\) in the Turing machine \(\mathcal T\)}\}
+    \]
+    is undecidable as follows: 
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+\end{problem}
+
+\pagebreak
+
+\begin{problem}
+    Design a stack automaton with 2 stack symbols that recognizes the following language.
+    \[
+        L_3 = \{w \mid w \text{ has the same \(\#\) of \(a\)s and \(b\)s }\}
+    \] 
+    How is this different than a counter-automaton?
+\end{problem}
+
+\vspace{20em}
+
+\begin{problem}
+    Design a stack automaton that recognizes the following language.
+    \[
+        L_4 = \{w \mid ww^{\text{op}}\}
+    \] 
+    These are the \emph{even-length palindromes}.
+\end{problem}
+
+\pagebreak
+
+\begin{problem}
+    Design a stack automaton that recognizes the language of \emph{pre-fix arithmetic expressions} for the alphabet \(A = \{\mathtt{ADD}, \mathtt{SUB}, \mathtt{DIV}, \mathtt{MUL}\} \cup \mathbb{N}\).
+    These are derived from the variable \(P\) in the grammar
+    \[\begin{aligned}
+        P &\to N \mid \mathtt{ADD}~P~P \mid \mathtt{SUB}~P~P \mid \mathtt{DIV}~P~P \mid \mathtt{MUL}~P~P \\
+        N &\to \mathtt{0} \mid \mathtt{1} \mid \mathtt{2} \mid \mathtt{3} \mid \dots
+    \end{aligned}\] 
+    Note the spaces (these are not letters, they're just there for clarity).
+    Now draw a parse tree that yields the following word: 
+    \[
+        \mathtt{ADD}~\mathtt{DIV}~9~31~\mathtt{MUL}~2~5
+    \]
+    Use the parse tree to find its value.
+\end{problem}
+
+
+\end{document}
