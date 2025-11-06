@@ -1,27 +1,25 @@
 # Fdb version 4
-["biber WShop6-(Un)Decidability"] 0 "WShop6-(Un)Decidability.bcf" "WShop6-(Un)Decidability.bbl" "WShop6-(Un)Decidability" 1762390486.63122 0
+["biber WShop6-(Un)Decidability"] 0 "WShop6-(Un)Decidability.bcf" "WShop6-(Un)Decidability.bbl" "WShop6-(Un)Decidability" 1762392912.09329 0
   "WShop6-(Un)Decidability.bcf" 0 -1 0 "pdflatex"
   "refs.bib" 0 -1 0 ""
   (generated)
   "WShop6-(Un)Decidability.bbl"
   "WShop6-(Un)Decidability.blg"
   (rewritten before read)
-["makeindex WShop6-(Un)Decidability.idx"] 1762390109.10489 "WShop6-(Un)Decidability.idx" "WShop6-(Un)Decidability.ind" "WShop6-(Un)Decidability" 1762390486.63111 0
-  "WShop6-(Un)Decidability.idx" 1762390485.7483 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+["makeindex WShop6-(Un)Decidability.idx"] 1762391870.11643 "WShop6-(Un)Decidability.idx" "WShop6-(Un)Decidability.ind" "WShop6-(Un)Decidability" 1762392912.09318 0
+  "WShop6-(Un)Decidability.idx" 1762392911.26185 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   (generated)
   "WShop6-(Un)Decidability.ilg"
   "WShop6-(Un)Decidability.ind"
   (rewritten before read)
-["pdflatex"] 1762390485.22621 "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/WShop6-(Un)Decidability.tex" "WShop6-(Un)Decidability.pdf" "WShop6-(Un)Decidability" 1762390486.63152 0
-  "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/WShop6-(Un)Decidability.tex" 1762390484.96762 5949 f0bb60d8c45ea29fad072ecacdaf5a7a ""
+["pdflatex"] 1762392910.73836 "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/WShop6-(Un)Decidability.tex" "WShop6-(Un)Decidability.pdf" "WShop6-(Un)Decidability" 1762392912.09358 0
+  "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/WShop6-(Un)Decidability.tex" 1762392910.6603 6573 a739d2f8fc4c479cf6c685772e101933 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/bitstrea/charter/bchb7t.tfm" 1136768653 2732 006d846b4d54f9b40899c7c3eecd771a ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/bitstrea/charter/bchb8r.tfm" 1136768653 5184 4fd08a9613e75c1da82714d79cf8b4f1 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/bitstrea/charter/bchr7t.tfm" 1136768653 2472 ab22c035363bbb0eb24fc2ce6fa2d921 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/bitstrea/charter/bchr8r.tfm" 1136768653 4644 551129616ea4f62d8f0094a3db9a3f9d ""
-  "/usr/local/texlive/2024/texmf-dist/fonts/tfm/bitstrea/charter/bchri7t.tfm" 1136768653 2568 58165f44b773491d02ba0f602dd480cb ""
-  "/usr/local/texlive/2024/texmf-dist/fonts/tfm/bitstrea/charter/bchri8r.tfm" 1136768653 4976 cfc4dd38b8fb809ad0d6138823dff41a ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1246382020 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -64,19 +62,19 @@
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/stmaryrd/stmary8.tfm" 1302307949 848 6125cdd3627e68d3db8013b98e587508 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/bitstrea/charter/bchb8a.pfb" 1136849748 33799 6c8c18c1e1a138641a52c29f0b878445 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/bitstrea/charter/bchr8a.pfb" 1136849748 34869 539b6fed90ef630e9049bc13079bc598 ""
-  "/usr/local/texlive/2024/texmf-dist/fonts/type1/bitstrea/charter/bchri8a.pfb" 1136849748 35118 12369bddf1a14581d11fcdbf86619250 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1248133631 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1248133631 35469 70d41d2b9ea31d5d813066df7c99281c ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb" 1248133631 31099 c85edf1dd5b9e826d67c9c7293b6786c ""
+  "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb" 1248133631 24287 6b803fa9eb1ddff9112e00519b09dd9e ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1248133631 34694 ad62b13721ee8eda1dcc8993c8bd7041 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/mathabx-type1/matha10.pfb" 1295482684 90043 a01ee69dbd537ea8a0835a2b4841a64e ""
+  "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/mathabx-type1/matha8.pfb" 1295482684 92536 122d225cdc6105aa1e30a312e405a45c ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/mathabx-type1/mathb10.pfb" 1295482684 89251 441f72450b980a987c1a89892f305fb3 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/vf/bitstrea/charter/bchb7t.vf" 1136768653 1372 e6cfde23c168b1d1864ce6aa6dffa18b ""
   "/usr/local/texlive/2024/texmf-dist/fonts/vf/bitstrea/charter/bchr7t.vf" 1136768653 1372 955cf021d0094e95829436b7bdab6458 ""
-  "/usr/local/texlive/2024/texmf-dist/fonts/vf/bitstrea/charter/bchri7t.vf" 1136768653 1376 a6caf4b9594dae1aa6039195e9d4e333 ""
   "/usr/local/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1461363279 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/local/texlive/2024/texmf-dist/tex/generic/atbegshi/atbegshi.sty" 1575674566 24708 5584a51a7101caf7e6bbf1fc27d8f7b1 ""
   "/usr/local/texlive/2024/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty" 1576625341 40635 c40361e206be584d448876bba8a64a3b ""
@@ -267,12 +265,12 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1721257481.80017 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1721257440 8221420 55780793342b43867148509ad7bdd958 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "WShop6-(Un)Decidability.aux" 1762390486.41385 342 87385d3cfb5f79ea4af9eefc372e8a3b "pdflatex"
+  "WShop6-(Un)Decidability.aux" 1762392911.8769 442 dda9a96728fb0bc25e594716fcb049c0 "pdflatex"
   "WShop6-(Un)Decidability.bbl" 0 -1 0 "biber WShop6-(Un)Decidability"
-  "WShop6-(Un)Decidability.ind" 1762390109.22728 0 d41d8cd98f00b204e9800998ecf8427e "makeindex WShop6-(Un)Decidability.idx"
-  "WShop6-(Un)Decidability.out" 1762390486.2429 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "WShop6-(Un)Decidability.run.xml" 1762390486.41567 2432 a3e502ae1c3289dec19e81e7d6f1f625 "pdflatex"
-  "WShop6-(Un)Decidability.tex" 1762390484.96762 5949 f0bb60d8c45ea29fad072ecacdaf5a7a ""
+  "WShop6-(Un)Decidability.ind" 1762391870.2178 0 d41d8cd98f00b204e9800998ecf8427e "makeindex WShop6-(Un)Decidability.idx"
+  "WShop6-(Un)Decidability.out" 1762392911.70888 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "WShop6-(Un)Decidability.run.xml" 1762392911.87929 2432 a3e502ae1c3289dec19e81e7d6f1f625 "pdflatex"
+  "WShop6-(Un)Decidability.tex" 1762392910.6603 6573 a739d2f8fc4c479cf6c685772e101933 ""
   (generated)
   "WShop6-(Un)Decidability.aux"
   "WShop6-(Un)Decidability.bcf"

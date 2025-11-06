@@ -176,23 +176,37 @@
 % START OF WORK SHOP.                                      %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 \begin{problem}
-    Show that the language \(L_{AB} = \{a^n b^n \mid n \in \mathbb N\}\) is decidable.
+    \label{firstprob}
+    Show that the language \(L_{=} = \{0^n 1^n \mid n \in \mathbb N\}\) is decidable.
 \end{problem}
 
-
+% \pagebreak
 
 \begin{problem}
     We are going to show that the language 
     \[
-        L_{11?} = \{\lfloor \mathcal T \rfloor \mathtt{*}x \mid \text{\(x\) halts on input \(11\) in the Turing machine \(\mathcal T\)}\}
+        L_{11?} = \{\lfloor \mathcal T \rfloor \mathtt{*}x \mid \text{\(x\) halts on input \(\mathtt{11}\) in the Turing machine \(\mathcal T\)}\}
     \]
     is undecidable as follows: 
     \begin{enumerate}
-        \item Design a Turing machine \(\mathcal C\) with a state \(\mathtt{rep\_11}\) that clears the tape and then prints \(11\) to the tape (i.e., \(\mathcal C_{\mathtt{rep\_11}}(w) = 11\) for any \(w \in A^*\)).
+        \item Write a program \(\mathtt{rep\_11}\) that clears the tape and then prints \(\mathtt{11}\) to the tape (i.e., if \(\mathcal C\) is the Turing machine containing the state \(\mathtt{rep\_11}\), then \(\mathcal C_{\mathtt{rep\_11}}(w) = \mathtt{11}\) for any \(w \in A^*\)).
+        
+        \item As an example of what you'll do next: in Problem~\ref{firstprob}, you designed a Turing machine \(\mathcal T\) with a state \(x\) such that \(\mathcal T_x(0^n1^n) = 1\) and otherwise \(\mathcal T_x(w) = 0\).
+        Write a program \(\mathtt{rep\_11\_equal}\) that (1) clears the tape, (2) writes \(\mathtt{11}\) to the tape, then (3) runs \(\mathcal T\) starting from \(x\).
 
-        \item Design a Turing machine \(\mathcal W\) with a state \(y\) that 
+        \item Now describe a Turing machine \(\mathcal W\) with a state \(y\) that incorporates the code for \(\mathtt{rep\_11}\) into the encoding of any other Turing program, in the following way:
+        if \(\mathcal T\) is a Turing machine with a state \(x\), then 
+        \(\mathcal W_y(\lfloor \mathcal T\rfloor \mathtt{*}x)\) is an encoding of the Turing program that (1) clears the tape, (2) writes \(\mathtt{11}\) to the tape, then (3) runs \(\mathcal T\) starting from \(x\).
+        
+        \item We are now in a position to reduce \(L_{Halt}\) to \(L_{11?}\).\\
+        Suppose that the Turing program \(x_{11}\) in the the Turing machine \(\mathcal E\) is a decider for the language \(L_{11?}\).
+        Now we define the Turing machine \(\mathcal H\) and its program \(x_{hlt}\) as follows: 
+        given a Turing machine \(\mathcal T\) with state \(x\) and an input word \(w \in \{0,1\}^*\), running \(x_{hlt}\) starting with the input string \(\lfloor \mathcal T\rfloor \mathtt{*}x \mathtt{*} w\)
+        \begin{enumerate}
+            \item runs \(\mathcal W_y(\lfloor \mathcal T\rfloor \mathtt{*}x \mathtt{*} w)\) and writes its contents to the tape
+        \end{enumerate}
+
 
     \end{enumerate}
 \end{problem}
