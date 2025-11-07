@@ -81,7 +81,7 @@
 
 % Environments
 \theoremstyle{theorem} % In Italics
-\newtheorem{theorem}                    {{\color{Purple}Theorem}}[section]
+\newtheorem{theorem}        {{\color{Purple}Theorem}}
 \newtheorem{lemma}          [theorem]   {{\color{Magenta}Lemma}}
 \newtheorem{proposition}    [theorem]   {Proposition}
 \newtheorem{corollary}      [theorem]   {Corollary}
@@ -178,41 +178,99 @@
 
 \begin{problem}
     \label{firstprob}
-    Show that the language \(L_{=} = \{0^n 1^n \mid n \in \mathbb N\}\) is decidable.
+    Show that the language \(L_{TM} = \{\lfloor \mathcal T \rfloor \mid \mathcal T \text{ is a Turing machine}\}\) is decidable using the following theorem.
 \end{problem}
 
-% \pagebreak
+\begin{theorem}
+    [CFL in Dec]
+    Every context-free language is decidable.
+    That is, \(\mathsf{CFL} \subseteq \mathsf{Dec}\).
+\end{theorem}
+
+\vfill \emph{\footnotesize Hint: cook up a grammar for the BuckLang programming langueg.}
+\pagebreak
 
 \begin{problem}
-    We are going to show that the language 
+    Prove that the following language
     \[
-        L_{11?} = \{\lfloor \mathcal T \rfloor \mathtt{*}x \mid \text{\(x\) halts on input \(\mathtt{11}\) in the Turing machine \(\mathcal T\)}\}
+        L_{11} = \{\lfloor \mathcal T \rfloor \mathtt{*}x \mid \text{\(x\) halts on input \(\mathtt{11}\) in the Turing machine \(\mathcal T\)}\}
     \]
-    is undecidable as follows: 
-    \begin{enumerate}
-        \item Write a program \(\mathtt{rep\_11}\) that clears the tape and then prints \(\mathtt{11}\) to the tape (i.e., if \(\mathcal C\) is the Turing machine containing the state \(\mathtt{rep\_11}\), then \(\mathcal C_{\mathtt{rep\_11}}(w) = \mathtt{11}\) for any \(w \in A^*\)).
-        
-        \item As an example of what you'll do next: in Problem~\ref{firstprob}, you designed a Turing machine \(\mathcal T\) with a state \(x\) such that \(\mathcal T_x(0^n1^n) = 1\) and otherwise \(\mathcal T_x(w) = 0\).
-        Write a program \(\mathtt{rep\_11\_equal}\) that (1) clears the tape, (2) writes \(\mathtt{11}\) to the tape, then (3) runs \(\mathcal T\) starting from \(x\).
-
-        \item Now describe a Turing machine \(\mathcal W\) with a state \(y\) that incorporates the code for \(\mathtt{rep\_11}\) into the encoding of any other Turing program, in the following way:
-        if \(\mathcal T\) is a Turing machine with a state \(x\), then 
-        \(\mathcal W_y(\lfloor \mathcal T\rfloor \mathtt{*}x)\) is an encoding of the Turing program that (1) clears the tape, (2) writes \(\mathtt{11}\) to the tape, then (3) runs \(\mathcal T\) starting from \(x\).
-        
-        \item We are now in a position to reduce \(L_{Halt}\) to \(L_{11?}\).\\
-        Suppose that the Turing program \(x_{11}\) in the the Turing machine \(\mathcal E\) is a decider for the language \(L_{11?}\).
-        Now we define the Turing machine \(\mathcal H\) and its program \(x_{hlt}\) as follows: 
-        given a Turing machine \(\mathcal T\) with state \(x\) and an input word \(w \in \{0,1\}^*\), running \(x_{hlt}\) starting with the input string \(\lfloor \mathcal T\rfloor \mathtt{*}x \mathtt{*} w\)
-        \begin{enumerate}
-            \item runs \(\mathcal W_y(\lfloor \mathcal T\rfloor \mathtt{*}x \mathtt{*} w)\) and writes its contents to the tape
-        \end{enumerate}
-
-
-    \end{enumerate}
+    is undecidable by showing that \(L_\varepsilon\) reduces to \(L_{11}\).
 \end{problem}
+
+
+\vfill\emph{\footnotesize Hint: see next page for a general methodology if you get stuck.}
+\pagebreak
+
+\subsection*{Technique for Problem 2}
+
+\begin{enumerate}
+    \item Assume for a contradition that there is a Turing machine \(\mathcal E\) with a state \(x_{11}\) that decides \(L_{11}\).\\
+    
+    \framebox{\parbox{0.9\textwidth}{We are going to build a decision procedure for \(L_\varepsilon\) using \(x_{11}\).
+    That is, given a Turing machine \(\mathcal T\) with a state \(x\), we are going to use \(x_{11}\) to decide if \(x\) halts on input \(\varepsilon\).}}\\
+
+    \item Show that the following Turing program halts on input \(\varepsilon\) if and only if \(x\) (in \(\mathcal T\)) halts on input \(11\):
+    \codeblock{
+        state start \\
+        if \_ : write 1.write 1.goto \(x\)\\
+        if 0 : write 1.write 1.goto \(x\)\\
+        if 1 : write 1.write 1.goto \(x\)\\
+        \(\lfloor \mathcal T\rfloor\) \hfill({\normalfont include all of the code that programs \(\mathcal T\)})        
+    }
+
+    \item Let \(\mathcal W\) at state \(y\) be a Turing program that takes any string of the form \(\lfloor \mathcal T\rfloor \mathtt{*} x\) as input and outputs the string immediately above this followed by \(\mathtt{*start}\).
+    
+    \item Now, what is \(\mathcal E_{x_{11}}(\mathcal W_{y}(\lfloor \mathcal T \rfloor \mathtt{*} x))\) if 
+    \begin{enumerate}[label=\Alph*.]
+        \item \(x\) halts on input \(\varepsilon\)? 
+        \item \(x\) does not halt on input \(\varepsilon\)? 
+    \end{enumerate}
+\end{enumerate}
 
 \pagebreak
 
+The definitions and theorem below, taken together, form a swift technique for telling that a given language is undecidable.
 
+\begin{definition}
+    [Non-trivial and Extensional]
+    Let \(\mathbf{TM}\) be the set of all pairs \((\mathcal T, x)\) where \(\mathcal T\) is a Turing machine and \(x\) is a state of \(\mathcal T\).
+    Let \(P \subseteq \mathbf{TM}\) (called a \emph{property of Turing programs}).
+    \begin{enumerate}
+        \item
+            \(P\) is \emph{nontrivial} if \(P \neq \{\}\) and \(P \neq \mathbf{TM}\).
+            I.e., there is at least one Turing program that satisfies the property and at least one Turing program that does not.
+        
+        \item
+            \(P\) is \emph{extensional} if the following holds: 
+            for any \((\mathcal T, x) \in P\) and any \((\mathcal S, y) \in \mathbf{TM}\), if \(\mathcal T_x = \mathcal S_y\), then \((\mathcal S, y) \in P\) also.
+            I.e., if \(\mathcal T\) at \(x\) implements the same string transformer as \(\mathcal S\) at \(y\), then either \((\mathcal T, x)\) and \((\mathcal S, y)\) both satisfy the property or neighter do.1
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[Rice's]
+    Let \(P \subseteq \mathbf{TM}\) be nontrivial and extensional. 
+    Then the language 
+    \[
+        L_P = \{\lfloor \mathcal T \rfloor \mathtt{* x} \mid (\mathcal T, x) \in P\}
+    \]
+    is undecidable.
+\end{theorem}
+
+\begin{problem}
+    Use Rice's Theorem to prove that all of the following languages are undecidable.
+    \begin{enumerate}
+        \item \(L_1 = \{\lfloor \mathcal T \rfloor \mathtt{*}x \mid \text{\(x\) accepts the word \(01101\)}\}\)
+        \item \(L_2 = \{\lfloor \mathcal T \rfloor \mathtt{*}x \mid \text{\(x\) does not accept the word \(01101\)}\}\)
+        \item \(L_3 = \{\lfloor \mathcal T \rfloor \mathtt{*}x \mid \text{\(x\) recognizes every even-length word}\}\)
+        \item \(L_4 = \{\lfloor \mathcal T \rfloor \mathtt{*}x \mid \text{\(\mathcal T_x = \mathcal U_c\) where \(\mathcal U\) at \(c\) is a universal Turing program}\}\)
+        \item \(L_5 = \{\lfloor \mathcal T \rfloor \mathtt{*}x\mathtt{*}w \mid \text{\(\mathcal T_x(w) = \varepsilon\)}\}\)
+    \end{enumerate}
+    Why can't Rice's theorem be used to show that the language in Problem 1 is undecidable?
+\end{problem}
+
+\pagebreak
+\ 
+\vfill\noindent\emph{\footnotesize Hint: in each case, the defining property of the language is a property of Turing programs. Explain why the property is nontrivial and extensional.}
 
 \end{document}
