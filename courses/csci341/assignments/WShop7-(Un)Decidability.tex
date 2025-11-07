@@ -213,9 +213,9 @@
     \item Show that the following Turing program halts on input \(\varepsilon\) if and only if \(x\) (in \(\mathcal T\)) halts on input \(11\):
     \codeblock{
         state start \\
-        if \_ : write 1.write 1.goto \(x\)\\
-        if 0 : write 1.write 1.goto \(x\)\\
-        if 1 : write 1.write 1.goto \(x\)\\
+        if \_ : write 1.write 1.move right.goto \(x\)\\
+        if 0 : write 1.write 1.move right.goto \(x\)\\
+        if 1 : write 1.write 1.move right.goto \(x\)\\
         \(\lfloor \mathcal T\rfloor\) \hfill({\normalfont include all of the code that programs \(\mathcal T\)})        
     }
 

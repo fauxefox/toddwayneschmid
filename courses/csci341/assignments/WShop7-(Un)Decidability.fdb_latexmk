@@ -1,19 +1,19 @@
 # Fdb version 4
-["biber WShop7-(Un)Decidability"] 0 "WShop7-(Un)Decidability.bcf" "WShop7-(Un)Decidability.bbl" "WShop7-(Un)Decidability" 1762529715.1653 0
+["biber WShop7-(Un)Decidability"] 0 "WShop7-(Un)Decidability.bcf" "WShop7-(Un)Decidability.bbl" "WShop7-(Un)Decidability" 1762546835.68447 0
   "WShop7-(Un)Decidability.bcf" 0 -1 0 "pdflatex"
   "refs.bib" 0 -1 0 ""
   (generated)
   "WShop7-(Un)Decidability.bbl"
   "WShop7-(Un)Decidability.blg"
   (rewritten before read)
-["makeindex WShop7-(Un)Decidability.idx"] 1762529635.94831 "WShop7-(Un)Decidability.idx" "WShop7-(Un)Decidability.ind" "WShop7-(Un)Decidability" 1762529715.16518 0
-  "WShop7-(Un)Decidability.idx" 1762529714.31213 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+["makeindex WShop7-(Un)Decidability.idx"] 1762529635.94831 "WShop7-(Un)Decidability.idx" "WShop7-(Un)Decidability.ind" "WShop7-(Un)Decidability" 1762546835.68432 0
+  "WShop7-(Un)Decidability.idx" 1762546834.80266 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   (generated)
   "WShop7-(Un)Decidability.ilg"
   "WShop7-(Un)Decidability.ind"
   (rewritten before read)
-["pdflatex"] 1762529713.8095 "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/WShop7-(Un)Decidability.tex" "WShop7-(Un)Decidability.pdf" "WShop7-(Un)Decidability" 1762529715.16558 0
-  "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/WShop7-(Un)Decidability.tex" 1762529713.55264 9030 7ceb75166286f2e6a99e4f524ef4818e ""
+["pdflatex"] 1762546834.2967 "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/WShop7-(Un)Decidability.tex" "WShop7-(Un)Decidability.pdf" "WShop7-(Un)Decidability" 1762546835.68475 0
+  "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/WShop7-(Un)Decidability.tex" 1762546833.96341 9063 8a009c95a8d5ae2316c43c9ffbd15bee ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/bitstrea/charter/bchb7t.tfm" 1136768653 2732 006d846b4d54f9b40899c7c3eecd771a ""
@@ -275,12 +275,12 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1721257481.80017 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1721257440 8221420 55780793342b43867148509ad7bdd958 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "WShop7-(Un)Decidability.aux" 1762529714.95651 442 f1f700068ec259ca6d4c20f2b807d82a "pdflatex"
+  "WShop7-(Un)Decidability.aux" 1762546835.47038 442 f1f700068ec259ca6d4c20f2b807d82a "pdflatex"
   "WShop7-(Un)Decidability.bbl" 0 -1 0 "biber WShop7-(Un)Decidability"
   "WShop7-(Un)Decidability.ind" 1762529636.33423 0 d41d8cd98f00b204e9800998ecf8427e "makeindex WShop7-(Un)Decidability.idx"
-  "WShop7-(Un)Decidability.out" 1762529714.78483 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "WShop7-(Un)Decidability.run.xml" 1762529714.95831 2432 feeddca970dc751451bb19503de86dbb "pdflatex"
-  "WShop7-(Un)Decidability.tex" 1762529713.55264 9030 7ceb75166286f2e6a99e4f524ef4818e ""
+  "WShop7-(Un)Decidability.out" 1762546835.28549 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "WShop7-(Un)Decidability.run.xml" 1762546835.47241 2432 feeddca970dc751451bb19503de86dbb "pdflatex"
+  "WShop7-(Un)Decidability.tex" 1762546833.96341 9063 8a009c95a8d5ae2316c43c9ffbd15bee ""
   (generated)
   "WShop7-(Un)Decidability.aux"
   "WShop7-(Un)Decidability.bcf"
