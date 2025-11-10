@@ -618,6 +618,14 @@
         L = \{w \in A^* \mid f(w) = 1\}
     \]
     or that it <i>is a decider for \(L\)</i>.
+    Notice that 
+    \[
+        f(w) = \begin{cases}
+            0 &\text{if } w \in A^* \setminus L \\
+            1 &\text{if } w \in L 
+        \end{cases}
+    \]
+    for any word \(w \in A^*\).
 
     <p></p>
     If \(L\) is a language, \(f\) is a decider for \(L\), \(f\) is computable, and \(f = \mathcal T_x\) for some Turing machine \(\mathcal T\) with the state \(x\), then we call \(\mathcal T\) at \(x\) a <i>decision procedure for \(L\)</i>.
