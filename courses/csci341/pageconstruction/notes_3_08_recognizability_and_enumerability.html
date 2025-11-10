@@ -8,7 +8,21 @@
 
 <div class="exercise">
     <b>(Universally Recognized)</b>
-    Show that \(L_{Halt} \in \mathsf{Rec}\) using a universal Turing program \(c\) in \(\mathcal U\).
+    Let \(\mathcal U\) at state \(c\) be a universal Turing program. 
+    Typically, \(\mathcal U\) at \(c\) typically just halts on input \(u \in A_{\mathcal U}^*\) (the universal Turing machine alphabet) if \(u\) is not of the form \(\lfloor \mathcal T\rfloor \mathtt{*} x \mathtt{*} w\) with \(\mathcal T\) a Turing machine, \(x\) a state of \(\mathcal T\), and a word \(w \in \{0,1\}^*\) (this amounts to a syntax error).
+    We can change this behaviour rather easily: instead of halting, let \(\mathcal U\) at state \(c\) enter a forever-loop if it encounters a syntax error. 
+    <ol>
+        <li>
+            Consider the string \(\lfloor \mathcal T\rfloor \mathtt{*} x \mathtt{*} w\) with \(\mathcal T\) a Turing machine, \(x\) a state of \(\mathcal T\), and a word \(w \in \{0,1\}^*\). 
+            If \(\mathcal U_c(\lfloor \mathcal T\rfloor \mathtt{*} x \mathtt{*} w)\) is well-defined, i.e., \(c\) halts on input \(\lfloor \mathcal T\rfloor \mathtt{*} x \mathtt{*} w\), does \(x\) halt on input \(w\)? Or does it run forever? If it halts, write down its value.
+        </li>
+        <li>
+            Given any string \(u \in A_{\mathcal U}^*\), if \(c\) halts on input\) halts on input \(u\), what can you tell me about the string \(u\)?
+        </li>
+        <li>
+            Calculate the language recognized by \(\mathcal U_c\), \(\mathcal R(\mathcal U, c)\).
+        </li>
+    </ol>
 </div>
 
 <p>
@@ -53,7 +67,56 @@
 
 <p>
     Recognizability is closely related to <i>enumerator programs</i>.
-    Roughly, an enumerator program is a program (state in a Turing machine) that eventually writes every word in a given language to a tape.
+    Roughly, an enumerator program is a program (state in a Turing machine) that computably represents a language as a <i>sequence of words</i> rather than just a set of words.
+    For example, the language \(L_{\mathbb N} = \{1^n \mid n \in \mathbb{N}\}\) can be represented as the sequence 
+    \[
+        \varepsilon,~1,~11,~111,~1111,~\cdots
+    \]
+    This is really the most basic language-as-sequence, and so we're going to build our notion of "enumerability" on top of it.
+</p>
+
+<div class="definition">
+    <b>(Enumerator)</b>
+    Let \(L \subseteq A^*\) be a language.
+    An <i>enumerator for \(L\)</i> is a Turing program \(\mathcal E\) at \(x\) such that 
+    \[
+        \mathcal E_x(1^n) = w_n
+    \]
+    for all \(n \in \mathbb N\), and \(L = \{w_n \mid n \in \mathbb N\}\).
+    
+    <p></p>
+    A language \(L\) is called <i>enumerable</i> if there is an enumerator for \(L\).
+    The family of enumerable languages is written \(\mathsf{Enu}\).
+</div>
+
+<div class="remark">
+    If the alphabet is finite or Since \(L\) is <i><a href="https://en.wikipedia.org/wiki/Countable_set" target="_blank">countable</a></i>, \(L\) is going to be countable as well, so we can always write the elements of \(L\) as a list, \(L = \{w_0, w_1, w_2, \dots\}\).
+    This doesn't mean that \(L\) is enumerable!
+</div>
+
+<p>
+    An easy (direct) consequence of the definition is that the Turing machine that does nothing and immediately halts is an enumerator for the language \(L_{\mathbb N}\) defined above.
+</p>
+
+<div class="individual-exercise">
+    Show that the Turing machine that does nothing and immediately halts is an enumerator for the language \(L_{\mathbb N}\) defined above.
+</div>
+
+<p>
+    Let's take a look at a slightly more complex enumerable language.
+</p>
+
+<div class="example">
+    Consider the language of all binary representations of natural numbers, 
+    \[
+        L_{bin} = \{\mathsf{bin}(n) \mid n \in \mathbb{N}\}
+    \]
+    For us, it is usually going to be more convenient to use two tapes to establish enumerability.
+    This is justified by the <a href="../compiled/csci341_notes_3_03_church_turing_thesis.html" target="_blank">Church-Turing thesis</a>.
+    This is how we are going to show \(L_{bin}\) is enumerable.
+</div>
+
+<p>
     All of these can be built on the simplest enumerator program, which is \(\mathtt{enumerate\_all}\).
     Recall the Turing program \(x_{\mathtt{succ}}\) that satisfies
     \[
