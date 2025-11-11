@@ -24,8 +24,8 @@ def create_page(header, footer, body, filename, course_folder = None, next_page_
         else : 
             prev_page_link = None
 
-        curr_page_num = filename.replace("_", " ").replace(".html", "")[11-5:].title()
-        curr_page_num_box = "<span style=\"width=10%;\">" + curr_page_num + "</span>"
+        # curr_page_num = filename.replace("_", " ").replace(".html", "")[11-5:].title()
+        # curr_page_num_box = "<span style=\"width=10%;\">" + curr_page_num + "</span>"
 
         if next_page_name and ("notes" in next_page_name) :
             cleaned_up_name = next_page_name.replace("_", " ").replace(".html", "")[11-5:].title()
@@ -37,7 +37,6 @@ def create_page(header, footer, body, filename, course_folder = None, next_page_
 
         backforwardblock = backforwardlinks \
             + (prev_page_link if prev_page_link else "") \
-            + curr_page_num_box \
             + (next_page_link if next_page_link else "") \
             + "</div>"
     else : 
