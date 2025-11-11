@@ -194,41 +194,68 @@
         L_{\varepsilon} = \{\lfloor \mathcal T\rfloor \mathtt{*}x \mid \text{Turing machine \(\mathcal T\) at state \(x\) halts on input \(\varepsilon\)}\}
     \]
     We are going to argue that \(L_{Halt}\) reduces to \(L_{\varepsilon}\). 
-    Let's see how this works: suppose for a contradiction that \(\mathcal E\) is a Turing machine with a state \(x_\varepsilon\) that decides the language \(L_{\varepsilon}\).
-    We are going show how to use \(\mathcal E\) to design a Turing machine \(\mathcal H\) with a state \(x_{hlt}\) that decides \(L_{Halt}\).
+    Let's see how this works: suppose for a contradiction that \(\mathcal E\) is a Turing machine with a state \(\mathtt{halts\_on\_\varepsilon}\) that decides the language \(L_{\varepsilon}\).
+    We are going to show how to use \(\mathcal E\) to design a decision procedure for \(L_{Halt}\).
     
+    <div class="exercise">
+        <b>(Relating \(\varepsilon\) to Halting)</b>
+        Show that \(\lfloor \mathcal T \rfloor \mathtt{*}x\mathtt{*}\varepsilon \in L_{Halt}\) if and only if \(\lfloor \mathcal T \rfloor \mathtt{*}x \in L_\varepsilon\).
+    </div>
+
     <p></p>
     Unlike the halt-on-empty problem, the input to the ordinary halting problem includes an input string in addition to the encoding of the Turing machine and state name.
-    The general idea behind the construction is to take a string of the form \(\lfloor \mathcal T \rfloor \mathtt{*}x\mathtt{*}w\) and add to \(\lfloor \mathcal T \rfloor\) a string of code that represents some states that write \(w\) to its tape before transitioning to \(x\).
-    Call this resulting program \(s\mathtt{/}\lfloor \mathcal T \rfloor\mathtt{*}y\), where \(y\) is the start state of the program encoded by \(s\).
-    Now, when we run this new program, encoded as \(s\mathtt{/}\lfloor \mathcal T \rfloor\mathtt{*}y\), on the empty string, this gives the same result as running \(\mathcal T\) starting from \(x\) on the input string \(w\).
+    The general idea behind the construction is to transform the string \(\lfloor \mathcal T \rfloor \mathtt{*}x\mathtt{*}w\) (that may or may not be an element of \(L_{Halt}\)) into the string \(\lfloor \mathcal T'\rfloor \mathtt{*} y\), where \(\mathcal T'\) is a Turing machine with a state \(y\) that writes the word \(w\) to the tape and then runs the program \(x\) in the original Turing machine \(\mathcal T\).
+    This entails writing a program that prepends a string of code to \(\lfloor \mathcal T \rfloor\) that encodes the writing procedure for the word \(w\). 
+    
+    <div class="exercise">
+        <b>(Write Your Own Prepend)</b>
+        Design a Turing machine \(\mathcal W\) (for "writer") with a program \(\mathtt{prepend}\) that computes the following string transformer,
+        \[\begin{aligned}
+            &\mathcal W_{\mathtt{prepend}}(u \mathtt{*} x \mathtt{*} a_1\cdots a_n) \\
+            &= \mathtt{state\#prepend {/} write\# a_1 \dots write\# a_n.goto\#} x \mathtt{/} u \mathtt{*prepend}
+        \end{aligned}\]
+        Compute the values of the following two expressions below:
+        \[
+            \mathcal U_c(
+                \mathtt{state\#x{/}if\#0{:}write\#1.halt{*}x{*}0}
+            ) = 
+        \]
+        \[
+            \mathcal U_c(\mathcal W_{\mathtt{prepend}}(
+                \mathtt{state\#x{/}if\#0{:}write\#1.halt{*}x{*}0}
+            ) \mathtt{*} \varepsilon) = 
+        \]
+    </div>
+    
+    <p></p>
+    Define the string 
+    \[
+        s = \mathtt{state\#prepend {/} write\# a_1 \dots write\# a_n.goto\#} x
+    \]
+    Now, when we run the new program, encoded as \(s\mathtt{/}\lfloor \mathcal T \rfloor\mathtt{*prepend}\), on the empty string, this gives the same result as running \(\mathcal T\) starting from \(x\) on the input string \(w\).
     Phrased in terms of a universal Turing machine,  
     \[
-        \mathcal U_c(s\mathtt{/}\lfloor \mathcal T \rfloor\mathtt{*}y\mathtt{*}\varepsilon) = \mathcal T_x(w)
+        \mathcal U_c(s\mathtt{/}\lfloor \mathcal T \rfloor\mathtt{*prepend}\mathtt{*}\varepsilon) = \mathcal T_x(w)
     \]
-    What this allows us to do is use the decider for \(L_{\varepsilon}\), \(\mathcal E\) at state \(x_{\varepsilon}\), to check if the resulting program halts on an empty input. 
+    What this allows us to do is use the decider for \(L_{\varepsilon}\), \(\mathcal E\) at state \(\mathtt{halts\_on\_\varepsilon}\), to check if the resulting program halts on an empty input. 
     As we have just seen, the new program (with \(s\) attatched) halts on \(\varepsilon\) if and only if \(x\) halts on input \(w\).
     This accomplishes our task.
 
     <p></p>
-    Formally, let \(\mathcal W\) with state \(y\) be a Turing program that satisfies 
-    \[\begin{aligned}
-        &\mathcal W_{y}(u \mathtt{*} x \mathtt{*} a_1a_2\cdots a_n) \\
-        &= \mathtt{state\#} x_{new} \mathtt{/ write\# a_1.write\# a_2\dots write\# a_n.goto\#} x \mathtt{/} u \mathtt{*}x_{new}
-    \end{aligned}\]
-    Then we can directly define \(\mathcal H\) and \(x_{hlt}\) by setting 
+    Formally, we can directly define \(\mathcal H\) and \(\mathtt{dec\_if\_halt}\) by setting 
     \[
-        \mathcal H_{x_{hlt}} ( w ) 
-        = \mathcal E_{x_{\varepsilon}} (\mathcal W_{y} ( w ))
+        \mathcal H_{\mathtt{dec\_if\_halt}} ( w ) 
+        = \mathcal E_{\mathtt{halts\_on\_\varepsilon}} (\mathcal W_\mathtt{prepend} ( w ))
     \]
     By composing, we obtain the following:
     \[\begin{aligned}
-        &\mathcal H_{x_{hlt}}(\lfloor \mathcal T \rfloor \mathtt{*} x \mathtt{*} w) \\
-        &= \mathcal E_{x_{\varepsilon}}\big( \mathcal W_{y}(\lfloor \mathcal T \rfloor \mathtt{*} x \mathtt{*} w) \big) \\
-        &= \mathcal E_{x_{\varepsilon}}\big( \mathtt{state\# x_{new} {/} write\# a_1.write\# a_2\dots write\# a_n.goto\# x{/}} \lfloor \mathcal T \rfloor \mathtt{*} x_{new} \big) \\
+        &\mathcal H_{\mathtt{dec\_if\_halt}}(\lfloor \mathcal T \rfloor \mathtt{*} x \mathtt{*} w) \\
+        &= \mathcal E_{\mathtt{halts\_on\_\varepsilon}}\big( \mathcal W_\mathtt{prepend}(\lfloor \mathcal T \rfloor \mathtt{*} x \mathtt{*} w) \big) \\
+        &= \mathcal E_{\mathtt{halts\_on\_\varepsilon}}\big( \mathtt{state\# \mathtt{prepend} {/} write\# a_1 \dots write\# a_n.goto\#} x\mathtt{/} \lfloor \mathcal T \rfloor \mathtt{*} \mathtt{prepend} \big) \\
     \end{aligned}\]
-    Since \(\mathcal E\) at \(x_{\varepsilon}\) decides \(L_{\varepsilon}\), this shows us that \(\mathcal H_{x_{hlt}}(\lfloor \mathcal T \rfloor \mathtt{*x*}w) = 1\) if \(x\) in \(\mathcal T\) halts on input \(w\), and \(\mathcal H_{x_{hlt}}(\lfloor \mathcal T \rfloor \mathtt{*} x \mathtt{*} w) = 0\) if \(x\) in \(\mathcal T\) does not halt on input \(w\).
-    In other words, \(\mathcal H\) at \(x_{hlt}\) is a decider for the halting problem.
+    Since \(\mathcal E\) at \(\mathtt{halts\_on\_\varepsilon}\) decides \(L_{\varepsilon}\), this shows us that \(\mathcal H_{\mathtt{dec\_if\_halt}}(\lfloor \mathcal T \rfloor \mathtt{*}x\mathtt{*}w) = 1\) if \(x\) in \(\mathcal T\) halts on input \(w\), and \(\mathcal H_{\mathtt{dec\_if\_halt}}(\lfloor \mathcal T \rfloor \mathtt{*} x \mathtt{*} w) = 0\) if \(x\) in \(\mathcal T\) does not halt on input \(w\).
+    In other words, \(\mathcal H\) at \(\mathtt{dec\_if\_halt}\) is a decider for the halting problem.
+    <img src="../imgs/halting_reduc_eg.svg" />
     By our Reduction of the Halting Problem lemma, it follows that \(L_{\varepsilon}\) is undecidable.
 </div>
 
@@ -381,7 +408,7 @@
         \qquad
         \mathcal P_z(\lfloor \mathcal N\rfloor \mathtt{* n}) = 0
     \]
-    We are going to use \(\mathcal P\) and \(z\) to construct a decider, a Turing machine \(\mathcal H\) with a state \(x_{hlt}\), for \(L_{Halt}\). 
+    We are going to use \(\mathcal P\) and \(z\) to construct a decider, a Turing machine \(\mathcal H\) with a state \(\mathtt{dec\_if\_halt}\), for \(L_{Halt}\). 
     In other words, we will show that \(L_{Halt}\) reduces to \(L_P\), which establishes that \(L_P\) is undecidable.
 
     <p></p>
@@ -421,11 +448,11 @@
     \]
     then we can define our decider for the halting problem by composition: 
     \[
-        \mathcal H_{x_{hlt}}
+        \mathcal H_{\mathtt{dec\_if\_halt}}
         = \mathcal P_z \circ \mathcal V_v
     \]
     We will return to the point that explains how to build \(\mathcal V_v\) in a moment. 
-    First, let us see why \(\mathcal H\) at \(x_{hlt}\) is a decider for \(L_{Halt}\).
+    First, let us see why \(\mathcal H\) at \(\mathtt{dec\_if\_halt}\) is a decider for \(L_{Halt}\).
 
     <p>
         Suppose \(x\) is a state of a Turing machine \(\mathcal T\) that halts on input \(w\).
@@ -433,13 +460,13 @@
         By extensionality of \(P\), and because \(\mathcal P\) at \(z\) is a decider for \(L_P\), \(\mathcal P_z(\lfloor \mathcal D[\mathcal T, x, w]\rfloor \mathtt{*}d) = 1\). 
         By definition, we therefore have 
         \[\begin{aligned}
-            \mathcal H_{x_{hlt}}(\lfloor \mathcal T\rfloor \mathtt{*}x\mathtt{*}w) 
+            \mathcal H_{\mathtt{dec\_if\_halt}}(\lfloor \mathcal T\rfloor \mathtt{*}x\mathtt{*}w) 
             &= \mathcal P_z \circ \mathcal V_v(\lfloor \mathcal T\rfloor \mathtt{*}x\mathtt{*}w) \\
             &= \mathcal P_z(\lfloor \mathcal D[\mathcal T, x, w]\rfloor \mathtt{*}d) \\
             &= \mathcal P_z(\lfloor \mathcal M\rfloor \mathtt{*}m) &\text{(extensionality)}\\
             &= 1
         \end{aligned}\]
-        This shows that if \(x\) halts on input \(w\), then \(\mathcal H_{x_{hlt}}(\lfloor \mathcal T\rfloor \mathtt{*}x\mathtt{*}w) = 1\).
+        This shows that if \(x\) halts on input \(w\), then \(\mathcal H_{\mathtt{dec\_if\_halt}}(\lfloor \mathcal T\rfloor \mathtt{*}x\mathtt{*}w) = 1\).
     </p>
 
     <p>
@@ -448,17 +475,17 @@
         By extensionality of \(P\), \(\mathcal P_z(\lfloor \mathcal D[\mathcal T, x, w]\rfloor \mathtt{*}d) = 0\). 
         By definition, we therefore have 
         \[\begin{aligned}
-            \mathcal H_{x_{hlt}}(\lfloor \mathcal T\rfloor \mathtt{*}x\mathtt{*}w) 
+            \mathcal H_{\mathtt{dec\_if\_halt}}(\lfloor \mathcal T\rfloor \mathtt{*}x\mathtt{*}w) 
             &= \mathcal P_z \circ \mathcal V_v(\lfloor \mathcal T\rfloor \mathtt{*}x\mathtt{*}w) \\
             &= \mathcal P_z(\lfloor \mathcal D[\mathcal T, x, w]\rfloor \mathtt{*}d) \\
             &= \mathcal P_z(\lfloor \mathcal N\rfloor \mathtt{*}n) &\text{(extensionality)}\\
             &= 0
         \end{aligned}\]
-        This shows that if \(x\) does not halt on input \(w\), then \(\mathcal H_{x_{hlt}}(\lfloor \mathcal T\rfloor \mathtt{*}x\mathtt{*}w) = 0\).
+        This shows that if \(x\) does not halt on input \(w\), then \(\mathcal H_{\mathtt{dec\_if\_halt}}(\lfloor \mathcal T\rfloor \mathtt{*}x\mathtt{*}w) = 0\).
     </p>
 
     <p>
-        The previous two paragraphs establish that \(\mathcal H\) at \(x_{hlt}\) is a decider for \(L_{Halt}\). 
+        The previous two paragraphs establish that \(\mathcal H\) at \(\mathtt{dec\_if\_halt}\) is a decider for \(L_{Halt}\). 
         We are now tasked with constructing \(\mathcal V\) with state \(v\).
         Let us sketch this quickly: we need \(v\) to (1) append the code of \(\mathcal P\) to \(\lfloor \mathcal T\rfloor\), as well as some programming to ensure that \(w\) gets written to a part of the tape, (2) augment the code of \(\mathcal T\) to only operate on the part of the tape that \(w\) gets written to, and (3) reroute all of the halting states of \(\mathcal T\) to a program that clears everything but \(u\) on the tape before running the program that corresponds to \(\mathcal P\).
 </div>
