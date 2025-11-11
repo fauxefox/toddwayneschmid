@@ -246,6 +246,18 @@
     Second, the choice of the BuckLang encoding wasn't exactly Turing's original choice... that is something we came up with. 
     But this just goes to show that there are also many different possible encodings of Turing machines; our specific choice of encoding was somewhat arbitrary.
 </p>
+
+<div class="exercise">
+    <b>(Computing with the Universal Computer)</b>
+    Let \(\mathcal U\) at state \(c\) be a universal Turing program.
+    Evaluate the following:
+    <ol>
+        <li>\(\mathcal U_c(\mathtt{state\#s1{/}if\#0{:}write\#1{.}halt{*}s1{*}0}) =\)</li>
+        <li>\(\mathcal U_c(\mathtt{state\#s1{/}if\#1{:}write\#1{.}halt{*}s1{*}0}) =\)</li>
+        <li>\(\mathcal U_c(\mathtt{state\#s1{/}if\#0{:}write\#\_{.}goto\#s1{*}s1{*}0}) =\)</li>
+    </ol>
+</div>
+
 <p>
     The proof obligation for Turing's Fixed Point theorem is simply to build one. 
     So let's see how that might be done, shall we?
@@ -457,7 +469,7 @@
 
 <div class="problem">
     <b>(Virtual Writing)</b>
-    In the buckleng_public repo in the "/examples" folder, you will see a BuckLang program called "tape_program_interpreter.buck". 
+    In the bucklang_public repo in the "/examples" folder, you will see a BuckLang program called "tape_program_interpreter.buck". 
     Currently, this program simulates tape machine programs that only include the \(\mathtt{move~right}\)" command.
     After line 265 in the program, you will find a few state names and some pseudocode for adding the virtual \(\mathtt{write}\) tape command. 
     Complete the \(\mathtt{virt\_write}\) program in "tape_program_interpreter.buck".

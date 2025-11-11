@@ -19,14 +19,36 @@
 
 <p>
     One solution is of course to only let each program run for a certain amount of time. 
-    There are several issues with this, but suffice it to say that certain very important bits of software need to be allowed more time than others to get their tasks completed, and it's hard to know in adv ance how much time exactly that is.
+    There are several issues with this, but suffice it to say that certain very important bits of software need to be allowed more time than others to get their tasks completed, and it's hard to know in advance how much time exactly that is.
     So your boss, [redacted], wants you to be smarter about it (the irony is not lost on you), and write some program that takes a block of code as input and <b>decides</b> whether or not that block of code compiles to a program that halts.
 </p>
 
 <div class="definition">
     <b>(The Halting Problem)</b>
     <i>The Halting problem</i> \(L_{Halt}\) is the language of all string representations of Turing machine programs that halt on a given input. 
-    Formally, \(L_{Halt}\) is the set of all strings \(\lfloor \mathcal T\rfloor\mathtt{*x*}w\) such that \(w \in A^*\),  \(\mathtt{x}\) is the string representation a state of \(\mathcal T\), and \(x\) halts on input \(w\).
+    Formally, 
+    \[
+        L_{Halt} = \left\{ \lfloor \mathcal T \rfloor \mathtt{*} x \mathtt{*} w ~\Big|~ \begin{gathered}
+            \text{\(\mathcal T\) is a Turing machine with state \(x\), }\\
+            \text{\(w \in A^*\), and \(x\) halts on input \(w\)}\\
+        \end{gathered}\right\}
+    \]
+    is the set of all strings \(\lfloor \mathcal T\rfloor\mathtt{*x*}w\) such that \(w \in A^*\),  \(\mathtt{x}\) is the string representation a state of \(\mathcal T\), and \(x\) halts on input \(w\).
+</div>
+
+<div class="exercise">
+    <b>(Understanding Halting)</b>
+    Consider the encoding of a one-state Turing machine below, 
+    \[
+        \lfloor \mathcal T\rfloor = \mathtt{state\#s1{/}if\#0{:}move\#right{.}write\#0{.}goto\#s1}
+    \]
+    <ol>
+        <li>Draw the Turing machine \(\mathcal T\).</li>
+        <li>Is \(\lfloor\mathcal T\rfloor \mathtt{*s1{*}0} \in L_{Halt} \)?</li>
+        <li>Is \(\lfloor\mathcal T\rfloor \mathtt{*s1{*}1} \in L_{Halt} \)?</li>
+        <li>Is \(\lfloor\mathcal T\rfloor \mathtt{*s1{*}} \in L_{Halt} \)?</li>
+        <li>Is \(\lfloor\mathcal T\rfloor \mathtt{*s2{*}0} \in L_{Halt} \)?</li>
+    </ol>
 </div>
 
 <p>
@@ -34,6 +56,7 @@
     Unfortunately for your boss, this task is not possible.
 </p>
 
+<!-- -->
 <h3>Undecidability of the Halting Problem</h3>
 
 <p>
@@ -43,13 +66,14 @@
         \quad \text{and} \quad 
         A^*\setminus L = \{w \in A^* \mid \mathcal T_x(w) = 0\}
     \]
+
     Then \(L_{Halt} \notin \mathsf{Dec}\).
     In other words, the halting problem is <i>undecidable</i>.
 </p>
 
 <div class="theorem">
     <b>(Halting is Undecidable)</b>
-    The Halting problem \(L_{Halt}\) is not decidable, i.e., \(L_{Halt} \notin \mathsf{Dec}\).
+    The Halting problem is undecidable, i.e., \(L_{Halt} \notin \mathsf{Dec}\).
 </div>
 
 <p>
@@ -59,18 +83,26 @@
 
 <div class="proof">
     Assume for a contradiction that \(L_{Halt} \in \mathsf{Dec}\).
-    Then there is a Turing machine \(\mathcal H\) with a state \(x_{hlt}\) such that \(\mathcal H_{x_{hlt}}(w) = 1\) if \(w \in L_{Halt}\) and \(\mathcal H_{x_{hlt}}(w) = 0\) if \(w \notin L_{Halt}\).
-    We are going to use \(x_{hlt}\) as a subroutine in a different program that exhibits an impossible behaviour!
-
+    Then there is a Turing machine \(\mathcal H\) with a state \(h\) such that \(\mathcal H_{h}(w) = 1\) if \(w \in L_{Halt}\) and \(\mathcal H_{h}(w) = 0\) if \(w \notin L_{Halt}\).
+    We are going to use \(h\) as a subroutine in a different program that exhibits an impossible behaviour!
+    
     <p></p>
     Let \(\mathtt{double\_input}\) be a Turing machine program that doubles the input string on the tape, i.e., turns the tape containing \(w\) into the tape containing \(ww\).
-    Now consider the following Turing machine program, which we will call \(\mathcal D\):
+    This can be implemented in one of several ways.
+
+    <div class="exercise">
+        <b>(Implement a Doubler)</b>
+        Design an explicit Turing machine \(\mathcal T\) with a state \(\mathtt{double\_input}\) such that \(\mathcal T_{\mathtt{double\_input}}(w) = ww\) for any word \(w \in \{0,1\}^*\).
+    </div>
+
+    Let us write \(\mathtt{det\_if\_halt}\) for the Turing program \(h\) in \(\mathcal H\), to make our construction below clearer.
+    Now consider the following Turing machine, which we will call \(\mathcal D\).
     <div class="code">
         <table>
             <tr>
-                <td>x_diag = </td>
+                <td>diag = </td>
                 <td>
-                    double_input.x_hlt.goto liar
+                    double_input.det_if_halt.goto liar
                 </td>
             </tr>
             <tr>
@@ -88,58 +120,70 @@
             </tr>
         </table>
     </div>
-    In the code for \(\mathcal D\) above, \(\mathtt{double\_input{.}x\_halt}\) doubles the input string on the tape and then decides whether the resulting string is of the form \(\lfloor \mathcal T\rfloor \mathtt{* x *} w\) for some Turing machine \(\mathcal T\) with state \(x\) that halts on input \(w\).
-    It is important to note that the state \(x_{diag}\) (corresponding to \(\mathtt{x\_diag}\) in \(\mathcal D\)) halts on a given input \(u\) <i>if and only if</i> \(u = \lfloor \mathcal T\rfloor \mathtt{*x*}w\) and \(\mathcal T\) at state \(x\) <i>does not</i> halt on input \(w\) (because \(x_{hlt}\) needs to output \(0\) to avoid the loop).
+    In the code for \(\mathcal D\) above, \(\mathtt{det\_if\_halt}\) decides whether the input string is of the form \(\lfloor \mathcal T\rfloor \mathtt{* x *} w\) for some Turing machine \(\mathcal T\) with state \(x\) that halts on input \(w\).
+
+    <img src="../imgs/halting_undec_proof.svg" />
+    <!-- It is important to note that the state \(\mathtt{diag}\) halts on a given input \(u\) <i>if and only if</i> \(u = \lfloor \mathcal T\rfloor \mathtt{*x*}w\) and \(\mathcal T\) at state \(x\) <i>does not</i> halt on input \(w\) (because \(h\) needs to output \(0\) to avoid the loop). -->
     
     <p></p>
     Now consider the input word 
     \[
-        w = \lfloor \mathcal D\rfloor \mathtt{* x_{diag} *}
+        w = \lfloor \mathcal D\rfloor \mathtt{* {diag} *}
     \]
-    (the "input" is the empty word, \(\varepsilon)\).
-    Does \(x_\mathtt{diag}\) halt on input \(\lfloor \mathcal D \rfloor \mathtt{* x_{diag} *} \)?
+    Does \(\mathtt{diag}\) halt on input \(w\)?
     Let's check!
-    We'll split this into two cases.
+    We can split this into two cases.
         
     <p></p>
     <b>Case 1:</b>
-    If \(x_\mathtt{diag}\) halts on input \(\lfloor \mathcal D \rfloor \mathtt{* x_{diag} *}\), then we must have
+    If \(\mathtt{diag}\) halts on input \(w\), then the output of running \(\mathtt{double\_input{.}det\_if\_halt}\) on the input word \(w\) must be \(0\), or else the \(\mathtt{liar}\) state enters the diverging \(\mathtt{loop}\).
+    Therefore, we must have
     \[
         0 
-        = \mathcal H_{x_{hlt}}(ww) 
-        = \mathcal H_{x_{hlt}}(
-            {\color{blue}\lfloor \mathcal D \rfloor} \mathtt{* {\color{red} x_{diag}} *} {\color{purple}\lfloor \mathcal D \rfloor \mathtt{* x_{diag} *}}
+        = \mathcal H_{h}(ww) 
+        = \mathcal H_{h}(
+            {\color{blue}\lfloor \mathcal D \rfloor} \mathtt{* {\color{red} {diag}} *} {\color{purple}\lfloor \mathcal D \rfloor \mathtt{* {diag} *}}
         ) 
     \]
-    But this word is a representation of a Turing machine, state, and input! 
+    But this word is a representation of a Turing machine (blue), state (red), and input (purple)! 
     Namely,
     \[
-        u = {\color{blue}\lfloor \mathcal D \rfloor} \mathtt{* {\color{red} x_{diag}} *} {\color{purple} w }
+        {\color{blue}\lfloor \mathcal D \rfloor} \mathtt{* {\color{red} {diag}} *} {\color{purple}\lfloor \mathcal D \rfloor \mathtt{* {diag} *}} 
+        = {\color{blue}\lfloor \mathcal D \rfloor} \mathtt{* {\color{red} {diag}} *} {\color{purple} w }
     \]
-    By definition of \(\mathcal H\) and \(x_{hlt}\), this would imply that \(x_{diag}\) does not halt on \(w = \lfloor \mathcal D\rfloor \mathtt{* x_{diag} *}\).
+    By definition of \(\mathtt{det\_if\_halt}\), \(\mathcal H_{h}({\color{blue}\lfloor \mathcal D \rfloor} \mathtt{* {\color{red} {diag}} *} {\color{purple} w }) = 0\) implies that \(\mathtt{diag}\) never halts on \({\color{purple} w } = {\color{purple}\lfloor \mathcal D \rfloor \mathtt{* {diag} *}}\).
     This contradicts the assumption at the beginning of this case.
+
+    <div class="exercise">
+        <b>(Needing Duplication)</b>
+        Try this part of the proof again, but without running \(\mathtt{double\_input}\) before \(\mathtt{det\_if\_halt}\).
+        What goes wrong?
+    </div>
 
     <p></p>
     <b>Case 2:</b>
-    If \(x_\mathtt{diag}\) does not halt on input \(\lfloor \mathcal D \rfloor \mathtt{* x_{diag} *}\), then 
+    If \(\mathtt{diag}\) does not halt on input \(\lfloor \mathcal D \rfloor \mathtt{* {diag} *}\), then the output of running \(\mathtt{double\_input{.}det\_if\_halt}\) on the input word \(w\) must be \(1\).
+    This is because both \(\mathtt{double\_input}\) and \(\mathtt{det\_if\_halt}\) halt on all inputs, so the only path down which \(\mathtt{diag}\) loops forever is the one where the \(\mathtt{liar}\) state enters the diverging \(\mathtt{loop}\).
+    In this case, we have
     \[
         1 
-        = \mathcal H_{x_{hlt}}(ww) 
-        = \mathcal H_{x_{hlt}}(
-            {\color{blue}\lfloor \mathcal D \rfloor} \mathtt{* {\color{red} x_{diag}} *} {\color{purple}\lfloor \mathcal D \rfloor \mathtt{* x_{diag} *}}
+        = \mathcal H_{h}(ww) 
+        = \mathcal H_{h}(
+            {\color{blue}\lfloor \mathcal D \rfloor} \mathtt{* {\color{red} {diag}} *} {\color{purple}\lfloor \mathcal D \rfloor \mathtt{* {diag} *}}
         ) 
     \]
-    Again, this word is a representation of a Turing machine, state, and input, 
+    Again, this word is a representation of a Turing machine (blue), state (red), and input (purple), 
     \[
-        u = {\color{blue}\lfloor \mathcal D \rfloor} \mathtt{* {\color{red} x_{diag}} *} {\color{purple} w }
+        {\color{blue}\lfloor \mathcal D \rfloor} \mathtt{* {\color{red} {diag}} *} {\color{purple}\lfloor \mathcal D \rfloor \mathtt{* {diag} *}} = {\color{blue}\lfloor \mathcal D \rfloor} \mathtt{* {\color{red} {diag}} *} {\color{purple} w }
     \]
-    By definition of \(\mathcal H\) and \(x_{hlt}\), this implies that \(x_{diag}\) halts on input \(w = \lfloor \mathcal D\rfloor \mathtt{* x_{diag} *}\).
+    By definition of \(\mathtt{det\_if\_halt}\), \(\mathcal H_{h}({\color{blue}\lfloor \mathcal D \rfloor} \mathtt{* {\color{red} {diag}} *} {\color{purple} w }) = 1\) implies that \(\mathtt{diag}\) halts on input \({\color{purple} w } = {\color{purple}\lfloor \mathcal D \rfloor \mathtt{* {diag} *}}\).
     This contradicts the assumption at the beginning of this case.
 
     <p></p>
-    ...wait, but then we have shown that \(x_{diag}\) does not and also does halt on input \(w\)?
-    Since this is not possible, our initial assumption that \(\mathcal H\) and \(x_{hlt}\) exist must have been false. 
-    Therefore, \(L_{Halt}\) is not decidable; formally, \(L_{Halt} \notin \mathsf{Dec}\).
+    ...wait, but then we have shown that \(\mathtt{diag}\) both halts and also does not halt on input \(w\)?
+    Since this is not possible, our initial assumption that \(\mathcal H\) and \(h\) (i.e., \(\mathtt{det\_if\_halt}\)) exist must have been false. 
+    Therefore, \(L_{Halt}\) is not decidable.
+    Formally, \(L_{Halt} \notin \mathsf{Dec}\).
 </div>
 
 <div class="exercise">

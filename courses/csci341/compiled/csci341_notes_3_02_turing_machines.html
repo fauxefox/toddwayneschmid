@@ -287,8 +287,8 @@
     the transition \(x \xrightarrow{a \mid \rhd{.}{\downarrow}0} y\) should really be interpreted as a "line of code in the program \(x\)", namely 
     <div class="code">
         <table>
-            <tr><td class="state">x = </td><td>if a move right.write 0.goto y</td></tr>
-            <tr><td class="state">y = </td><td>if a write 0.goto x</td></tr>
+            <tr><td class="state">x = </td><td>if a : move right.write 0.goto y</td></tr>
+            <tr><td class="state">y = </td><td>if a : write 0.goto x</td></tr>
         </table>
     </div>
     <!-- or if we have a very complicated tape program, 
@@ -362,16 +362,16 @@
         <table>
             <tr><td class ="state">x_clr = </td>
                 <td>
-                    if _ move right.goto y <br />
-                    if 0 move left.goto x_clr <br />
-                    if 1 move left.goto x_clr <br />
+                    if _ : move right.goto y <br />
+                    if 0 : move left.goto x_clr <br />
+                    if 1 : move left.goto x_clr <br />
                 </td>
             </tr>
             <tr><td class ="state">y = </td>
                 <td>
-                    if _ halt <br />
-                    if 0 erase.move right.goto y <br />
-                    if 1 erase.move right.goto y <br />
+                    if _ : halt <br />
+                    if 0 : erase.move right.goto y <br />
+                    if 1 : erase.move right.goto y <br />
                 </td>
             </tr>
         </table>
@@ -550,7 +550,7 @@
 <div class="definition">
     <b>(General Computable Function)</b>
     Let \(f \colon S_1 \to S_2\) be any function between two sets \(S_1\) and \(S_2\).
-    A <i>computable representation of \(f\)</i> is a representation of \(f\) \((\rho_1, g, \rho_2)\) such that \(g\) is computable.
+    A <i>computable representation of \(f\)</i> is a representation \((\rho_1, g, \rho_2)\) of \(f\) such that \(g\) is computable.
 </div>
 
 <div class="individual-exercise">
@@ -575,7 +575,7 @@
 <h3>Recognizability</h3>
 
 <p>
-    The languages that a particular program halts have a special name, which we can write down now.
+    The language of words that a particular Turing program halts on have a special name.
 </p>
 
 <div class="definition">
@@ -645,7 +645,7 @@
     As a program, it can be written as follows:
     <div class="code">
         <table>
-            <tr><td class ="state">x_acc = </td>
+            <tr><td class ="state">accept = </td>
                 <td>
                     clear.goto y
                 </td>
@@ -657,10 +657,14 @@
             </tr>
         </table>
     </div>
+    If \(\mathcal T\) is a Turing machine that implements the program \(\mathtt{accept}\) above, then \(\mathcal T_\mathtt{accept}\) is a decision procedure for the language \(A^*\).
+    This is because \(\mathcal T_\mathtt{accept}(w) = 1\) for all \(w \in A^*\).
+
+    <p></p>
     The <i>reject</i> program is similar but writes a \(0\).
     <div class="code">
         <table>
-            <tr><td class ="state">x_rej = </td>
+            <tr><td class ="state">reject = </td>
                 <td>
                     clear.goto y
                 </td>
@@ -672,7 +676,8 @@
             </tr>
         </table>
     </div>
-    These are also such special programs that they deserve their own names: we'll just write \(\mathtt{accept}\) and \(\mathtt{reject}\) instead of \(\mathtt{goto~x_acc}\) and \(\mathtt{goto~x_rej}\).
+    If \(\mathcal T\) is a Turing machine that implements the program \(\mathtt{reject}\) above, then \(\mathcal T_\mathtt{reject}\) is a decision procedure for the empty language \(\{\} \subseteq A^*\).
+    This is because \(\mathcal T_\mathtt{reject}(w) = 0\) for all \(w \in A^*\).
 </div>
 
 <p>
@@ -683,7 +688,7 @@
 
 <div class="problem">
     <b>(ABCs Done Right)</b>
-    Show that the language \(\{a^nb^nc^n \mid n \in \mathbb N\}\) is decidable.
+    Show that the language \(L_{ABC} = \{a^nb^nc^n \mid n \in \mathbb N\}\) is decidable by designing an explicit Turing machine \(\mathcal T\) with a state \(x\) such that \(\mathcal T_x\) is a decider for \(L_{ABC}\).
 </div>
 
 <p>
@@ -701,7 +706,7 @@
     Since \(L\) is decidable, it has a decision procedure.
     Let \(\mathcal T\) be a Turing machine with a state \(x_L\) that is a decision procedure for the language \(L\).
     Call the decision procedure \(\mathtt{decide}~L\).
-    Without loss of generality, we can assume that the tape head is either reading \(\top\) or \(\bot\) when it halts.
+    Without loss of generality, we can assume that the tape head is either reading \(1\) or \(0\) when it halts.
     Consider the following Turing program:
     <div class="code">
         <table>
@@ -711,16 +716,18 @@
             </tr>
             <tr>
                 <td>y = </td>
-                <td>if \(\top\) halt</br>
-                if \(\bot\) diverge</td>
+                <td>
+                    if 1 : halt</br>
+                    if 0 : diverge
+                </td>
             </tr>
         </table>
     </div>
     You made the program \(\mathtt{diverge}\) Divergent Loop exercise.
     The state \(x\) halts on an input word \(w\) if and only if \(x_L\) halts and accepts the word \(w\).
     This is because 
-    (1) if \(x_L\) accepts the word \(w\), then the tape head is reading \(\top\) when \(x_L\) halts on the input \(w\), and 
-    (2) if \(x_L\) rejects the word \(w\), then the tape head is reading \(\bot\) when \(x_L\) halts on the input \(w\).
+    (1) if \(x_L\) accepts the word \(w\), then the tape head is reading \(1\) when \(x_L\) halts on the input \(w\), and 
+    (2) if \(x_L\) rejects the word \(w\), then the tape head is reading \(0\) when \(x_L\) halts on the input \(w\).
 </div>
 
 <p>
