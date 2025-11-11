@@ -17,21 +17,21 @@
             If \(\mathcal U_c(\lfloor \mathcal T\rfloor \mathtt{*} x \mathtt{*} w)\) is well-defined, i.e., \(c\) halts on input \(\lfloor \mathcal T\rfloor \mathtt{*} x \mathtt{*} w\), does \(x\) halt on input \(w\)? Or does it run forever? If it halts, write down its value.
         </li>
         <li>
-            Given any string \(u \in A_{\mathcal U}^*\), if \(c\) halts on input\) halts on input \(u\), what can you tell me about the string \(u\)?
+            Given any string \(u \in A_{\mathcal U}^*\), if \(c\) halts on input \(u\), what can you tell me about the string \(u\)?
         </li>
         <li>
-            Calculate the language recognized by \(\mathcal U_c\), \(\mathcal R(\mathcal U, c)\).
+            Calculate the language recognized by \(\mathcal U_c\), i.e., \(\mathcal R(\mathcal U, c)\).
         </li>
     </ol>
 </div>
 
 <p>
-    The issue here is that while \(\mathcal L_{Halt}\) is recognizable, it is not additionally <i>co-recognizable</i>. 
+    The issue here is that while \(L_{Halt}\) is recognizable, it is not additionally <i>co-recognizable</i>. 
     The terminology "co-recognizable" just means that the complement is also recognizable.
     Write \(\mathsf{coRec}\) for the family of co-recognizable languages.
 </p>
 
-<div class="individual-exercise">
+<div class="exercise">
     <b>(Switching Sides)</b>
     Check that if \(L \in \mathsf{Rec}\), then \(A^* \setminus L \in \mathsf{coRec}\).
 </div>
@@ -48,7 +48,7 @@
 </p>
 
 <div class="theorem">
-    <b>(Halting co-Problem is Unecognizable)</b>
+    <b>(co-Halting Problem is Unecognizable)</b>
     The language \(A^* \setminus L_{Halt}\) is unrecognizable, i.e., \(A^* \setminus L_{Halt} \notin \mathsf{Rec}\).
 </div>
 
@@ -77,12 +77,12 @@
 
 <div class="definition">
     <b>(Enumerator)</b>
-    Let \(L \subseteq A^*\) be a language.
-    An <i>enumerator for \(L\)</i> is a Turing program \(\mathcal E\) at \(x\) such that 
+    Let \(L \subseteq A^*\) be a language and write \(L = \{w_n \mid n \in \mathbb N\}\).
+    An <i>enumerator for \(L\)</i> is a Turing machine \(\mathcal E\) with a state \(x\) such that 
     \[
         \mathcal E_x(1^n) = w_n
     \]
-    for all \(n \in \mathbb N\), and \(L = \{w_n \mid n \in \mathbb N\}\).
+    for all \(n \in \mathbb N\).
     
     <p></p>
     A language \(L\) is called <i>enumerable</i> if there is an enumerator for \(L\).
@@ -98,8 +98,8 @@
     An easy (direct) consequence of the definition is that the Turing machine that does nothing and immediately halts is an enumerator for the language \(L_{\mathbb N}\) defined above.
 </p>
 
-<div class="individual-exercise">
-    Show that the Turing machine that does nothing and immediately halts is an enumerator for the language \(L_{\mathbb N}\) defined above.
+<div class="exercise">
+    Show that the language \(L_{\mathbb N} = \{1^n \mid n \in \mathbb{N}\}\) is enumerable.
 </div>
 
 <p>
@@ -111,10 +111,103 @@
     \[
         L_{bin} = \{\mathsf{bin}(n) \mid n \in \mathbb{N}\}
     \]
+    This language can be written as a list, 
+    \[
+        0,~1,~10,~11,~100,~101,~110,~\dots
+    \]
+    where we simply add \(1\) to the number in binary at each step.
+    <a href="../compiled/csci341_notes_3_04_reductions.html" target="_blank">In a previous section</a>, you showed how to build a Turing program called \(\mathtt{succ}\), which added one to its input represented as a binary number.
+    For example, \(\mathcal T_{\mathtt{succ}}(1001) = 1010\), because \(9 + 1 = 10\).
+    This is the key helper-subroutine that goes into out enumerator.
+    Define the following Turing machine \(\mathcal E\) at its state \(\mathtt{enum}\) on input \(1^n\).
+    Note that at the start, the tape is a sequence of \(1\)s.
+    <ol>
+        <li>
+            Rewind the tape and write \(0\#\) to the beginning of the tape. 
+            \[\begin{array}{l c c c c c c r}
+                & \triangledown & & {\color{grey}(} & {\color{grey} 1^n} & {\color{grey})} & & \\
+                \hline
+                \cdots & 0 & \# & 1 & \cdots & 1 & & \cdots \\
+                \hline
+            \end{array}\]
+        </li>
+        <li>
+            Fast forward to the end of the tape. 
+            If the tape head reads \(\#\), erase and halt. 
+            Otherwise, if it reads a \(1\), erase the \(1\) and proceed to step 3.
+        </li>
+        <li>
+            Rewind to the cell immediately to the left of \(\#\). 
+            Run \(\mathtt{succ}\) to add one to the number represented in binary before the \(\#\).
+            Go to step 2.
+        </li>
+    </ol>
+    For example, for \(n = 3\), 
+    \[\begin{array}{l c c c c c c c c c r}
+        & & & & & & \triangledown & & & & \text{input}\\
+        \hline
+        \cdots & & & & &  & 1 & 1 & 1 & & \cdots \\
+        \hline
+        %%%%%%%%%
+        & & & & \triangledown & & & & & & \text{step 1}\\
+        \hline
+        \cdots & & & & 0 & \# & 1 & 1 & 1 & & \cdots \\
+        \hline
+        %%%%%%%%%
+        & & & &  & & & & \triangledown & & \text{step 2} \\
+        \hline
+        \cdots & & & & 0 & \# & 1 & 1 &  & & \cdots \\
+        \hline
+        %%%%%%%%%
+               & & & & \triangledown & & & &  & & \text{step 3} \\
+        \hline
+        \cdots & & & & 1 & \# & 1 & 1 &  & & \cdots \\
+        \hline
+        %%%%%%%%%
+               & & & &   &    &   & \triangledown &  & & \text{step 2} \\
+        \hline
+        \cdots & & & & 1 & \# & 1 &  &  & & \cdots \\
+        \hline
+        %%%%%%%%%
+               & & & \triangledown &   &    &   &  &  & & \text{step 3} \\
+        \hline
+        \cdots & & &1 & 0 & \# & 1 &  &  & & \cdots \\
+        \hline
+        %%%%%%%%%
+               & & &  &   &     & \triangledown &  &  & & \text{step 2} \\
+        \hline
+        \cdots & & & 1 & 0 & \# &  &  &  & & \cdots \\
+        \hline
+        %%%%%%%%%
+               & & & \triangledown &   &     &  &  &  & & \text{step 3} \\
+        \hline
+        \cdots & & & 1 & 1 & \# &  &  &  & & \cdots \\
+        \hline
+        %%%%%%%%%
+               & & &  &   &  \triangledown   &  &  &  & & \text{step 2} \\
+        \hline
+        \cdots & & & 1 & 1 &  &  &  &  & & \cdots \\
+        \hline
+    \end{array}\]
+    At the end, \(\mathcal E_{\mathtt{enum}}(111) = 11 = \mathsf{bin}(3)\).
+</div>
+
+<div class="exercise">
+    <b>(Enumerating Doubles)</b>
+    Show that the language 
+    \[
+        L_{2bin} = \{\mathsf{bin}(2n) \mid n \in \mathbb{N}\}
+    \]
+    is enumerable by designing an enumerator for it.
+</div>
+
+
+<!-- 
+
+<p>
     For us, it is usually going to be more convenient to use two tapes to establish enumerability.
     This is justified by the <a href="../compiled/csci341_notes_3_03_church_turing_thesis.html" target="_blank">Church-Turing thesis</a>.
-    This is how we are going to show \(L_{bin}\) is enumerable.
-</div>
+</p>
 
 <p>
     All of these can be built on the simplest enumerator program, which is \(\mathtt{enumerate\_all}\).
@@ -159,8 +252,4 @@
 
 <p>
     Again, we can 
-</p>
-
-<div class="definition">
-    A language is called <i>recursively enumerable</i> if there is an enumerator program \(\)
-</div>
+</p> -->
