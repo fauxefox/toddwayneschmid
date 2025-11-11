@@ -1,5 +1,5 @@
 <!-- THIS IS A COMPILED FILE 
- Compiled on 2025-11-10 -->
+ Compiled on 2025-11-11 -->
 
 
 
@@ -331,10 +331,10 @@
                 <tr>
                     <td>\(s_x =\)</td>
                     <td>
-                        state%clear/<br>
-                        if%_:goto%\(x\)/ <br>
-                        if%0:erase.move%right.goto%clear/ <br>
-                        if%1:erase.move%right.goto%clear
+                        state#clear/<br>
+                        if#_:goto#\(x\)/ <br>
+                        if#0:erase.move#right.goto#clear/ <br>
+                        if#1:erase.move#right.goto#clear
                     </td>
                 </tr>
             </table>
@@ -344,7 +344,7 @@
         \[
             \mathcal C_z(u\mathtt{* x}) = s_x\mathtt{/}u\mathtt{*clear}
         \]
-        Notice that \(s_x\mathtt{/}\lfloor \mathcal T\rfloor\mathtt{*x}\) is an encoding of the program that clears the tape and then runs \(\mathcal T\) from state \(x\).
+        Notice that \(s_x\mathtt{/}\lfloor \mathcal T\rfloor\mathtt{*clear}\) is an encoding of the program that clears the tape and then runs \(\mathcal T\) from state \(x\).
         Show that 
         \[
             \mathcal E_y(\mathcal C_z(\lfloor \mathcal T\rfloor \mathtt{*x}))
