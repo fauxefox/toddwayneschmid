@@ -17,21 +17,27 @@ def create_page(header, footer, body, filename, course_folder = None, next_page_
         backforwardlinks = "<div style=\"border: none; margin-bottom: -20px; padding: 0px; text-align: center;\">"
 
         if prev_page_name and ("notes" in prev_page_name) :
-            cleaned_up_name = prev_page_name.replace("_", " ").replace(".html", "")[11:].title()
-            prev_page_link = f"<a href=\"../compiled/{course_folder}_{prev_page_name}\"><span class=\"link\"> &larr; {cleaned_up_name}</span></a>"
+            cleaned_up_name = prev_page_name.replace("_", " ").replace(".html", "")[11-5:].title()
+            cleaned_up_name = cleaned_up_name[0] + "." + str(int(cleaned_up_name[2:4])) + cleaned_up_name[4:]
+            prev_page_link = f"<a href=\"../compiled/{course_folder}_{prev_page_name}\"><span class=\"link\" style=\"width:40%\"> &larr; {cleaned_up_name}</span></a>"
             # prev_page_link = f"<a href=\"../compiled/{course_folder}_{prev_page_name}\"><span class=\"link\"> \(\looparrowleft\) {cleaned_up_name}</span></a>"
         else : 
             prev_page_link = None
 
+        curr_page_num = filename.replace("_", " ").replace(".html", "")[11-5:].title()
+        curr_page_num_box = "<span style=\"width=10%;\">" + curr_page_num + "</span>"
+
         if next_page_name and ("notes" in next_page_name) :
-            cleaned_up_name = next_page_name.replace("_", " ").replace(".html", "")[11:].title()
-            next_page_link = f"<a href=\"../compiled/{course_folder}_{next_page_name}\"><span class=\"link\">{cleaned_up_name} &rarr;</span></a>"
+            cleaned_up_name = next_page_name.replace("_", " ").replace(".html", "")[11-5:].title()
+            cleaned_up_name = cleaned_up_name[0] + "." + str(int(cleaned_up_name[2:4])) + cleaned_up_name[4:]
+            next_page_link = f"<a href=\"../compiled/{course_folder}_{next_page_name}\"><span class=\"link\" style=\"width:40%\">{cleaned_up_name} &rarr;</span></a>"
             # next_page_link = f"<a href=\"../compiled/{course_folder}_{next_page_name}\"><span class=\"link\">{cleaned_up_name} \(\leadsto\)</span></a>"
         else : 
             next_page_link = None
 
         backforwardblock = backforwardlinks \
             + (prev_page_link if prev_page_link else "") \
+            + curr_page_num_box \
             + (next_page_link if next_page_link else "") \
             + "</div>"
     else : 
