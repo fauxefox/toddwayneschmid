@@ -46,6 +46,38 @@
     The <i>runtime</i> of a given a path through the Turing machine 
     \[
         x_0 \xrightarrow{a_1 \mid p_1} x_1 \xrightarrow{a_2 \mid p_2} \cdots \xrightarrow{a_n \mid p_n} x_n
+        \qquad\qquad (*)
     \]
     is the nonnegative integer \(\mathsf{rtime}(p_1{.}p_2\dots p_n)\).
+    If the path (*) is a halting run in \(\mathcal T\) starting from \(x\) on an input word \(w\), then we say that the runtime of (*) is <i>completed</i>.
+    If it is a run but is not halting, then we say that it is <i>partial</i>.
+
+    <p></p>
+    If we additionally assume that \(\mathcal T\) is deterministic and \(x\) halts on input \(w\), then we define 
+    \[
+        \mathsf{rtime}(\mathcal T, x, w) = \mathsf{rtime}(p_1{.}p_2 \dots p_n)
+    \]
+    if (*) is a halting run, and say that \(\mathsf{rtime}(\mathcal T, x, w)\) is the <i>runtime of \(x\) on input \(w\)</i>.
 </div>
+
+<p>
+    Later, we will define the runtime of a Turing program where the Turing machine is potentially nondeterministic.
+    But for now, we assume determinism.
+</p>
+
+<p>For the sake of a snappier notation, we will often write \(\mathsf{rtime}(x, w)\) instead of \(\mathsf{rtime}(\mathcal T, x, w)\) if \(\mathcal T\) is understood from context.</p>
+
+<div class="exercise">
+    <b>(Counting Steps)</b>
+    Determine the runtimes of the following Turing program, \(x_{clr}\) in the figure below, on each input.
+    <img src="../imgs/x_clr.svg" />
+    <ol>
+        <li>\(\mathsf{rtime}(x_{clr})(\varepsilon)\)</li>
+        <li>\(\mathsf{rtime}(x_{clr})(0)\)</li>
+        <li>\(\mathsf{rtime}(x_{clr})(010)\)</li>
+    </ol>
+</div>
+
+<p>
+    
+</p>
