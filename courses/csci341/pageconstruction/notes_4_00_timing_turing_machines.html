@@ -159,12 +159,11 @@
 <p>
     Asymptotic growth classes allow us to organize the space of all decision problems, what we have modelled as languages, by the growth rates of the runtimes of their solutions. 
     One can see this as a measure of their <i>complexity</i>, or simply said, how difficult they are to solve.
+    We start with a definition of "tractible", meaning "can be solved in a reasonable amount of time".
 </p>
 
 <div class="definition">
-    <b>(Complexity Classes)</b>
+    <b>(Tractibility)</b>
     Let \(L \subseteq A^*\) be any language. 
-    <ul>
-        <li>We say that \(L\) is <i>tractible</i> if there is a decision procedure \(x\) for \(L\) such that \(\mathsf{rtime}_x\) has </li>
-    </ul>
+    We say that \(L\) is <i>tractible</i> if there is a decision procedure \(x\) for \(L\) that runs in polynomial time. The family of tractible languages is writte \(\mathbf P\), for "polynomial".
 </div>
