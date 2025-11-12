@@ -162,7 +162,31 @@
     But what about the problems that <i>can</i> be solved algorithmically?
     We are now ready for Part 4 of this story, which has less to do with whether or not a given computational problem <i>can be solved at all</i>, and more to do with <i>how many resources it takes to solve the problem</i>.
     This is what's known as the <i>complexity</i> of the problem.
-</p><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_3_08_recognizability_and_enumerability.html"><span class="link" style="width:40%"> &larr; 3.8 Recognizability And Enumerability</span></a></div>
+    Studying complexity with Tureing machines precisely requires precise definitions of <i>time</i> and <i>space</i> as resources.
+</p>
+
+<h2>Timing Tape Programs</h2>
+
+<p>
+    Our model for the memory of a computer was the <i>tape machine</i>, which we defined to be a pair \((t, i)\) consisting of a <i>tape</i> \(t \colon \mathbb Z \to A \cup \{\_\}\)  and a <i>position</i> \(i \in \mathbb Z\).
+    Tape machines came with a notion of <i>tape program</i>, and we defined these with a grammar that allowed us to write sequences of the basic commands \(\mathtt{move~right}\), \(\mathtt{move~left}\), and \(\mathtt{write~\sigma}\), where \(\sigma \in A\).
+    Now, it is a bit hard to say how much time each of these basic commands takes to run, given they are abstract entities.
+    In particular, we don't know the <i>units</i> of time to measure with. 
+    Our fundamental assumption going forward is that <i>each of these basic tape machine commands takes about the same amount of time to run</i>.
+    This allows us to use the amount of time that a basic tape machine command to run <i>as our unit of time</i>.
+    This reduces measuring the time taken by a particular tape program to simply counting the number of basic tape machine commands get run.
+</p>
+
+<div class="definition">
+    <b>(Tape Program Runtime)</b>
+    Let \(p \in \mathtt{Tape}\) be a tape machine program. 
+    Then the <i>runtime of \(p\)</i>, written \(\mathsf{rtime}(p)\), is the number of basic tape machine commands that appear in \(p\).
+    More formally, 
+    <ol>
+        <li>\(\mathsf{rtime}(\mathtt{move~left}) = \mathsf{rtime}(\mathtt{move~left}) = \mathsf{rtime}(\mathtt{move~right}) = 1\)</li>
+        <li>If \(p,q \in \mathtt{Tape}\), then \(\mathsf{rtime}(p{.}q) = \mathsf{rtime}(p) + \mathsf{rtime}(q)\)</li>
+    </ol>
+</div><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_3_08_recognizability_and_enumerability.html"><span class="link" style="width:40%"> &larr; 3.8 Recognizability And Enumerability</span></a></div>
 
 
 <!-- END OF BODY -->
