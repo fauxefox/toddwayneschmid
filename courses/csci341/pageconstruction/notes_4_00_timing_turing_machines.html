@@ -55,9 +55,9 @@
     <p></p>
     If we additionally assume that \(\mathcal T\) is deterministic and \(x\) halts on input \(w\), then we define 
     \[
-        \mathsf{rtime}(\mathcal T, x, w) = \mathsf{rtime}(p_1{.}p_2 \dots p_n)
+        \mathsf{rtime}(\mathcal T, x)(w) = \mathsf{rtime}(p_1{.}p_2 \dots p_n)
     \]
-    if (*) is a halting run, and say that \(\mathsf{rtime}(\mathcal T, x, w)\) is the <i>runtime of \(x\) on input \(w\)</i>.
+    if (*) is a halting run, and say that \(\mathsf{rtime}(\mathcal T, x)(w)\) is the <i>runtime of \(x\) on input \(w\)</i>.
 </div>
 
 <p>
@@ -65,7 +65,7 @@
     But for now, we assume determinism.
 </p>
 
-<p>For the sake of a snappier notation, we will often write \(\mathsf{rtime}(x, w)\) instead of \(\mathsf{rtime}(\mathcal T, x, w)\) if \(\mathcal T\) is understood from context.</p>
+<p>For the sake of a snappier notation, we will often write \(\mathsf{rtime}(x)(w)\) instead of \(\mathsf{rtime}(\mathcal T, x)(w)\) if \(\mathcal T\) is understood from context.</p>
 
 <div class="exercise">
     <b>(Counting Steps)</b>
@@ -79,5 +79,18 @@
 </div>
 
 <p>
-    
+    Now, usually when we are measuring the runtime of an algorithm, we are concerned with one of three measures of runtime complexity: <i>worst-case</i>, <i>best-case</i>, and <i>average-case</i> (there is also amortized analysis, but this is a more complex issue for Turing machines) runtimes on inputs of a given size.
+    Measuring size-of-input is straightforward for Turing programs; it's the length of the input word.
+    Best-case and average-case analyses also make sense for Turing programs, but we are going to focus on worst-case analysis for this course for the sake of simply illustrating how analyzing Turing programs is generally done.
+    The worst-case runtime of a Turing program is simply the maximum runtime over all inputs of a given size.
 </p>
+
+<div class="definition">
+    <b>(Worst-case Runtime)</b>
+    Let \(\mathcal T = (Q, A, \delta)\) be a Turing machine, let \(x \in Q\), and let \(n \in \mathbb N\).
+    The <i>worst-case runtime of \(x\) on inputs of length \(n\)</i>, if it exists, is the number 
+    \[
+        \mathsf{rtime}_x(n) = \max \{ \mathsf{rtime}(x)(w) \mid w \in A^* \text{ where } \mathsf{len}(w) \le n\}
+    \]
+    if it exists, and we write \(\mathsf{rtime}_x(n) = \infty\) if \(x\) runs forever on some input \(w\) with \(\mathsf{len}(w) \le n\).
+</div>
