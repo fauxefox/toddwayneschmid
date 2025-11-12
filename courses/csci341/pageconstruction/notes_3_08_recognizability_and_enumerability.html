@@ -181,6 +181,7 @@
 </p>
 
 <div class="exercise">
+    <b>(I will Be the 11111)</b>
     Show that the language \(L_{\mathbb N} = \{1^n \mid n \in \mathbb{N}\}\) is enumerable.
 </div>
 
@@ -272,6 +273,20 @@
         \hline
     \end{array}\]
     At the end, \(\mathcal E_{\mathtt{enum}}(111) = 11 = \mathsf{bin}(3)\).
+</div>
+
+<div class="exercise">
+    <b>(Enumerating Everything)</b>
+    Show that the complete language of all strings
+    \(
+        \{0,1\}^*
+    \)
+    is enumerable by designing an enumerator for it.
+    <div class="hint">
+        You should make use of the enumerator for \(L_{bin}\) in the example, but with a twist.
+        Every string of \(0\)s and \(1\)s corresponds to a binary representation of a natural number, except those that have leading \(0\)s.
+        So how do you include the strings of \(0\)s and \(1\)s that don't necessarily start with a \(1\)?
+    </div>
 </div>
 
 <div class="exercise">
