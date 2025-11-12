@@ -107,10 +107,26 @@
 </div>
 
 <p>
-    The worst-case runtime of \(x\) is therefore a function on the natural numbers, 
-    \[
-        \mathsf{rtime}_x \colon \mathbb N \to \mathbb{N} \cup \{\infty\}
-    \]
-    If \(x\) halts on all inputs, then the \(\cup \{\infty\}\) is unnecessary here.
+    If \(x\) halts on all inputs, then the \(\cup \{\infty\}\) is unnecessary in the definition above.
 </p>
 
+<h3>Runtime Complexity</h3>
+
+<p>
+    The worst-case runtime of a Turing program \(x\), as long as it halts on all inputs, is therefore a function on the natural numbers, 
+    \[
+        \mathsf{rtime}_x \colon \mathbb N \to \mathbb N
+    \]
+    This allows us to apply tools for <i>asymptotic comparisons</i> between worst-case runtimes, which you have already seen in past courses.
+    We include the relevant definitions below anyhow, for reference.
+</p>
+
+<div class="definition">
+    <i>(Asymptotic Comparison)</i>
+    Let \(f, g \colon \mathbb N \to \mathbb N\) be any two functions from the natural numbers to the natural numbers.
+    <ul>
+        <li>We write \(f \in \mathcal O(g)\) and say that \(f\) <i>\(g\) grows as fast as \(f\)</i> if there is a \(c > 0\) such that for all \(n \in \mathbb N\), \(f(n) < c ~ g(n)\).</li>
+        <li>We write \(g \in \Omega(f)\) if \(f \in \mathcal O(g)\)</li>
+        <li>We write \(f \approx g\) and say that <i>\(f\) and \(g\) grow at the same rate</i> if \(f \in \mathcal O(g)\) and \(f \in \Omega(g)\)</li>
+    </ul>
+</div>
