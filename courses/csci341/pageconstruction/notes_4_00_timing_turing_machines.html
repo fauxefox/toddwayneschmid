@@ -30,7 +30,11 @@
     Then the <i>runtime of \(p\)</i>, written \(\mathsf{rtime}(p)\), is the number of basic tape machine commands that appear in \(p\).
     More formally, 
     <ol>
+        <li>\(\mathsf{rtime}(\mathtt{skip}) = 0\)</li>
         <li>\(\mathsf{rtime}(\mathtt{move~left}) = \mathsf{rtime}(\mathtt{move~left}) = \mathsf{rtime}(\mathtt{move~right}) = 1\)</li>
         <li>If \(p,q \in \mathtt{Tape}\), then \(\mathsf{rtime}(p{.}q) = \mathsf{rtime}(p) + \mathsf{rtime}(q)\)</li>
     </ol>
 </div>
+
+<p>
+</p>

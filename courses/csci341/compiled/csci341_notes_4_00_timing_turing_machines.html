@@ -183,10 +183,14 @@
     Then the <i>runtime of \(p\)</i>, written \(\mathsf{rtime}(p)\), is the number of basic tape machine commands that appear in \(p\).
     More formally, 
     <ol>
+        <li>\(\mathsf{rtime}(\mathtt{skip}) = 0\)</li>
         <li>\(\mathsf{rtime}(\mathtt{move~left}) = \mathsf{rtime}(\mathtt{move~left}) = \mathsf{rtime}(\mathtt{move~right}) = 1\)</li>
         <li>If \(p,q \in \mathtt{Tape}\), then \(\mathsf{rtime}(p{.}q) = \mathsf{rtime}(p) + \mathsf{rtime}(q)\)</li>
     </ol>
-</div><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_3_08_recognizability_and_enumerability.html"><span class="link" style="width:40%"> &larr; 3.8 Recognizability And Enumerability</span></a></div>
+</div>
+
+<p>
+</p><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_3_08_recognizability_and_enumerability.html"><span class="link" style="width:40%"> &larr; 3.8 Recognizability And Enumerability</span></a></div>
 
 
 <!-- END OF BODY -->
