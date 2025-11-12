@@ -94,3 +94,23 @@
     \]
     if it exists, and we write \(\mathsf{rtime}_x(n) = \infty\) if \(x\) runs forever on some input \(w\) with \(\mathsf{len}(w) \le n\).
 </div>
+
+<div class="exercise">
+    <b>(Counting worst-case Steps)</b>
+    Determine the worst-case runtimes of the following Turing program, \(x_{clr}\) in the figure below.
+    <img src="../imgs/x_clr.svg" />
+    <ol>
+        <li>\(\mathsf{rtime}_{x_{clr}}(0)\)</li>
+        <li>\(\mathsf{rtime}_{x_{clr}}(2)\)</li>
+        <li>\(\mathsf{rtime}(x_{clr})(4)\)</li>
+    </ol>
+</div>
+
+<p>
+    The worst-case runtime of \(x\) is therefore a function on the natural numbers, 
+    \[
+        \mathsf{rtime}_x \colon \mathbb N \to \mathbb{N} \cup \{\infty\}
+    \]
+    If \(x\) halts on all inputs, then the \(\cup \{\infty\}\) is unnecessary here.
+</p>
+

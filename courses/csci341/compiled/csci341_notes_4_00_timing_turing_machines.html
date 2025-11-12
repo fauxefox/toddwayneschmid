@@ -246,7 +246,28 @@
         \mathsf{rtime}_x(n) = \max \{ \mathsf{rtime}(x)(w) \mid w \in A^* \text{ where } \mathsf{len}(w) \le n\}
     \]
     if it exists, and we write \(\mathsf{rtime}_x(n) = \infty\) if \(x\) runs forever on some input \(w\) with \(\mathsf{len}(w) \le n\).
-</div><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_3_08_recognizability_and_enumerability.html"><span class="link" style="width:40%"> &larr; 3.8 Recognizability And Enumerability</span></a></div>
+</div>
+
+<div class="exercise">
+    <b>(Counting worst-case Steps)</b>
+    Determine the worst-case runtimes of the following Turing program, \(x_{clr}\) in the figure below.
+    <img src="../imgs/x_clr.svg" />
+    <ol>
+        <li>\(\mathsf{rtime}_{x_{clr}}(0)\)</li>
+        <li>\(\mathsf{rtime}_{x_{clr}}(2)\)</li>
+        <li>\(\mathsf{rtime}(x_{clr})(4)\)</li>
+    </ol>
+</div>
+
+<p>
+    The worst-case runtime of \(x\) is therefore a function on the natural numbers, 
+    \[
+        \mathsf{rtime}_x \colon \mathbb N \to \mathbb{N} \cup \{\infty\}
+    \]
+    If \(x\) halts on all inputs, then the \(\cup \{\infty\}\) is unnecessary here.
+</p>
+
+<div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_3_08_recognizability_and_enumerability.html"><span class="link" style="width:40%"> &larr; 3.8 Recognizability And Enumerability</span></a></div>
 
 
 <!-- END OF BODY -->
