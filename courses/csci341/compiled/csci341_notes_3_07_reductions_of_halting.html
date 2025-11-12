@@ -349,10 +349,11 @@
         \[
             \mathcal E_y(\mathcal C_z(\lfloor \mathcal T\rfloor \mathtt{*x}))
             = \begin{cases}
-                1 &\text{if }\varepsilon \in \mathcal R(\mathcal T, x) \\
-                0 &\text{if }\varepsilon \notin \mathcal R(\mathcal T, x) 
+                1 &\text{if }\varepsilon \notin \mathcal R(\mathcal T, x) \\
+                0 &\text{if }\varepsilon \in \mathcal R(\mathcal T, x) 
             \end{cases}
         \]
+        Now compose this with a Turing machine that swaps \(0\) and \(1\).
         Conclude that \(L_{\emptyset} \notin \mathsf{Dec}\).
     </div>
 </div>

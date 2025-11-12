@@ -196,15 +196,6 @@
     Formally, \(\mathsf{Dec} = \mathsf{Rec} \cap \mathsf{coRec}\).
 </div>
 
-<p>
-    An immediate consequence of this fact is that we have also encountered our first unrecognizable language!
-</p>
-
-<div class="theorem">
-    <b>(co-Halting Problem is Unecognizable)</b>
-    The language \(A^* \setminus L_{Halt}\) is unrecognizable, i.e., \(A^* \setminus L_{Halt} \notin \mathsf{Rec}\).
-</div>
-
 <div class="problem">
     <b>(C + R = D)</b>
     Prove that if \(L \subseteq A^*\) is both recognizable and co-recognizable, then \(L\) is decidable.
@@ -216,6 +207,97 @@
     </div>
 </div>
 
+<p>
+    An immediate consequence of this fact is that we have also encountered our first unrecognizable language.
+</p>
+
+<div class="theorem">
+    <b>(co-Halting Problem is Unecognizable)</b>
+    The language \(A^* \setminus L_{Halt}\) is unrecognizable, i.e., \(A^* \setminus L_{Halt} \notin \mathsf{Rec}\).
+</div>
+
+<p>
+    And as an immediate consequence of the co-halting problem being unrecognizable, we also have found our first <i>un-co-recognizable</i> language as well.
+</p>
+
+<div class="exercise">
+    <b>(Not Not Not Not Halting Problem)</b>
+    Is \(L_{Halt} \in \mathsf{coRec}\)?
+</div>
+
+<p>
+    You might be wondering at this point if there are languages that are neither recognizable nor co-recognizable. 
+    These languages are a bit exotic, but they do exist.
+    If you're just looking for an example, there is a nice little lemma we can use to produce them.
+</p>
+
+<div class="lemma">
+    <b>(Binary Branching Recognizable)</b>
+    Let \(L \subseteq \{0,1\}^*\) be any language.
+    If \(L \notin \mathsf{Rec}\), then 
+    \[
+        (\{0\} \cdot L) \cup (\{1\}\cdot (A^* \setminus L)) \notin \mathsf{Rec}
+        \qquad \text{and} \qquad 
+        (\{0\} \cdot L) \cup (\{1\}\cdot (A^* \setminus L)) \notin \mathsf{coRec}
+    \]
+</div>
+
+<div class="proof">
+    Let \(L \subseteq \{0,1\}^*\) be a language that is not recognizable, and let 
+    \[
+        U = (\{0\} \cdot L) \cup (\{1\}\cdot (A^* \setminus L))
+    \]
+    Assume for a contradiction that \(U \in \mathsf{Rec}\).
+    Then there is a Turing machine \(\mathcal T\) with a state \(x\) such that 
+    \(
+        U = \mathcal R(\mathcal T, x)
+    \).
+    That is, for any \(w \in \{0,1\}^*\), \(w \in U\) if and only if \(x\) halts on input \(w\).
+    We need to produce a Turing program that recognizes \(L\).
+    Exhibit A: let \(\mathcal T'\) at its state \(y\) be the Turing program that writes a \(0\) to the left of the input tape and then proceeds with the Turing program \(\mathcal T\) at \(x\).
+    Then 
+
+    <div style="margin: 20px;">
+    \(\mathcal T'\) at \(y\) halts on an input word \(w\)  <br>
+    if and only if \(\mathcal T\) at \(x\) halts on input \(0w\) <br>
+    if and only if \(0w \in U\) <br>
+    if and only if \(w \in L\)
+    </div>
+
+    <p></p>
+    Hence, \(\mathcal T'\) at \(y\) recognizes \(L\), which contradicts our initial assumption that \(L\) is unrecognizable.
+
+    <p></p>
+    Conversely, suppose that \(U\) is co-recognizable. 
+    This is the same thing as saying that \(A^*\setminus U\) is recognizable.
+    Suppose that \(\mathcal T\) at state \(x\) recognizes \(A^*\setminus U\).
+    Since
+    \[\begin{aligned}
+        A^* \setminus U 
+        &= A^* \setminus ((\{0\} \cdot L) \cup (\{1\}\cdot (A^* \setminus L))) \\
+        &= (A^* \setminus (\{0\} \cdot L)) \cap (A^* \setminus (\{1\}\cdot (A^* \setminus L))) \\
+        &= \{\varepsilon\} \cup (\{1\} \cdot L) \cup (\{0\}\cdot (A^* \setminus L))
+    \end{aligned}\]
+    we can argue similarly to how we did before that if \(A^* \setminus U \) is recognizable, then \(L\) is recognizable.
+</div>
+
+<!-- <div class="theorem">
+    <b>(Diagonal Problem)</b>
+    The <i>off-diagonal problem</i>, i.e., the language 
+    \[
+        L_{Diag} = \{\lfloor \mathcal T \rfloor \mathtt{*} x \mid \text{the state \(x\) of \(\mathcal T\) does not halt on input \(\lfloor \mathcal T \rfloor \mathtt{*} x\)}\}
+    \]
+    is both unrecognizable and un-co-recognizable: \(L_{All} \notin \mathsf{Rec}\) and \(L_{All} \notin \mathsf{coRec}\).
+</div>
+
+<div class="proof">
+    For the first statement, we are going to reduce recognizing \(A^*\setminus L_{Halt}\) to recognizing \(L_{All}\).
+    To that end, suppose that we had a Turing machine \(\mathcal T\) with a state \(x\) such that \(L_{All} = \mathcal R(\mathcal T, x)\).
+    We build a recognizer for \(A^* \setminus L_{Halt}\) as follows:
+</div> -->
+
+
+<!--  -->
 <h3>Enumerators and Recognizability</h3>
 
 <p>
@@ -354,6 +436,63 @@
     is enumerable by designing an enumerator for it.
 </div>
 
+<p>
+    As it turns out, recognizability and enumerability are equivalent.
+</p>
+
+<div class="theorem">
+    <b>(Enumerable = Recognizable)</b>
+    A language is recognizable if and only if it is enumerable. 
+    That is, \(\mathsf{Rec} = \mathsf{Enu}\).
+</div>
+
+<div class="problem">
+    Show that if a language is enumerable, then it is recognizable.
+
+    <div class="hint">
+        Let \(L \subseteq A^*\).
+        Suppose that \(\mathcal E\) at state \(\mathtt{enum}\) is an enumerator for \(L\). 
+        Construct a Turing machine \(\mathcal T\) with a state \(x\) that operates as follows: given a word \(w \in A^*\), \(x\) checks whether \(\mathcal E_y(1^n) = w\) for each \(n \in \mathbb N\), and halts when it succeeds.
+    </div>
+</div>
+
+<div class="proof">(Sketch)
+    The problem above shows that \(\mathsf{Enu} \subseteq \mathsf{Rec}\).
+    For the other direction, let \(L \in \mathsf{Rec}\), and let \(\mathcal T\) at state \(x\) be a Turing program that recognizes \(L\).
+    All that is left is to exhibit an enumerator for \(L\).
+    The basic idea behind the construction is to start by enumerating all of the possible sequenece of \(0\)s and \(1\)s,
+    \[
+        \varepsilon,
+        ~0,
+        ~1,
+        ~00,
+        ~01,
+        ~10,
+        ~11,
+        ~000,
+        ~001,
+        ~010,
+        ~100,
+        ~101, \dots
+    \]
+    For \(k \in \mathbb N\), write \(w_k\) for the \(k\)th string in this sequence.
+    The pseudocode for the enumeration procedure is as follows: starting with an input string \(1^n\), we need to produce the \(n\)th word in the language.
+    <div class="code">
+        def enum : <br>
+        &nbsp;&nbsp;set k = 1 <br>
+        &nbsp;&nbsp;set m = n <br>
+        &nbsp;&nbsp;while m > 0 : <br>
+        &nbsp;&nbsp;&nbsp;&nbsp; for i from 1 to k : <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if \(x\) halts in \(\le k - i\) steps on input \(w_i\) : <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; set m = m - 1 <br>
+    </div>
+    Intuitively, the \(n\)th time \(\mathtt{enum}\) sees that \(x\) halts, \(\mathtt{enum}\) halts.
+</div>
+
+<p>
+    Altogether, we have the following picture.
+    <img src="../imgs/Chomsky_complete.svg" />
+</p>
 
 <!-- 
 
