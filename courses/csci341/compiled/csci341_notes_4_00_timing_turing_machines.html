@@ -287,6 +287,39 @@
         <li>We write \(f \in o(g)\) and say that \(f\) <i>\(g\) grows strictly faster than \(f\)</i> if \(f \in \mathcal O(g)\) and \(f \not\approx g\).</li>
         <li>We write \(g \in \omega(f)\) if \(f \in o(g)\)</li>
     </ul>
+</div>
+
+<p>
+    Typical asymptotic comparisons include things like \(f \in \mathcal O(n^2)\) (<i>parabolic</i> growth), \(f \in \mathcal O(n^3)\) (<i>cubic</i> growth), and \(f \in \mathcal O(2^n)\) (<i>exponential</i> growth).
+    One of the foundational observations made in the theory of computational growth is that the latter growth should be held distinct from the previous two.
+</p>
+
+<div class="definition">
+    <b>(Asymptotic Growth Classes)</b>
+    Let \(f \colon \mathbb N \to \mathbb N\).
+    We say that
+    <ul>
+        <li>\(f\) exhibits <i>polynomial growth</i> if there exists a \(k \in \mathbb N\) such that \(f \in \mathcal O(n^k)\)</li>
+        <li>\(f\) exhibits <i>\(b\)-exponential growth</i> if for the given \(b \in \mathbb N\), \(f \in \mathcal O(b^n)\)</li>
+    </ul>
+    Furthermore, given a Turing machine \(\mathcal T\) with a state \(x\), we say that 
+    <ul>
+        <li>\(x\) <i>runs in polynomial time</i> if \(\mathsf{rtime}_x\) exhibits polynomial growth</li>
+        <li>\(x\) <i>runs in exponential time</i> if \(\mathsf{rtime}_x\) exhibits \(b\)-exponential growth for some \(b \in \mathbb N\)</li>
+    </ul>
+</div>
+
+<p>
+    Asymptotic growth classes allow us to organize the space of all decision problems, what we have modelled as languages, by the growth rates of the runtimes of their solutions. 
+    One can see this as a measure of their <i>complexity</i>, or simply said, how difficult they are to solve.
+</p>
+
+<div class="definition">
+    <b>(Complexity Classes)</b>
+    Let \(L \subseteq A^*\) be any language. 
+    <ul>
+        <li>We say that \(L\) is <i>tractible</i> if there is a decision procedure \(x\) for \(L\) such that \(\mathsf{rtime}_x\) has </li>
+    </ul>
 </div><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_3_08_recognizability_and_enumerability.html"><span class="link" style="width:40%"> &larr; 3.8 Recognizability And Enumerability</span></a></div>
 
 
