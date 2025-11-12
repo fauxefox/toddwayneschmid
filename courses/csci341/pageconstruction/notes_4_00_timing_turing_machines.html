@@ -12,7 +12,7 @@
     Studying complexity with Tureing machines precisely requires precise definitions of <i>time</i> and <i>space</i> as resources.
 </p>
 
-<h2>Timing Tape Programs</h2>
+<h2>Runtime</h2>
 
 <p>
     Our model for the memory of a computer was the <i>tape machine</i>, which we defined to be a pair \((t, i)\) consisting of a <i>tape</i> \(t \colon \mathbb Z \to A \cup \{\_\}\)  and a <i>position</i> \(i \in \mathbb Z\).
@@ -37,4 +37,15 @@
 </div>
 
 <p>
+    The definition of running time for tape programs extends pretty readily to timing Turing machine programs, with the minute exception that we now have to deal with the possibility that a particular Turing machine program does not halt. 
 </p>
+
+<div class="definition">
+    <b>(Turing Program Runtime)</b>
+    Let \(\mathcal T = (Q, A, \delta)\) be a Turing machine.
+    The <i>runtime</i> of a given a path through the Turing machine 
+    \[
+        x_0 \xrightarrow{a_1 \mid p_1} x_1 \xrightarrow{a_2 \mid p_2} \cdots \xrightarrow{a_n \mid p_n} x_n
+    \]
+    is the nonnegative integer \(\mathsf{rtime}(p_1{.}p_2\dots p_n)\).
+</div>
