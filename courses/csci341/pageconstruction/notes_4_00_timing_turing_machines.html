@@ -237,3 +237,26 @@
 </div>
 
 <h2>Spcaial Complexity</h2>
+
+<p>
+    We should make a brief note here about spacial complexity, since it plays a big role in more advanced ideas that you are bound to encounter in your career at some point.
+</p>
+
+<div class="definition">
+    <b>(Spacial Requirements)</b>
+    Let \(\mathcal T = (Q, A, \delta)\) be a Turing machine with a state \(x \in Q\).
+    Let \(w = a_0 \cdots a_{n-1} \in A^*\) be a word, and consider the tape \((t, 0)\) with \(t(i) = a_i\) for \(0 \le i \le n-1\).
+    The <i>space required to run \(x\) on input \(w\)</i> is \(N_{right} - N_{left}\), where 
+    <ul>
+        <li>\(N_{right} =\ \) the maximum index \(j\) such that the tape head reaches \((t', j)\) while it runs \(x\) on input \(w\)</li>
+        <li>\(N_{left} =\ \) the minimum index \(j\) such that the tape head reaches \((t', j)\) while it runs \(x\) on input \(w\)</li>
+    </ul>
+    We write 
+    \[
+        \mathsf{space}(\mathcal T, x)(w) = N_{right} - N_{left}
+    \]
+</div>
+
+<p>
+    This 
+</p>
