@@ -1,5 +1,5 @@
 <!-- THIS IS A COMPILED FILE 
- Compiled on 2025-11-12 -->
+ Compiled on 2025-11-14 -->
 
 
 
@@ -250,19 +250,22 @@
 
 <div class="exercise">
     <b>(Counting worst-case Steps)</b>
-    Determine the worst-case runtimes of the following Turing program, \(x_{clr}\) in the figure below.
-    <img src="../imgs/x_clr.svg" />
+    Determine the worst-case runtimes of the following Turing program, \(x_{bad}\) in the figure below (it's not the same as the one above!).
+    <img src="../imgs/x_othr.svg" />
     <ol>
         <li>\(\mathsf{rtime}_{x_{clr}}(0)\)</li>
         <li>\(\mathsf{rtime}_{x_{clr}}(2)\)</li>
         <li>\(\mathsf{rtime}(x_{clr})(4)\)</li>
     </ol>
+    The <i>best-case runtime</i> is defined similarly to the worst-case runtime, except with a \(\min\) taken instead of a \(\max\).
+    What are the best-case runtimes on the inputs above?
 </div>
 
 <p>
     If \(x\) halts on all inputs, then the \(\cup \{\infty\}\) is unnecessary in the definition above.
 </p>
 
+<!--  -->
 <h3>Runtime Complexity</h3>
 
 <p>
@@ -290,39 +293,76 @@
 </div>
 
 <p>
-    Typical asymptotic comparisons include things like \(f \in \mathcal O(n^2)\) (<i>parabolic</i> growth), \(f \in \mathcal O(n^3)\) (<i>cubic</i> growth), and \(f \in \mathcal O(2^n)\) (<i>exponential</i> growth).
+    Typical asymptotic comparisons include things like \(f \in \mathcal O(n^2)\) (<i>parabolic</i> growth), \(f \in \mathcal O(n^3)\) (<i>cubic</i> growth), and \(f \in \mathcal O(b^n)\) for some \(b > 1\) (<i>exponential</i> growth).
     One of the foundational observations made in the theory of computational growth is that the latter growth should be held distinct from the previous two.
 </p>
 
 <div class="definition">
-    <b>(Asymptotic Growth Classes)</b>
+    <b>(Polynomial and Exponential Time)</b>
     Let \(f \colon \mathbb N \to \mathbb N\).
     We say that
     <ul>
         <li>\(f\) exhibits <i>polynomial growth</i> if there exists a \(k \in \mathbb N\) such that \(f \in \mathcal O(n^k)\)</li>
         <li>\(f\) exhibits <i>\(b\)-exponential growth</i> if for the given \(b \in \mathbb N\), \(f \in \mathcal O(b^n)\)</li>
     </ul>
-    Furthermore, given a Turing machine \(\mathcal T\) with a state \(x\), we say that 
+    Given a Turing machine \(\mathcal T\) with a state \(x\), we say that 
     <ul>
         <li>\(x\) <i>runs in polynomial time</i> if \(\mathsf{rtime}_x\) exhibits polynomial growth</li>
-        <li>\(x\) <i>runs in exponential time</i> if \(\mathsf{rtime}_x\) exhibits \(b\)-exponential growth for some \(b \in \mathbb N\)</li>
+        <li>\(x\) <i>runs in exponential time</i> if \(\mathsf{rtime}_x\) exhibits \(b\)-exponential growth for some \(b > 1\)</li>
     </ul>
 </div>
 
+<div class="exercise">
+    <b>(Polynomial Effects)</b>
+    Let \(p(x) = c_0 + c_1 x + c_2 x^2\) be a quadratic polynomial.
+    <ol>
+        <li>Let \(f \in \mathcal O(n^3)\). Check that \(f \circ p \in \mathcal O(n^5)\).</li>
+        <li>Extrapolating from the previous exercise, if \(q(x)\) is any polynomial at all and \(f\) exhibits polynomial growth, does \(p \circ f\) exhibit polynomial growth?</li>
+        <li>Use <a href="https://www.desmos.com/calculator" target="_blank">Desmos graphing calculator</a> to graph \(2^{n^2}\) and \(3^n\) as functions of \(n\).
+            Is \(f \circ p \in \mathcal O(3^n)\)? Up to observation, does \(f \circ p\) exhibit exponential growth?</li>
+    </ol> 
+</div>
+
 <p>
-    Asymptotic growth classes allow us to organize the space of all decision problems, what we have modelled as languages, by the growth rates of the runtimes of their solutions. 
+    Asymptotic growth classes allow us to organize the space of all computational problems by the growth rates of the runtimes of their solutions. 
     One can see this as a measure of their <i>complexity</i>, or simply said, how difficult they are to solve.
-    We start with a definition of "tractible", meaning "can be solved in a reasonable amount of time".
+</p>
+
+<p>
+    We start with a definition of "tractable", meaning "can be solved in a reasonable amount of time".
 </p>
 
 <div class="definition">
     <b>(Tractibility)</b>
-    Let \(L \subseteq A^*\) be any language. 
-    We say that \(L\) is <i>tractible</i> if there is a decision procedure \(x\) for \(L\) that runs in polynomial time. The family of tractible languages is writte \(\mathbf P\), for "polynomial".
+    Let \(f \colon A^* \rightharpoonup A^*\) be any string transformer.
+    <i>The problem of computing \(f\) is tractable</i> if there is a Turing machine \(\mathcal T\) with a state \(x\) such that \(\mathcal T_x = f\) and \(x\) runs in polynomial time.
+
+    <p></p>
+    Given a language \(L\subseteq A^*\), we say that \(L\) is <i>tractable</i> if the problem of computing its decider is tractable.
+    that is, there is a decision procedure \(x\) for \(L\) that runs in polynomial time. 
+
+    <p></p>
+    The family of tractable languages is written \(\mathsf{PTIME}\), or \(\mathsf{P}\) for short, where the P stands for "polynomial".
+</div>
+
+<div class="exercise">
+    <b>("I could do that")</b>
+    Show that the following problems are tractable.
+
+</div>
+
+<div class="exercise">
+    <b>(Composing Tractable Programs)</b>
+
 </div>
 
 <p>
-    The super formal notation for saying that a language (decision problem) \(L\) is tractible is to write that \(L \in \mathbf P\).
+    Let \(L \subseteq A^*\) be any language. 
+</p>
+
+<p>
+    The super formal notation for saying that a language (decision problem) \(L\) is tractable is to write that \(L \in \mathbf P\).
+    This leads us to a larger 
 </p><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_3_08_recognizability_and_enumerability.html"><span class="link" style="width:40%"> &larr; 3.8 Recognizability And Enumerability</span></a></div>
 
 
