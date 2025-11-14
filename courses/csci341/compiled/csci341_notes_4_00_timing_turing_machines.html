@@ -162,7 +162,7 @@
     But what about the problems that <i>can</i> be solved algorithmically?
     We are now ready for Part 4 of this story, which has less to do with whether or not a given computational problem <i>can be solved at all</i>, and more to do with <i>how many resources it takes to solve the problem</i>.
     This is what's known as the <i>complexity</i> of the problem.
-    Studying complexity with Tureing machines precisely requires precise definitions of <i>time</i> and <i>space</i> as resources.
+    Studying complexity with Turing machines precisely requires precise definitions of <i>time</i> and <i>space</i> as resources.
 </p>
 
 <h2>Runtime</h2>
@@ -184,7 +184,7 @@
     More formally, 
     <ol>
         <li>\(\mathsf{time}(\mathtt{skip}) = 0\)</li>
-        <li>\(\mathsf{time}(\mathtt{move~left}) = \mathsf{time}(\mathtt{move~left}) = \mathsf{time}(\mathtt{move~right}) = 1\)</li>
+        <li>\(\mathsf{time}(\mathtt{write~\sigma}) = \mathsf{time}(\mathtt{move~left}) = \mathsf{time}(\mathtt{move~right}) = 1\)</li>
         <li>If \(p,q \in \mathtt{Tape}\), then \(\mathsf{time}(p{.}q) = \mathsf{time}(p) + \mathsf{time}(q)\)</li>
     </ol>
 </div>
@@ -389,7 +389,7 @@
     Prove that if the problems of computing \(f\) and \(g\) are both tractible, then the problem of computing \(g \circ f\) is tractible. 
 </div>
 
-<h2>Spcaial Complexity</h2>
+<h2>Spacial Complexity</h2>
 
 <p>
     We should make a brief note here about spacial complexity, since it plays a big role in more advanced ideas that you are bound to encounter in your career at some point.
