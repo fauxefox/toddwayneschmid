@@ -269,5 +269,15 @@
     \[
         \mathsf{maxspace}_x^I(n) = \max \{\mathsf{space}(x)(w) \mid w \in I \text{ and } \mathsf{len}(w) \le n \text{ and } w \in I\}
     \]
-    We say that \(x\) <i>runs in \(O(f)\)-space (relative to \(I\))</i> if \(\mathsf{maxspace}_x^I \in \mathcal O(f)\).
+    We say that \(x\) 
+    <ol>
+        <li><i>runs in \(O(f)\)-space (relative to \(I\))</i> if \(\mathsf{maxspace}_x^I \in \mathcal O(f)\).</li>
+        <li><i>runs in polynomial space (relative to \(I\))</i> if \(\mathsf{maxspace}_x^I \in \mathcal O(n^k)\) for some \(k \in \mathbb N\).</li>
+        <li><i>runs in exponential space (relative to \(I\))</i> if \(\mathsf{maxspace}_x^I \in \mathcal O(b^n)\) for some \(b > 1\).</li>
+    </ol>
+</div>
+
+<div class="exercise">
+    <b>(Be Your Own Boss)</b>
+    Formulate a sensible definition of "polynomial space problem" and "exponential space problem", both for functions and for decision problems.
 </div>

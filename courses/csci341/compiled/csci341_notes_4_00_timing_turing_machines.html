@@ -422,7 +422,17 @@
     \[
         \mathsf{maxspace}_x^I(n) = \max \{\mathsf{space}(x)(w) \mid w \in I \text{ and } \mathsf{len}(w) \le n \text{ and } w \in I\}
     \]
-    We say that \(x\) <i>runs in \(O(f)\)-space (relative to \(I\))</i> if \(\mathsf{maxspace}_x^I \in \mathcal O(f)\).
+    We say that \(x\) 
+    <ol>
+        <li><i>runs in \(O(f)\)-space (relative to \(I\))</i> if \(\mathsf{maxspace}_x^I \in \mathcal O(f)\).</li>
+        <li><i>runs in polynomial space (relative to \(I\))</i> if \(\mathsf{maxspace}_x^I \in \mathcal O(n^k)\) for some \(k \in \mathbb N\).</li>
+        <li><i>runs in exponential space (relative to \(I\))</i> if \(\mathsf{maxspace}_x^I \in \mathcal O(b^n)\) for some \(b > 1\).</li>
+    </ol>
+</div>
+
+<div class="exercise">
+    <b>(Be Your Own Boss)</b>
+    Formulate a sensible definition of "polynomial space problem" and "exponential space problem", both for functions and for decision problems.
 </div><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_3_08_recognizability_and_enumerability.html"><span class="link" style="width:40%"> &larr; 3.8 Recognizability And Enumerability</span></a></div>
 
 
