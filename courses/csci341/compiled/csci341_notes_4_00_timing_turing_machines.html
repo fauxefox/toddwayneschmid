@@ -378,23 +378,18 @@
     Show that the following problems are tractable.
     <ol>
         <li>\(f \colon \{0,1\}^* \to \{0,1\}^*\) where \(f(\varepsilon) = \varepsilon\), \(f(0w) = 1~f(w)\), and \(f(1w) = 0~f(w)\) (\(f\) computes the \(2\)'s complement of bitstrings). Note that in this case, you don't need a representation.</li>
-        <li>\(f \colon \{0,1\}^* \to \{0,1\}^*\) where \(f(\varepsilon) = \varepsilon\), \(f(0w) = 1~f(w)\), and \(f(1w) = 0~f(w)\) (\(f\) computes the \(2\)'s complement of bitstrings)</li>
+        <li>\(f \colon \{0,1\}^* \to \{0,1\}^*\) where \(f(w) = 0^n1^m\), where \(n\) is the number of \(0\)s in \(w\) and \(m\) is the number of \(1\)s in \(w\)</li>
+        <li>\(D \subseteq \mathbb N\) where \(D = \{2n \mid n \in \mathbb N\}\)</li>
     </ol>
 </div>
 
-<div class="exercise">
+<div class="problem">
     <b>(Composing Tractable Programs)</b>
-
+    Let \(f \colon S_1 \to S_2\) and \(g \colon S_2 \to S_3\) be functions between sets \(S_1,S_2,S_3\).
+    Prove that if the problems of computing \(f\) and \(g\) are both tractible, then the problem of computing \(g \circ f\) is tractible. 
 </div>
 
-<p>
-    Let \(L \subseteq A^*\) be any language. 
-</p>
-
-<p>
-    The super formal notation for saying that a language (decision problem) \(L\) is tractable is to write that \(L \in \mathbf P\).
-    This leads us to a larger 
-</p><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_3_08_recognizability_and_enumerability.html"><span class="link" style="width:40%"> &larr; 3.8 Recognizability And Enumerability</span></a></div>
+<h2>Spcaial Complexity</h2><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_3_08_recognizability_and_enumerability.html"><span class="link" style="width:40%"> &larr; 3.8 Recognizability And Enumerability</span></a></div>
 
 
 <!-- END OF BODY -->
