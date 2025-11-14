@@ -90,9 +90,25 @@
     Let \(\mathcal T = (Q, A, \delta)\) be a Turing machine, let \(x \in Q\), and let \(n \in \mathbb N\).
     The <i>worst-case runtime of \(x\) on inputs of length \(n\)</i>, if it exists, is the number 
     \[
-        \mathsf{rtime}_x(n) = \max \{ \mathsf{rtime}(x)(w) \mid w \in A^* \text{ where } \mathsf{len}(w) \le n\}
+        \mathsf{maxrt}_x(n) = \max \{ \mathsf{rtime}(x)(w) \mid w \in A^* \text{ where } \mathsf{len}(w) \le n\}
     \]
-    if it exists, and we write \(\mathsf{rtime}_x(n) = \infty\) if \(x\) runs forever on some input \(w\) with \(\mathsf{len}(w) \le n\).
+    if it exists, and we write \(\mathsf{maxrt}_x(n) = \infty\) if \(x\) runs forever on some input \(w\) with \(\mathsf{len}(w) \le n\).
+</div>
+
+<p>
+    It is not uncommon to restrict the possible inputs to a particular set of strings when measuring complexity.
+    This comes up when discussing the "difficulty" (complexity) of a problem <i>relative to its representation</i>.
+</p>
+
+<div class="definition">
+    <b>(Relative Worst-case Runtime)</b>
+    Let \(\mathcal T = (Q, A, \delta)\) be a Turing machine, let \(x \in Q\), and let \(n \in \mathbb N\).
+    Let \(I \subseteq A^*\) be a language of <i>possible inputs</i>.
+    The <i>relative worst-case runtime of \(x\) on inputs of length \(n\) in \(I\)</i>, if it exists, is the number 
+    \[
+        \mathsf{rtime}_x^I(n) = \max \{ \mathsf{rtime}(x)(w) \mid w \in R \text{ where } \mathsf{len}(w) \le n\}
+    \]
+    and we write \(\mathsf{rtime}_x^I(n) = \infty\) if \(x\) runs forever on some input \(w \in I\) with \(\mathsf{len}(w) \le n\).
 </div>
 
 <div class="exercise">
@@ -104,6 +120,14 @@
         <li>\(\mathsf{rtime}_{x_{clr}}(2)\)</li>
         <li>\(\mathsf{rtime}(x_{clr})(4)\)</li>
     </ol>
+    Now consider the language of possible inputs \(I = \mathcal L(1^*)\).
+    Determine the relative worst-case runtimes of \(x_{bad}\) on inputs in \(I\).
+    <ol>
+        <li>\(\mathsf{rtime}_{x_{bad}}^I(0)\)</li>
+        <li>\(\mathsf{rtime}_{x_{bad}}^I(2)\)</li>
+        <li>\(\mathsf{rtime}_x_{bad}^I(4)\)</li>
+    </ol>
+    
     The <i>best-case runtime</i> is defined similarly to the worst-case runtime, except with a \(\min\) taken instead of a \(\max\).
     What are the best-case runtimes on the inputs above?
 </div>
