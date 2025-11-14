@@ -331,7 +331,7 @@
     </ul>
     Given a Turing machine \(\mathcal T = (Q, A, \delta)\) with a state \(x \in Q\), and given \(I \subseteq A^*\), we say that 
     <ul>
-        <li>where \(f \colon \mathbb N\to \mathbb N\), \(x\) <i>runs in \(f\)-time (relative to \(I\))</i> if \(\mathsf{maxtime}_x \in \mathcal O(f)\)</li>
+        <li>where \(f \colon \mathbb N\to \mathbb N\), \(x\) <i>runs in \(\mathcal O(f)\)-time (relative to \(I\))</i> if \(\mathsf{maxtime}_x \in \mathcal O(f)\)</li>
         <li>\(x\) <i>runs in polynomial time (relative to \(I\))</i> if \(\mathsf{maxtime}_x^I\) exhibits polynomial growth </li>
         <li>\(x\) <i>runs in exponential time (relative to \(I\))</i> if \(\mathsf{maxtime}_x^I\) exhibits \(b\)-exponential growth for some \(b > 1\)</li>
     </ul>
@@ -422,6 +422,7 @@
     \[
         \mathsf{maxspace}_x^I(n) = \max \{\mathsf{space}(x)(w) \mid w \in I \text{ and } \mathsf{len}(w) \le n \text{ and } w \in I\}
     \]
+    We say that \(x\) <i>runs in \(O(f)\)-space (relative to \(I\))</i> if \(\mathsf{maxspace}_x^I \in \mathcal O(f)\).
 </div><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_3_08_recognizability_and_enumerability.html"><span class="link" style="width:40%"> &larr; 3.8 Recognizability And Enumerability</span></a></div>
 
 
