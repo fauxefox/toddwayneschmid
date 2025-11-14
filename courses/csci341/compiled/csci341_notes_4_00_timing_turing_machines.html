@@ -326,6 +326,7 @@
 <p>
     Asymptotic growth classes allow us to organize the space of all computational problems by the growth rates of the runtimes of their solutions. 
     One can see this as a measure of their <i>complexity</i>, or simply said, how difficult they are to solve.
+    <!-- <span style="color:purple">It is very important to note that a </span> -->
 </p>
 
 <p>
@@ -334,21 +335,23 @@
 
 <div class="definition">
     <b>(Tractibility)</b>
-    Let \(f \colon A^* \rightharpoonup A^*\) be any string transformer.
-    <i>The problem of computing \(f\) is tractable</i> if there is a Turing machine \(\mathcal T\) with a state \(x\) such that \(\mathcal T_x = f\) and \(x\) runs in polynomial time.
+    <p></p>
+    Given a decision problem \(D \subseteq S\) for a set \(S\), we say that \(S\) is <i>tractable</i> if it has a faithful representation \((\rho, L)\) such that \(L\) has a decision procedure that runs in polynomial time. 
 
     <p></p>
-    Given a language \(L\subseteq A^*\), we say that \(L\) is <i>tractable</i> if the problem of computing its decider is tractable.
-    that is, there is a decision procedure \(x\) for \(L\) that runs in polynomial time. 
+    Let \(f \colon S_1 \to S_2\) be a function between sets \(S_1\) and \(S_2\).
+    <i>The problem of computing \(f\) is tractable</i> if there is a computable representation \((\rho_1, \mathcal T_x, \rho_2)\) of \(f\), where the state \(x\) of the Turing machine \(\mathcal T\) runs in polynomial time on the strings where it is defined.
 
     <p></p>
-    The family of tractable languages is written \(\mathsf{PTIME}\), or \(\mathsf{P}\) for short, where the P stands for "polynomial".
+    The family of tractable problems is written \(\mathsf{PTIME}\), or \(\mathsf{P}\) for short, where the P stands for "polynomial".
 </div>
 
 <div class="exercise">
     <b>("I could do that")</b>
     Show that the following problems are tractable.
-
+    <ol>
+        <li>\(f \colon \{0,1\}^* \to \{0,1\}^*\) where \(f(\varepsilon) = \varepsilon\)</li>
+    </ol>
 </div>
 
 <div class="exercise">
