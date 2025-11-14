@@ -154,7 +154,8 @@
     </ul>
     Given a Turing machine \(\mathcal T\) with a state \(x\), we say that 
     <ul>
-        <li>\(x\) <i>runs in polynomial time</i> if \(\mathsf{rtime}_x\) exhibits polynomial growth</li>
+        <li>where \(f \colon \mathbb N\to \mathbb N\), \(x\) <i>runs in \(f\)-time</i> if \(\mathsf{rtime}_x \in \mathcal O(f)\)</li>
+        <li>\(x\) <i>runs in polynomial time</i> if \(\mathsf{rtime}_x\) exhibits polynomial growth </li>
         <li>\(x\) <i>runs in exponential time</i> if \(\mathsf{rtime}_x\) exhibits \(b\)-exponential growth for some \(b > 1\)</li>
     </ul>
 </div>
@@ -173,8 +174,10 @@
 <p>
     Asymptotic growth classes allow us to organize the space of all computational problems by the growth rates of the runtimes of their solutions. 
     One can see this as a measure of their <i>complexity</i>, or simply said, how difficult they are to solve.
-    <!-- <span style="color:purple">It is very important to note that a </span> -->
+    Today we are going to look at two typical runtime complexities.
 </p>
+
+<h3>Tractability</h3>
 
 <p>
     We start with a definition of "tractable", meaning "can be solved in a reasonable amount of time".
@@ -197,7 +200,8 @@
     <b>("I could do that")</b>
     Show that the following problems are tractable.
     <ol>
-        <li>\(f \colon \{0,1\}^* \to \{0,1\}^*\) where \(f(\varepsilon) = \varepsilon\)</li>
+        <li>\(f \colon \{0,1\}^* \to \{0,1\}^*\) where \(f(\varepsilon) = \varepsilon\), \(f(0w) = 1~f(w)\), and \(f(1w) = 0~f(w)\) (\(f\) computes the \(2\)'s complement of bitstrings). Note that in this case, you don't need a representation.</li>
+        <li>\(f \colon \{0,1\}^* \to \{0,1\}^*\) where \(f(\varepsilon) = \varepsilon\), \(f(0w) = 1~f(w)\), and \(f(1w) = 0~f(w)\) (\(f\) computes the \(2\)'s complement of bitstrings)</li>
     </ol>
 </div>
 
