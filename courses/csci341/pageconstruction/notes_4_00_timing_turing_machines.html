@@ -176,11 +176,11 @@
         <li>\(f\) exhibits <i>polynomial growth</i> if there exists a \(k \in \mathbb N\) such that \(f \in \mathcal O(n^k)\)</li>
         <li>\(f\) exhibits <i>\(b\)-exponential growth</i> if for the given \(b \in \mathbb N\), \(f \in \mathcal O(b^n)\)</li>
     </ul>
-    Given a Turing machine \(\mathcal T\) with a state \(x\), we say that 
+    Given a Turing machine \(\mathcal T = (Q, A, \delta)\) with a state \(x \in Q\), and given \(I \subseteq A^*\), we say that 
     <ul>
-        <li>where \(f \colon \mathbb N\to \mathbb N\), \(x\) <i>runs in \(f\)-time</i> if \(\mathsf{maxtime}_x \in \mathcal O(f)\)</li>
-        <li>\(x\) <i>runs in polynomial time</i> if \(\mathsf{maxtime}_x\) exhibits polynomial growth </li>
-        <li>\(x\) <i>runs in exponential time</i> if \(\mathsf{maxtime}_x\) exhibits \(b\)-exponential growth for some \(b > 1\)</li>
+        <li>where \(f \colon \mathbb N\to \mathbb N\), \(x\) <i>runs in \(f\)-time (relative to \(I\))</i> if \(\mathsf{maxtime}_x \in \mathcal O(f)\)</li>
+        <li>\(x\) <i>runs in polynomial time (relative to \(I\))</i> if \(\mathsf{maxtime}_x^I\) exhibits polynomial growth </li>
+        <li>\(x\) <i>runs in exponential time (relative to \(I\))</i> if \(\mathsf{maxtime}_x^I\) exhibits \(b\)-exponential growth for some \(b > 1\)</li>
     </ul>
 </div>
 
@@ -204,17 +204,17 @@
 <h3>Tractability</h3>
 
 <p>
-    We start with a definition of "tractable", meaning "can be solved in a reasonable amount of time".
+    We start with a definition of "tractable", which intuitively means "can be solved in a reasonable amount of time".
 </p>
 
 <div class="definition">
     <b>(Tractibility)</b>
     <p></p>
-    Given a decision problem \(D \subseteq S\) for a set \(S\), we say that \(S\) is <i>tractable</i> if it has a faithful representation \((\rho, L)\) such that \(L\) has a decision procedure that runs in polynomial time. 
+    Given a decision problem \(D \subseteq S\) for a set \(S\), we say that \(S\) is <i>tractable</i> if it has a faithful representation \((\rho, L)\) such that \(L\) has a decision procedure that runs in polynomial time (relative to \(\rho(D) = \{w \in A^* \mid \exists d \in D, w = \rho(d)\}\)). 
 
     <p></p>
     Let \(f \colon S_1 \to S_2\) be a function between sets \(S_1\) and \(S_2\).
-    <i>The problem of computing \(f\) is tractable</i> if there is a computable representation \((\rho_1, \mathcal T_x, \rho_2)\) of \(f\), where the state \(x\) of the Turing machine \(\mathcal T\) runs in polynomial time on the strings where it is defined.
+    The problem of computing \(f\) is <i>tractable</i> if there is a computable representation \((\rho_1, \mathcal T_x, \rho_2)\) of \(f\), where the state \(x\) of the Turing machine \(\mathcal T\) runs in polynomial time (relative to \(\rho_1(S_1)\)).
 
     <p></p>
     The family of tractable problems is written \(\mathsf{PTIME}\), or \(\mathsf{P}\) for short, where the P stands for "polynomial".
