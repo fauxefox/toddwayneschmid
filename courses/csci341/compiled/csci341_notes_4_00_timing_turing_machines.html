@@ -180,12 +180,12 @@
 <div class="definition">
     <b>(Tape Program Runtime)</b>
     Let \(p \in \mathtt{Tape}\) be a tape machine program. 
-    Then the <i>runtime of \(p\)</i>, written \(\mathsf{rtime}(p)\), is the number of basic tape machine commands that appear in \(p\).
+    Then the <i>runtime of \(p\)</i>, written \(\mathsf{time}(p)\), is the number of basic tape machine commands that appear in \(p\).
     More formally, 
     <ol>
-        <li>\(\mathsf{rtime}(\mathtt{skip}) = 0\)</li>
-        <li>\(\mathsf{rtime}(\mathtt{move~left}) = \mathsf{rtime}(\mathtt{move~left}) = \mathsf{rtime}(\mathtt{move~right}) = 1\)</li>
-        <li>If \(p,q \in \mathtt{Tape}\), then \(\mathsf{rtime}(p{.}q) = \mathsf{rtime}(p) + \mathsf{rtime}(q)\)</li>
+        <li>\(\mathsf{time}(\mathtt{skip}) = 0\)</li>
+        <li>\(\mathsf{time}(\mathtt{move~left}) = \mathsf{time}(\mathtt{move~left}) = \mathsf{time}(\mathtt{move~right}) = 1\)</li>
+        <li>If \(p,q \in \mathtt{Tape}\), then \(\mathsf{time}(p{.}q) = \mathsf{time}(p) + \mathsf{time}(q)\)</li>
     </ol>
 </div>
 
@@ -201,16 +201,16 @@
         x_0 \xrightarrow{a_1 \mid p_1} x_1 \xrightarrow{a_2 \mid p_2} \cdots \xrightarrow{a_n \mid p_n} x_n
         \qquad\qquad (*)
     \]
-    is the nonnegative integer \(\mathsf{rtime}(p_1{.}p_2\dots p_n)\).
+    is the nonnegative integer \(\mathsf{time}(p_1{.}p_2\dots p_n)\).
     If the path (*) is a halting run in \(\mathcal T\) starting from \(x\) on an input word \(w\), then we say that the runtime of (*) is <i>completed</i>.
     If it is a run but is not halting, then we say that it is <i>partial</i>.
 
     <p></p>
     If we additionally assume that \(\mathcal T\) is deterministic and \(x\) halts on input \(w\), then we define 
     \[
-        \mathsf{rtime}(\mathcal T, x)(w) = \mathsf{rtime}(p_1{.}p_2 \dots p_n)
+        \mathsf{time}(\mathcal T, x)(w) = \mathsf{time}(p_1{.}p_2 \dots p_n)
     \]
-    if (*) is a halting run, and say that \(\mathsf{rtime}(\mathcal T, x)(w)\) is the <i>runtime of \(x\) on input \(w\)</i>.
+    if (*) is a halting run, and say that \(\mathsf{time}(\mathcal T, x)(w)\) is the <i>runtime of \(x\) on input \(w\)</i>.
 </div>
 
 <p>
@@ -218,16 +218,16 @@
     But for now, we assume determinism.
 </p>
 
-<p>For the sake of a snappier notation, we will often write \(\mathsf{rtime}(x)(w)\) instead of \(\mathsf{rtime}(\mathcal T, x)(w)\) if \(\mathcal T\) is understood from context.</p>
+<p>For the sake of a snappier notation, we will often write \(\mathsf{time}(x)(w)\) instead of \(\mathsf{time}(\mathcal T, x)(w)\) if \(\mathcal T\) is understood from context.</p>
 
 <div class="exercise">
     <b>(Counting Steps)</b>
     Determine the runtimes of the following Turing program, \(x_{clr}\) in the figure below, on each input.
     <img src="../imgs/x_clr.svg" />
     <ol>
-        <li>\(\mathsf{rtime}(x_{clr})(\varepsilon)\)</li>
-        <li>\(\mathsf{rtime}(x_{clr})(0)\)</li>
-        <li>\(\mathsf{rtime}(x_{clr})(010)\)</li>
+        <li>\(\mathsf{time}(x_{clr})(\varepsilon)\)</li>
+        <li>\(\mathsf{time}(x_{clr})(0)\)</li>
+        <li>\(\mathsf{time}(x_{clr})(010)\)</li>
     </ol>
 </div>
 
@@ -243,7 +243,7 @@
     Let \(\mathcal T = (Q, A, \delta)\) be a Turing machine, let \(x \in Q\), and let \(n \in \mathbb N\).
     The <i>worst-case runtime of \(x\) on inputs of length \(n\)</i>, if it exists, is the number 
     \[
-        \mathsf{maxrt}_x(n) = \max \{ \mathsf{rtime}(x)(w) \mid w \in A^* \text{ where } \mathsf{len}(w) \le n\}
+        \mathsf{maxrt}_x(n) = \max \{ \mathsf{time}(x)(w) \mid w \in A^* \text{ where } \mathsf{len}(w) \le n\}
     \]
     if it exists, and we write \(\mathsf{maxrt}_x(n) = \infty\) if \(x\) runs forever on some input \(w\) with \(\mathsf{len}(w) \le n\).
 </div>
@@ -259,9 +259,9 @@
     Let \(I \subseteq A^*\) be a language of <i>possible inputs</i>.
     The <i>relative worst-case runtime of \(x\) on inputs of length \(n\) in \(I\)</i>, if it exists, is the number 
     \[
-        \mathsf{rtime}_x^I(n) = \max \{ \mathsf{rtime}(x)(w) \mid w \in R \text{ where } \mathsf{len}(w) \le n\}
+        \mathsf{time}_x^I(n) = \max \{ \mathsf{time}(x)(w) \mid w \in R \text{ where } \mathsf{len}(w) \le n\}
     \]
-    and we write \(\mathsf{rtime}_x^I(n) = \infty\) if \(x\) runs forever on some input \(w \in I\) with \(\mathsf{len}(w) \le n\).
+    and we write \(\mathsf{time}_x^I(n) = \infty\) if \(x\) runs forever on some input \(w \in I\) with \(\mathsf{len}(w) \le n\).
 </div>
 
 <div class="exercise">
@@ -269,16 +269,16 @@
     Determine the worst-case runtimes of the following Turing program, \(x_{bad}\) in the figure below (it's not the same as the one above!).
     <img src="../imgs/x_othr.svg" />
     <ol>
-        <li>\(\mathsf{rtime}_{x_{clr}}(0)\)</li>
-        <li>\(\mathsf{rtime}_{x_{clr}}(2)\)</li>
-        <li>\(\mathsf{rtime}(x_{clr})(4)\)</li>
+        <li>\(\mathsf{time}_{x_{clr}}(0)\)</li>
+        <li>\(\mathsf{time}_{x_{clr}}(2)\)</li>
+        <li>\(\mathsf{time}(x_{clr})(4)\)</li>
     </ol>
     Now consider the language of possible inputs \(I = \mathcal L(1^*)\).
     Determine the relative worst-case runtimes of \(x_{bad}\) on inputs in \(I\).
     <ol>
-        <li>\(\mathsf{rtime}_{x_{bad}}^I(0)\)</li>
-        <li>\(\mathsf{rtime}_{x_{bad}}^I(2)\)</li>
-        <li>\(\mathsf{rtime}_x_{bad}^I(4)\)</li>
+        <li>\(\mathsf{time}_{x_{bad}}^I(0)\)</li>
+        <li>\(\mathsf{time}_{x_{bad}}^I(2)\)</li>
+        <li>\(\mathsf{time}_x_{bad}^I(4)\)</li>
     </ol>
     
     The <i>best-case runtime</i> is defined similarly to the worst-case runtime, except with a \(\min\) taken instead of a \(\max\).
@@ -295,7 +295,7 @@
 <p>
     The worst-case runtime of a Turing program \(x\), as long as it halts on all inputs, is therefore a function on the natural numbers, 
     \[
-        \mathsf{rtime}_x \colon \mathbb N \to \mathbb N
+        \mathsf{time}_x \colon \mathbb N \to \mathbb N
     \]
     This allows us to apply tools for <i>asymptotic comparisons</i> between worst-case runtimes, which you have already seen in past courses.
     We include the relevant definitions below anyhow, for reference.
@@ -331,9 +331,9 @@
     </ul>
     Given a Turing machine \(\mathcal T\) with a state \(x\), we say that 
     <ul>
-        <li>where \(f \colon \mathbb N\to \mathbb N\), \(x\) <i>runs in \(f\)-time</i> if \(\mathsf{rtime}_x \in \mathcal O(f)\)</li>
-        <li>\(x\) <i>runs in polynomial time</i> if \(\mathsf{rtime}_x\) exhibits polynomial growth </li>
-        <li>\(x\) <i>runs in exponential time</i> if \(\mathsf{rtime}_x\) exhibits \(b\)-exponential growth for some \(b > 1\)</li>
+        <li>where \(f \colon \mathbb N\to \mathbb N\), \(x\) <i>runs in \(f\)-time</i> if \(\mathsf{time}_x \in \mathcal O(f)\)</li>
+        <li>\(x\) <i>runs in polynomial time</i> if \(\mathsf{time}_x\) exhibits polynomial growth </li>
+        <li>\(x\) <i>runs in exponential time</i> if \(\mathsf{time}_x\) exhibits \(b\)-exponential growth for some \(b > 1\)</li>
     </ul>
 </div>
 
