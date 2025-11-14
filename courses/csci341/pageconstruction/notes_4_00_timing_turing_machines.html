@@ -133,7 +133,7 @@
 </div>
 
 <p>
-    If \(x\) halts on all inputs, then the \(\cup \{\infty\}\) is unnecessary in the definition above.
+    If \(x\) halts on all inputs, then the "\(\cup \{\infty\}\)" is unnecessary in the definition above.
 </p>
 
 <!--  -->
@@ -142,7 +142,7 @@
 <p>
     The worst-case runtime of a Turing program \(x\), as long as it halts on all inputs, is therefore a function on the natural numbers, 
     \[
-        \mathsf{time}_x \colon \mathbb N \to \mathbb N
+        \mathsf{maxtime}_x \colon \mathbb N \to \mathbb N
     \]
     This allows us to apply tools for <i>asymptotic comparisons</i> between worst-case runtimes, which you have already seen in past courses.
     We include the relevant definitions below anyhow, for reference.
@@ -178,9 +178,9 @@
     </ul>
     Given a Turing machine \(\mathcal T\) with a state \(x\), we say that 
     <ul>
-        <li>where \(f \colon \mathbb N\to \mathbb N\), \(x\) <i>runs in \(f\)-time</i> if \(\mathsf{time}_x \in \mathcal O(f)\)</li>
-        <li>\(x\) <i>runs in polynomial time</i> if \(\mathsf{time}_x\) exhibits polynomial growth </li>
-        <li>\(x\) <i>runs in exponential time</i> if \(\mathsf{time}_x\) exhibits \(b\)-exponential growth for some \(b > 1\)</li>
+        <li>where \(f \colon \mathbb N\to \mathbb N\), \(x\) <i>runs in \(f\)-time</i> if \(\mathsf{maxtime}_x \in \mathcal O(f)\)</li>
+        <li>\(x\) <i>runs in polynomial time</i> if \(\mathsf{maxtime}_x\) exhibits polynomial growth </li>
+        <li>\(x\) <i>runs in exponential time</i> if \(\mathsf{maxtime}_x\) exhibits \(b\)-exponential growth for some \(b > 1\)</li>
     </ul>
 </div>
 
