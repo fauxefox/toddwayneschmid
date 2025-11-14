@@ -258,5 +258,15 @@
 </div>
 
 <p>
-    This 
+    Spacial requirement is another measure of the amount of resources required by a program as it runs that is worth keeping track of.
+    We can similarly define the asymptotic space requirements of a program, as well as the <i>spacial complexity</i> of a program as it runs.
 </p>
+
+<div class="definition">
+    <b>(Spacial Complexity)</b>
+    Let \(\mathcal T = (Q, A, \delta)\) be a Turing machine with a state \(x \in Q\), and let \(n \in \mathbb N\) and \(I \subseteq A^*\).
+    The <i>(relative) worst-case space requirements of \(x\) on inputs of length \(n\) (in \(I\))</i> is defined to be 
+    \[
+        \mathsf{maxspace}_x^I(n) = \max \{\mathsf{space}(x)(w) \mid w \in I \text{ and } \mathsf{len}(w) \le n \text{ and } w \in I\}
+    \]
+</div>
