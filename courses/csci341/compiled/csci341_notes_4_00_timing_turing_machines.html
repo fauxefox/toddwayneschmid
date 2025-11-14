@@ -259,9 +259,9 @@
     Let \(I \subseteq A^*\) be a language of <i>possible inputs</i>.
     The <i>relative worst-case runtime of \(x\) on inputs of length \(n\) in \(I\)</i>, if it exists, is the number 
     \[
-        \mathsf{time}_x^I(n) = \max \{ \mathsf{time}(x)(w) \mid w \in R \text{ where } \mathsf{len}(w) \le n\}
+        \mathsf{maxtime}_x^I(n) = \max \{ \mathsf{time}(x)(w) \mid w \in R \text{ where } \mathsf{len}(w) \le n\}
     \]
-    and we write \(\mathsf{time}_x^I(n) = \infty\) if \(x\) runs forever on some input \(w \in I\) with \(\mathsf{len}(w) \le n\).
+    and we write \(\mathsf{maxtime}_x^I(n) = \infty\) if \(x\) runs forever on some input \(w \in I\) with \(\mathsf{len}(w) \le n\).
 </div>
 
 <div class="exercise">
