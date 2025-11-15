@@ -47,7 +47,7 @@
 </p>
 
 <div class="example">
-    <b>(Counting Pairs)</b>
+    <b>(Counting Pairs Suffices)</b>
     Consider the two (hopefully familiar) examples: 
     \[\begin{gathered}
         L_= = \{w \in \{0,1\}^* \mid \text{\(w\) has the same number of \(0\)s as \(1\)s}\}\\
@@ -126,4 +126,24 @@
     Then, as we observed before, the composition of \(\mathcal T_x\) with \(\mathcal S_\mathtt{red}\) is a decision procedure for \(L_1\).
     Now, if \(\mathcal T\) at \(x\) runs in \(\mathcal O(n^k)\)-time and \(\mathcal S\) at \(\mathtt{red}\) runs in \(\mathcal O(n^l)\)-time, then their composition runs in \(\mathcal O(n^k + n^l) = \mathcal O(n^{\max\{k,l\}})\)-time (they run one after the other).
     It follows that \(L_1\) is decidable in polynomial time, i.e., \(L_1 \in \mathsf{P}\).
+</div>
+
+<div class="example">
+    <b>(Counting Pairs Suffices Again)</b>
+    Let us return to the example from before. 
+    In that example, we exhibited a reducer \(\mathtt{01move} \colon L_= \preceq L_{nn}\), and gave an explicit description of the steps involved in the implementation.
+    Let us take a moment to analyze the algorithm implemented by \(\mathtt{01move}\).
+    
+    <p></p>
+    Let \(n = \mathsf{len}(w)\) for some given input word \(w \in \{0,1\}^*\).
+    All 6 of the steps in the implementation of \(\mathtt{01move}\) run in \(\mathcal O(n)\)-time, individually. 
+    Steps 2-3 and 4-5 are loops that repeat at most \(n\) times each, so the whole algorithm runs in \(\mathcal O(n + n^2 + n^2 + n) = \mathcal O(n^2)\)-time. 
+    Hence, \(\mathtt{01move}\) runs in polynomial time.
+    It is also true that \(\mathtt{eqnum}\) runs in polynomial time (you are about to show this), so we conclude from the Reducers Reduce lemma above that \(L_= \in \mathsf{P}\).
+</div>
+
+<div class="exercise">
+    <b>(Left-Right Rate)</b>
+    What is the asymptotic growth rate of the worst-case runtime of \(\mathtt{eqnum}\)?
+    What does that make the asymptotic runtime of our decision procedure above, \(\mathtt{eqnum{.}01move}\)?
 </div>
