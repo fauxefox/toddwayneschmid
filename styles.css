@@ -120,6 +120,7 @@ a:visited{
 	padding-bottom: 1%;
 	border-top:#eee 1px solid;
 	width: 96%;
+	margin-top: -20px;
 }
 
 
@@ -309,6 +310,18 @@ a:visited{
 	display: block;
 	padding: 20px;
 	width: calc(70% - 130px);
+}
+
+h1 {
+	text-justify: none;
+}
+
+h2 {
+	text-justify: none;
+}
+
+h3 {
+	text-justify: none;
 }
 
 #cpstuff h1 {
