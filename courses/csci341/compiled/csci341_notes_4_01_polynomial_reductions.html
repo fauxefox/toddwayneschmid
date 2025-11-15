@@ -309,6 +309,14 @@
     \]
     Design a computable reducer \(\mathcal S_{\mathtt{red}} \colon L_+ \preceq L_{nn}\) that runs in polynomial time.
     Explain why this implies that \(L_+ \in \mathsf{P}\). 
+</div>
+
+<div class="problem">
+    <b>(Composing Reductions Again)</b>
+    Let \(L_1,L_2, L_3 \subseteq A^*\) be languages.
+    Let \(r_1 \colon L_1 \preceq L_2\) and \(r_2 \colon L_2 \preceq L_3\).
+    Prove that if \(r_1\) and \(r_2\) are polynomial time reducers, then \(r_2 \circ r_1 \colon L_1 \preceq L_3\) is a polynomial time reducer.
+    Conclude that if \(L_3 \in \mathsf{P}\), then \(L_1 \in \mathsf{P}\).
 </div><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_4_00_timing_turing_machines.html"><span class="link" style="width:40%"> &larr; 4.0 Timing Turing Machines</span></a><a href="../compiled/csci341_notes_4_02_nondeterminism_and_complexity.html"><span class="link" style="width:40%">4.2 Nondeterminism And Complexity &rarr;</span></a></div>
 
 
