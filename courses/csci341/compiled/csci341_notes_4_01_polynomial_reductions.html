@@ -270,8 +270,15 @@
 </p>
 
 <div class="theorem">
-    Let \(L_1,L_2 \subseteq A^*\) be languages, and let \(\mathcal T\) at state \(x\) implement a polynomial time reducer \(\mathcal T_x \colon L_1 \preceq L_2\).
-    Then, if \(L_2 \in \mathsf P\), we also know that \(L_1 \in \mathsf P\).
+    Let \(L_1,L_2 \subseteq A^*\) be languages, and let \(\mathcal S\) at state \(\mathtt{red}\) implement a polynomial time reducer \(\mathcal S_{\mathtt{red}} \colon L_1 \preceq L_2\).
+    If \(L_2 \in \mathsf P\), then \(L_1 \in \mathsf P\).
+</div>
+
+<div class="proof">
+    Let \(\mathcal T = (Q, A, \delta)\) at the state \(x \in Q\) be a decision procedure for \(L_2\) that runs in polynomial time.
+    Then, as we observed before, the composition of \(\mathcal T_x\) with \(\mathcal S_\mathtt{red}\) is a decision procedure for \(L_1\).
+    Now, if \(\mathcal T\) at \(x\) runs in \(\mathcal O(n^k)\)-time and \(\mathcal S\) at \(\mathtt{red}\) runs in \(\mathcal O(n^l)\)-time, then their composition runs in \(\mathcal O(n^k + n^l) = \mathcal O(n^{\max\{k,l\}})\)-time (they run one after the other).
+    It follows that \(L_1\) is decidable in polynomial time, i.e., \(L_1 \in \mathsf{P}\).
 </div><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_4_00_timing_turing_machines.html"><span class="link" style="width:40%"> &larr; 4.0 Timing Turing Machines</span></a><a href="../compiled/csci341_notes_4_02_nondeterminism_and_complexity.html"><span class="link" style="width:40%">4.2 Nondeterminism And Complexity &rarr;</span></a></div>
 
 
