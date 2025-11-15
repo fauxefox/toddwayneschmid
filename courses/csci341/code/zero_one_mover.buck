@@ -1,0 +1,86 @@
+state __top 
+    if _ : write #.move left.goto find_0_rew
+    if 0 : move right.goto __top
+    if 1 : move right.goto __top
+
+# Clear the marked and extra symbols
+state clear_rew
+    if # : move left.goto clear_rew
+    if @ : move left.goto clear_rew
+    if _ : move right.goto clear
+
+state clear 
+    if @ : erase.move right.goto clear
+    if # : erase.move right.halt
+
+# Finding 0, erasing and moving it to the end of the tape
+state find_0_rew
+    if _ : move right.goto find_0
+
+    # standard rew
+    if 0 : move left.goto find_0_rew
+    if 1 : move left.goto find_0_rew
+    if @ : move left.goto find_0_rew
+    if # : move left.goto find_0_rew
+
+state find_0  
+    if _ : halt
+    if 0 : write @.move right.goto move_0
+    if 1 : move right.goto find_0
+    if @ : move right.goto find_0
+    if # : move left.goto find_1_rew
+
+state move_0 
+    if _ : write 0.move left.goto move_0_rew
+
+    # standard ff
+    if 0 : move right.goto move_0
+    if 1 : move right.goto move_0
+    if @ : move right.goto move_0
+    if # : move right.goto move_0
+
+state move_0_rew
+    if _ : move right.goto find_0
+
+    # standard rew
+    if 0 : move left.goto move_0_rew
+    if 1 : move left.goto move_0_rew
+    if @ : move left.goto move_0_rew
+    if # : move left.goto move_0_rew
+
+
+
+# Finding 1, erasing and moving it to the end of the tape
+state find_1_rew
+    if _ : move right.goto find_1
+
+    # standard rew
+    if 0 : move left.goto find_1_rew
+    if 1 : move left.goto find_1_rew
+    if @ : move left.goto find_1_rew
+    if # : move left.goto find_1_rew
+
+state find_1  
+    if _ : halt
+    if 0 : move right.goto find_1
+    if 1 : write @.move right.goto move_1
+    if @ : move right.goto find_1
+    if # : goto clear_rew
+
+state move_1 
+    if _ : write 1.move left.goto move_1_rew
+
+    # standard ff
+    if 0 : move right.goto move_1
+    if 1 : move right.goto move_1
+    if @ : move right.goto move_1
+    if # : move right.goto move_1
+
+state move_1_rew
+    if _ : move right.goto find_1
+
+    # standard rew
+    if 0 : move left.goto move_1_rew
+    if 1 : move left.goto move_1_rew
+    if @ : move left.goto move_1_rew
+    if # : move left.goto move_1_rew

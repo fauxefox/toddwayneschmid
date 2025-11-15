@@ -1,0 +1,225 @@
+\documentclass[11pt]{article}
+
+\newcommand{\pset}{
+    9
+}
+\newcommand{\subtitle}{
+    Computability
+}
+\newcommand{\duedate}{
+    Monday, November 17
+}
+
+% Page Setup
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    margin={2.5cm}
+}
+
+% Basic Packages
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathpartir}
+\usepackage{enumitem}
+\usepackage{mathabx}
+
+% Font
+\usepackage{charter}
+
+% Bibliography and index
+\usepackage[backend=biber, style=numeric]{biblatex}
+\addbibresource{refs.bib}
+\usepackage{makeidx}
+\makeindex
+
+% Colors and Graphics
+\usepackage[dvipsnames, x11names]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{
+    cd,
+    fit,
+    calc,
+    positioning,
+    arrows,
+    automata,
+    shapes
+}
+\tikzset{
+    baseline = (current bounding box.center),
+    every state/.append style = {
+        rectangle,
+        rounded corners=5pt,
+		inner sep = 3pt,
+		minimum size = 18pt,
+		initial text = {},
+        fill=Azure1
+	},
+	every edge/.append style = {
+		->,
+		>=stealth,
+		bend angle=10,
+		thick
+	}
+}
+\usepackage{musicography}
+\usepackage{graphicx}
+\usepackage{svg}
+\graphicspath{../imgs/}
+
+% Hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    linkcolor   = black,
+    filecolor   = RubineRed,
+    urlcolor    = RubineRed,
+    citecolor   = RubineRed,
+    pdftitle    = {CSCI 341 Course Materials}
+}
+\usepackage[capitalize]{cleveref}
+
+% Environments
+\theoremstyle{theorem} % In Italics
+\newtheorem{theorem}                    {{\color{Purple}Theorem}}[section]
+\newtheorem{lemma}          [theorem]   {{\color{Magenta}Lemma}}
+\newtheorem{proposition}    [theorem]   {Proposition}
+\newtheorem{corollary}      [theorem]   {Corollary}
+\newtheorem{question}                   {{\color{red}Question}}
+
+\theoremstyle{definition} % Not in italics
+\newtheorem{definition}     [theorem]   {{\color{NavyBlue}Definition}}
+\newtheorem{example}        [theorem]   {{\color{ForestGreen}Example}}
+\newtheorem{problem}                    {{\color{BurntOrange}Problem}}
+
+\theoremstyle{remark} % Subdued label
+\newtheorem{remark}[theorem]        {{\color{Gray}Remark}}
+
+% (1), (2), ...
+\renewcommand\labelenumi{(\theenumi)}
+
+% Go nuts with line breaks 
+\allowdisplaybreaks
+
+%%%%%%%%%%
+% MACROS %
+%%%%%%%%%%
+
+\newcommand{\op}{\mathrm{op}}               % Opposite
+\newcommand{\inv}{{-1}}                     % Inverse
+\newcommand{\id}{\mathsf{id}}               % Identity f(x) = x
+\newcommand{\Det}{\mathrm{Det}}             % determinize
+\newcommand{\Lang}{\mathcal{L}}             % Language
+
+\newcommand{\incl}{\mathsf{incl}}           % Inclusion
+\newcommand{\proj}{\mathsf{proj}}           % Projection
+
+% Numbers and Standard notation
+\newcommand{\NN}{\mathbb{N}}                % 0, 1, 2, 3, 4, ...
+\newcommand{\ZZ}{\mathbb{Z}}                % ..., -2, -1, 0, 1, 2, ...
+\newcommand{\QQ}{\mathbb{Q}}                % n/m for n and m in \NN and m > 0
+\newcommand{\RR}{\mathbb{R}}                % real numbers
+\newcommand{\pRR}{\mathbb{R}_{+}}           % positive real numbers
+
+\newcommand{\dom}{\mathrm{dom}}             % Domain
+\newcommand{\cod}{\mathrm{cod}}             % Codomain
+
+\newcommand{\Grph}{\operatorname{Grph}}     % Graph of a function
+
+% Transitions
+\newcommand{\tr}[1]{
+    \mathrel{
+        \raisebox{-1pt}{
+            \(\xrightarrow{#1}\)
+        }
+    }
+}
+\newcommand{\bisim}{\mathrel{\raisebox{1pt}{\(\underline{\leftrightarrow}\)}}}
+
+% Text
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\codeblock}[1]{
+    \begin{center}
+        \parbox{0.8\textwidth}{
+            \ttfamily
+            #1
+        }
+    \end{center}
+}
+
+% Boolean statements
+\newcommand{\OR}{~\mathrm{or}~}
+\newcommand{\AND}{~\mathrm{and}~}
+\newcommand{\NOT}{\mathrm{not}~}
+\newcommand{\IMPLIES}{~\mathrm{implies}~}
+\newcommand{\FORALL}{\mathrm{for\ all}~}
+\newcommand{\EXISTS}{\mathrm{there\ exists}~}
+\newcommand{\SUCHTHAT}{~\mathrm{such\ that}~}
+
+
+
+% Title
+\title{CSCI 341 Problem Set \pset}
+\author{\subtitle}
+\date{Due
+    \duedate
+}
+
+\begin{document}
+
+\maketitle
+
+Don't forget to check the webspace for hints and additional context for each problem!
+
+\begin{problem}
+    [Virtual Writing]
+    In the {\ttfamily bucklang\_public} repo in the {\ttfamily /examples} folder, you will see a BuckLang program called ``{\ttfamily tape\_program\_interpreter.buck}''. 
+    Currently, this program simulates tape machine programs that only include the \(\mathtt{move~right}\) command.
+    After line 265 in the program, you will find a few state names and some pseudocode for adding the virtual \(\mathtt{write}\) tape command. 
+    Complete the \(\mathtt{virt\_write}\) program in ``{\ttfamily tape\_program\_interpreter}''.buck.
+\end{problem}
+
+\begin{proof}[Solution.]
+    (Submit your completed {tape\_program\_interpreter.buck} to the Gradescope \href{https://www.gradescope.com/courses/1094390/assignments/7103711}{code submission box for Problem Set 9}, along with three output files: one for the string {\ttfamily 0}, one for the string {\ttfamily 11}, and one for the string {\ttfamily 1000}.)
+\end{proof}
+
+\begin{problem}
+    [Equivalence Problem]
+    The language below consists of all pairs of encodings of Turing machines (and states) that recognize exactly the same words.
+    \[
+        L_= = \big\{\lfloor \mathcal T_1\rfloor \mathtt{*}x_1\mathtt{*}\lfloor \mathcal T_2\rfloor \mathtt{*}x_2 \mid \mathcal R(\mathcal T_1, x_1) = \mathcal R(\mathcal T_2, x_2)\big\}
+    \]
+    \begin{enumerate}
+        \item Show that \(L_=\) is undecidable (I encourage you to use Rice's theorem somehow).
+        \item Write a short reflection on what the impact of this undecidability result is. 
+        For example, is it possible to write an algorithm to decide if two blocks of code accomplish the same task?
+    \end{enumerate}
+\end{problem}
+
+\begin{proof}[Solution.]
+    
+\end{proof}
+
+\begin{problem}
+    [C + R = D]
+    Prove that if \(L \subseteq A^*\) is both recognizable and co-recognizable, then \(L\) is decidable.
+    Explain why this implies that \(A^*\setminus L_{Halt}\) is not recognizable.
+\end{problem}
+
+\begin{proof}[Solution.]
+    
+\end{proof}
+
+
+
+\end{document}
+
+% If you want to give it a go!
+
+\begin{problem}
+    [(BONUS) Virtually Moving Left]
+    Complete the \(\mathtt{virt\_move\_left}\) program in "{\ttfamily tape\_program\_interpreter.buck}" (see line 254).
+\end{problem}

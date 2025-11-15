@@ -1,0 +1,287 @@
+<!-- THIS IS A COMPILED FILE 
+ Compiled on 2025-11-15 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<head>
+	
+	<meta charset="UTF-8">
+	<meta name="author" content="Todd Schmid">
+	
+	<!-- Renders latex formulas -->
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+	<!-- Renders tikz figures mid page -->
+    <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
+    <script src="https://tikzjax.com/v1/tikzjax.js"></script>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="stylesheet" href="../../../styles.css" />
+	<link rel="stylesheet" href="../../course_styles.css" />
+	<link rel="icon" href="../../../squidab.png" />
+	
+	<!-- * Customize for each course * -->
+	<title>CSCI 341 Theory of Computation</title>
+	<meta name="description" content="Course pages for CSCI 341.">
+	<meta name="keywords" content="bucknell,theory,computer,science,schmid,csci341">
+	<!-- ***************************** -->
+</head>
+
+<body>
+
+<div id="content">
+
+<!-- Header Section -->
+<div id="course_head" style="text-align: left;">
+	<h1 style="margin-bottom: 0; text-align: left;">CSCI 341 Theory of Computation</h1>
+	<i>Fall 2025, with <a href="../../../teaching.html">Schmid</a></i>
+	<div id="links">
+		<!-- * Customize for each course * -->
+		<a href="csci341_index.html"><span class="link">Syllabus</span></a>
+		<a href="csci341_contents.html"><span class="link">Notes</span></a>
+		<a href="csci341_resources.html"><span class="link">Resources</span></a>
+		<a href= "csci341_assignments.html"><span class="link">Assignments</span></a>
+		<!-- ***************************** -->
+	</div>
+</div>
+
+
+
+<div id="stuff">
+
+
+<!-- BEGINNING OF BODY -->
+<div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_4_00_timing_turing_machines.html"><span class="link" style="width:40%"> &larr; 4.0 Timing Turing Machines</span></a><a href="../compiled/csci341_notes_4_02_nondeterminism_and_complexity.html"><span class="link" style="width:40%">4.2 Nondeterminism And Complexity &rarr;</span></a></div><h1>Computable and Polynomial Time Reductions</h1>
+
+<p>
+    Recall that our main technique for proving that a language is undecidable is to <i>reduce</i> a problem we already know is undecidable to it.
+    In one example, we reduced the halting problem (\(L_{Halt}\)) to the halting-on-empty problem (\(L_\varepsilon\)).
+    The technique was to introduce a "meddler program", a program that rewrote some of the encoding of a Turing machine to transform it from an instance of one problem into an instance of another. 
+    This "meddler program" was itself a Turing program: it was implemented by a state in a Turing machine.
+    These tools for reduction, that <i>transform</i> one problem into another, are our main concern today.
+    While the following definition can also be formulated for general computational problems (functions \(f \colon S_1 \to S_2\)), we stick to decision problems for now.
+</p>
+
+<div class="definition">
+    <b>(Computable Reducer)</b>
+    Let \(L_1, L_2 \subseteq A^*\) be languages.
+    A <i>reducer of \(L_1\) to \(L_2\)</i> is a function (i.e., defined on all strings!) \(r \colon A^* \to A^*\) such that 
+    \[
+        w \in L_1 \text{ if and only if } r(w) \in L_2
+    \]
+    We write \(r \colon L_1 \preceq L_2\) if \(r\) is a reducer of \(L_1\) to \(L_2\).
+    A reducer is <i>computable</i> if there is a Turing machine \(\mathcal T\) with a state \(x\) such that \(\mathcal T_x = r\).
+</div>
+
+<p>
+    As was just mentioned, computable reducers came up earlier when we were proving undecidability results.
+    Each of these is an example of such a computable reducer, and so we encourage the reader to go back and take a look at these. 
+    But for now, let us see a quick example. 
+</p>
+
+<div class="lemma">
+    <b>(Reducers Reduce)</b>    
+    Let \(L_1,L_2 \subseteq A^*\) be languages. 
+    If there is a reducer \(r \colon L_1 \preceq L_2\) and \(L_2\) is decidable, then \(L_1\) is decidable.
+</div>
+
+<p>
+    It's a good exercise tosee that this is also true about recognizability.
+</p>
+
+<div class="exercise">
+    <b>(Recognizability and Reducers)</b>
+    Let \(L_1,L_2 \subseteq A^*\) be languages. 
+    Show that if there is a reducer \(r \colon L_1 \preceq L_2\) and \(L_2\) is recognizable, then \(L_1\) is recognizable.
+</div>
+
+<p>
+    Reducers are very practical,especially when we are faced with difficult problems (OK, but you could have guessed that!).
+</p>
+
+<div class="example">
+    <b>(Counting Pairs)</b>
+    Consider the two (hopefully familiar) examples: 
+    \[\begin{gathered}
+        L_= = \{w \in \{0,1\}^* \mid \text{\(w\) has the same number of \(0\)s as \(1\)s}\}\\
+        L_{nn} = \{0^n 1^n \mid n \in \mathbb N\}
+    \end{gathered}\]
+    As you can probably imagine, the second language is much easier to design a decision procedure for than the first.
+    In fact, here is such a decision procedure: <a href="../code/eqnm.buck" target="_blank">eqnm.buck</a>.
+    It would be nice to be able to reuse that decision procedure to design a decision procedure for the first language.
+    This is where a reducer could step in: we are going to design a Turing machine \(\mathcal S\) with a state \(\mathtt{01move}\) such that 
+    \[
+        \mathcal S_\mathtt{01move}(w) = 0^m1^n
+    \]
+    where \(w\) has \(m\) \(1\)s and \(n\) \(0\)s.
+    Now, if \(\mathcal T\) is a Turing machine with a state \(\mathtt{eqnm}\) such that
+    \[
+        \mathcal T_{\mathtt{eqnm}}(0^m1^n) = \begin{cases}
+            1 &\text{if \(n = m\)} \\
+            0 &\text{if \(n \neq m\)} 
+        \end{cases}
+    \]
+    (i.e., \(\mathtt{eqnm}\) is a decision procedure for \(L_=\)), then composing the two programs gives a decision procedure for \(L_=\).
+    \[
+        \mathcal T_{\mathtt{eqnm}}(\mathcal S_{\mathtt{01move}}(w))
+        = \mathcal T_{\mathtt{eqnm}}(0^m1^n)
+        = \begin{cases}
+            1 &\text{if \(n = m\)} \\
+            0 &\text{if \(n \neq m\)} 
+        \end{cases}
+    \]
+    This gives an explicit program \(\mathtt{01move}\) that implements the reduction of the decision problem \(L_=\) to the decision problem \(L_{nn}\).
+    In formal notation, \(\mathcal S_\mathtt{01move} \colon L_= \preceq L_{nn}\).
+
+    <p></p>
+    For the heck of it, let us actually design this reducer. 
+    The basic idea is going to be to "move" all of the 0s to the end of the tape, and then "move" all of the 1s to the end of the tape. 
+    In a bit more detail, \(\mathtt{01move}\) operates like this: 
+    <ol>
+        <li>Write a # to the end of the tape to mark that it is the end of the original input.</li>
+        <li>Find a 0 in the original input. Replace it with an @ symbol and then write a 0 to the end of the tape.</li>
+        <li>Search for another 0 in the original input. If there are no more 0s in the original input, rewind and go to the next step. Otherwise, go back to 2.</li>
+        <li>Find a 1 in the original input. Replace it with an @ symbol and then write a 1 to the end of the tape.</li>
+        <li>Search for another 1 in the original input. If there are no more 1s in the original input, rewind and go to the next step. Otherwise, go back to 4.</li>
+        <li>Erase all of the @s and the # from the tape.</li>
+    </ol>
+    An explicit implementation in BuckLang is here: <a href="../code/zero_one_mover.buck" target="_blank">zero_one_mover.buck</a>.
+</div>
+
+<p>
+    Something else significant about this example is that the reducer <i>runs in polynomial time</i>.
+</p>
+
+<h2>Polynomial Time Reducers</h2>
+
+<p>
+    Reducers tell us which problems can be reduced to which other problems. 
+    But, just like how we can measure how difficult a problem is to solve, we can use the same tools to express <i>how difficult it is to reduce one problem to another</i>.
+</p>
+
+<div class="definition">
+    <b>(Polynomial Time Reductions)</b>
+    Let \(L_1, L_2 \subseteq A^*\) be languages, and let \(\mathcal T\) at state \(x\) implement a reducer \(\mathcal T_x \colon L_1 \preceq L_2\). 
+    Then we say that \(\mathcal T_x\) is a <i>polynomial time reducer</i> if \(\mathsf{maxtime}_x\) runs in polynomial time, and that \(L_1\) is <i>polynomial time reducible to \(L_2\)</i>.
+</div>
+
+<p>
+    The main observation about polynomial time reduction is the following statement.
+</p>
+
+<div class="theorem">
+    Let \(L_1,L_2 \subseteq A^*\) be languages, and let \(\mathcal T\) at state \(x\) implement a polynomial time reducer \(\mathcal T_x \colon L_1 \preceq L_2\).
+    Then, if \(L_2 \in \mathsf P\), we also know that \(L_1 \in \mathsf P\).
+</div><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_4_00_timing_turing_machines.html"><span class="link" style="width:40%"> &larr; 4.0 Timing Turing Machines</span></a><a href="../compiled/csci341_notes_4_02_nondeterminism_and_complexity.html"><span class="link" style="width:40%">4.2 Nondeterminism And Complexity &rarr;</span></a></div>
+
+
+<!-- END OF BODY -->
+    <div style="height: 50px;border-top: 1px solid rgb(131, 131, 131);margin-top: 50px; padding: 20px; text-align: right;">
+        <a href=""><span class="link">Top</span></a>
+    </div>
+</div>
+</div>
+</body>
+
+
+</html>
