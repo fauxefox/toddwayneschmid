@@ -1,5 +1,5 @@
 <!-- THIS IS A COMPILED FILE 
- Compiled on 2025-11-16 -->
+ Compiled on 2025-11-17 -->
 
 
 
@@ -155,26 +155,27 @@
 
 <p>
     Recall that for <a href="../compiled/csci341_notes_1_02_reading_words.html" target="_blank">finite automata</a> (and <a href="../compiled/csci341_notes_2_04_stack_automata.html" target="_blank">stack automata</a>, too) that nondeterminism occurs when a state has more than one defined behaviour for a given input.
-    In Turing machines, nondeterminism occurs when a program can branch into two possible  state of the tape head can lead to two possible outcomes.
+    In Turing machines, nondeterminism occurs when a program can branch into two paths from the same program and memory state (of the tape head).
     <div class="code">
         <img src="../imgs/nondeterminism_quick.svg" />
         if a : <br>
         &NonBreakingSpace;&NonBreakingSpace;&boxvr; p.goto y<br>
         &NonBreakingSpace;&NonBreakingSpace;&boxur; q.goto z
     </div>
-    The semantics of nondeterminism in these settings was that a word was <i>accepted</i> by the automaton if <i>at least one path</i> from a given starting input and state lead to a positive end. 
+    The semantics of nondeterminism in vanilla and stack automata was that a word was <i>accepted</i> by the automaton if <i>at least one path</i> from a given starting input and state lead to a positive end. 
     The semantics of nondeterminism in Turing machines will be exactly the same, although we are going to change the terminology from "decider" to "verifier" to get a clean formalism.
 </p>
 
 <p>
     The word "verifier" comes from what one might stretch to consider a physical interpretation of nondeterministic Turing machines.
     One way to interpret nondeterminism is as a kind of search procedure, more specifically "search-for-an-answer".
-    Each time a path through a Turing machine proceeds down one branch unpon arriving at a nondeterministic state instead of another, the machine is "taking a guess" at which path ends in the correct result. 
-    A halting path is then interpreted as a "check", in the sense that it checks the resulting string on the tape to see if the guesses it made along the way resulted in the desied output.
+    Each time a path through a Turing machine proceeds down one branch instead of another upon arriving at a nondeterministic state, the machine is "taking a guess" at which path ends in the correct result. 
+    A halting path is then interpreted as a "check", in the sense that it checks the resulting string on the tape to see if the guesses it made along the way result in the desied output.
 </p>
 
 <p style="color: purple;">
-    From here on out, when we want to allow a Turing machine to be nondeterministic (not require, but allow), we will call it a <i>general Turing machine</i>.
+    So far, we have assumed that all Turing machines are deterministic.
+    To make it clear that we are no longer making this assumption, from here on out when we want to allow a Turing machine to be nondeterministic (not require, but allow), we will call it a <i>general Turing machine</i>.
 </p>
 
 <div class="definition">
@@ -182,10 +183,178 @@
     Let \(\mathcal T = (Q, A, \delta)\) be a general Turing machine, and let \(L \subseteq A^*\) be a language. 
     We say that a state \(x \in Q\) is a <i>verifier for \(L\)</i> if
     <ol>
-        <li>every run of \(\mathcal T\) starting from \(x\) is finite, and</li>
-        <li>for any \(w \in A^*\), \(w \in L\) if and only if there is a halting run starting from \(x\) on input \(w\) that returns the string \(1\).</li>
+        <li>every run of \(\mathcal T\) starting from \(x\) is finite (there are no unending loops), and</li>
+        <li>for any \(w \in A^*\), \(w \in L\) if and only if there is a halting run starting from \(x\) on input \(w\) that accepts (returns the string \(1\)).</li>
     </ol>
-</div><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_4_01_polynomial_reductions.html"><span class="link" style="width:40%"> &larr; 4.1 Polynomial Reductions</span></a><a href="../compiled/csci341_notes_4_03_hard_problems.html"><span class="link" style="width:40%">4.3 Hard Problems &rarr;</span></a></div>
+    A language is called <i>verifiable</i> if it has a verifier.
+
+    <p>
+        The family of verifiable languages is written \(\mathsf{Ver}\).
+    </p>
+</div>
+
+<div class="exercise">
+    <b>(Verify a Verifier)</b>
+    Consider the following general Turing machine \(\mathcal V\) below.
+    <div class="code">
+        state v <br>
+        if _ : write 1.goto v <br>
+        if 1 : move right.goto z <br>
+        if 0 : <br>
+        &NonBreakingSpace;&NonBreakingSpace;&boxvr; move right.goto u<br>
+        &NonBreakingSpace;&NonBreakingSpace;&boxur; move right.goto z <br>
+        <br>
+        state u <br>
+        if _ : write 1.halt <br>
+        if 0 : erase.move right.goto u <br>
+        if 1 : erase.move right.goto u <br>
+        <br>
+        state z <br>
+        if _ : halt <br>
+        if 0 : erase.move right.goto z <br>
+        if 1 : erase.move right.goto z <br>
+    </div>
+    Write down all of the halting runs starting from \(v\) on the input strings \(\varepsilon, 0, 110, 010, 0110\).
+    Is it a verifier?
+    If so, what language does it verify?
+</div>
+
+<p>
+    The worst-case runtime of a verifier is also a guess-and-check procedure, but it is less idealistic about the difficulty of finding an accepting run.
+</p>
+
+<div class="definition">
+    <b>(Nondeterministic Runtime)</b>
+    Let \(\mathcal T = (Q, A, \delta)\) be a general Turing machine, and let \(x \in Q\) and \(w \in A^*\).
+    The <i>runtime of \(x\) on input \(w\)</i> is the maximum over all runtimes of runs starting from \(x\), 
+    \[
+        \mathsf{time}(\mathcal T, x)(w) = \max\left\{\mathsf{time}(p_1\dots p_n) ~\middle|~ 
+            \begin{gathered}
+                x \xrightarrow{a_1 \mid p_1} \cdots \xrightarrow{a_n \mid p_n} x_n \\
+                \text{is a run starting from \(x\)}
+            \end{gathered}
+        \right\}
+    \]
+    The <i>worst-case runtime of \(x\) on inputs of length \(n \in \mathbb N\) in \(I\subseteq A^*\)</i> is defined the same as before, 
+    \[
+        \mathsf{maxtime}_x^I(n) = \max\{\mathsf{time}(\mathcal T, x)(w) \mid \text{ \(w \in I\) and \(\mathsf{len}(w) \le n\) } \}
+    \]
+</div>
+
+<p>
+    There are analogous families of languages for the complexity of verification.
+</p>
+
+<div class="definition">
+    <b>(Nondeterministic Polynomial Time)</b>
+    We say that a language \(L \subseteq A^*\) is <i>verifiable in polynomial time</i> if there it has a verifier \(\mathcal V\) at state \(v\) such that
+    \[
+        \mathsf{maxtime}_v \in \mathcal O(n^k)
+    \]
+    for some \(k \in \mathbb N\).
+
+    <p>
+        The family of all languages that are verifiable in polynomial time is written \(\mathsf{NP}\).
+    </p>
+</div>
+
+<div class="exercise">
+    <b>(Verification in Polynomial Time?)</b>
+    Does the general Turing program in the Verify the Verifier run in polynomial time?
+</div>
+
+<!--  -->
+<h2>\(\mathsf{P}\) versus \(\mathsf{NP}\)</h2>
+
+<p>
+    If you will recall from the theory of regular languages, Kleene's theorem implied that nondeterministic automata are equal in expressiveness as total deterministic automata: they can decide the same family of languages. 
+    This actually doesn't hold for context-free languages: there are context-free languages that cannot be decided with any deterministic stack automaton.
+    You have already spent time with a famous example of this, namely \(\{ww^{op} \mid w \in \{0,1\}^*\}\).
+    It might therefore come as a surprise that in fact, general Turing machines are equal in expressivity to deterministic ones.
+</p>
+
+<p> 
+    Every decision procedure is a verifier, so we immediately see that 
+    \[
+        \mathsf{Dec} \subseteq \mathsf{Ver}
+    \]
+    The opposite inclusion takes much more work to arrive at.
+</p>
+
+<div class="theorem">
+    <b>(Determinism Suffices)</b>
+    A language is decidable if and only if it is verifiable.
+    That is, \(\mathsf{Dec} = \mathsf{Ver}\).
+</div>
+
+<div class="proof">
+    (Sketch.)
+    We have already seen the forward inclusion.
+    For the backward inclusion, we need to take every general Turing program, say Turing machine \(\mathcal V\) at state \(v\), that verifies a given language \(L\), and turn \(\mathcal V\) into a deterministic Turing program \(\mathcal T\) at state \(x\) that decides \(L\).
+    Roughly: we can build a Turing program on two tapes that does a breadth-first search through the runs starting from \(v\), records the paths it has taken, and if it encounters an accepting run then it clears tape 1 and accepts (writes a \(1\)).
+    If it has checked all possible halting runs, then it clears the tape and rejects (writes a \(0\)).
+    The tricky part of a more formal proof would be to check that this Turing machine always halts and either writes a \(1\) or \(0\).
+    This rests on property 1 of a verifier, that it has no infinite loops.
+</div>
+
+<p>
+    We failed to mention this in the Church-Turing thesis section.
+    Why?
+    We focused on \(k\)-tape Turing machines, multiple-symbols-to-two-symbols conversion, and even Turing machines that run on sheets because, if these run in polynomial time, then the deterministic Turing machine that simulates them also runs in polynomial time (this is not obvious, but it is true).
+    This raises a very important problem with the deterministic Turing machine constructed in the proof above: even if the original (general) Turing program runs in  polynomial time, it is likely that the constructed deterministic Turing machine runs in at least exponential time.
+    This is simply because the number of paths that the deterministic Turing machine simulating the verifier has to sift through is in the worst case \(\mathcal O(b^{n^k})\) if there is a state that branches into \(b\) different paths somewhere in \(\mathcal V\) and the state runs in (nondeterministically) \(\mathcal O(n^k)\)-time.
+    This immediately leads us to the following definition and theorem.
+</p>
+
+<div class="definition">
+    <b>(EXP-time)</b>
+    A Turing program runs in <i>polynomial-exponential time</i> if 
+    \[
+        \mathsf{maxtime}_x \in \mathcal O({b^{n^k}})
+    \]
+    for some \(b > 1\) and \(k \in \mathbb N\).
+</div>
+
+<div class="theorem">
+    <b>(Basic Inclusions)</b>
+    We have \(\mathsf{P} \subseteq \mathsf{NP} \subseteq \mathsf{EXP} \subseteq \mathsf{Dec}\).
+</div>
+
+<img src="../imgs/complexity_heirarchy.svg" />
+
+<p>
+    This figure is not to scale!
+    There are problems solvable in exponential time that are not in \(\mathsf{NP}\).
+    And in reality, there are many complexity classes between \(\mathsf{EXP}\) and \(\mathsf{Dec}\).
+</p>
+
+<p>
+    The proof of the Determinism Suffices theorem does not tell us that a given language \(L \in \mathsf{NP}\) <i>cannot</i> be decided in polynomial time, it just doesn't give us a way of showing that it is.
+    This is actually the subject of (probably) one of the most important open problems in modern mathematics.
+</p>
+
+<div class="bonus-problem">
+    <b>(P vs NP)</b>
+    Is \(\mathsf{P} = \mathsf{NP}\)?
+
+    <div class="hint">
+        Probably not. Also, <a href="https://en.wikipedia.org/wiki/Independence_(mathematical_logic)" target="_blank">this question may not have an answer at all</a>.
+    </div>
+</div>
+
+<p>
+    Solving this "bonus problem" above is an incredibly active area of research!
+    Since we don't know the answer, we prefer instead to find solace in the techniques we <i>do</i> have.
+</p>
+
+<div class="theorem">
+    <b>(Polynomial Reductions for Nondeterminism)</b>
+    Let \(L_1 \in \mathsf{NP}\) be a language verifiable in polynomial time, and let \(r \colon L_1 \preceq L_2\) for a given language \(L_2\subseteq A^*\).
+    Then \(L_2 \in \mathsf{NP}\).
+</div>
+
+
+<div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_4_01_polynomial_reductions.html"><span class="link" style="width:40%"> &larr; 4.1 Polynomial Reductions</span></a><a href="../compiled/csci341_notes_4_03_hard_problems.html"><span class="link" style="width:40%">4.3 Hard Problems &rarr;</span></a></div>
 
 
 <!-- END OF BODY -->
