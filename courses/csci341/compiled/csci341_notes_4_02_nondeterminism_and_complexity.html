@@ -151,7 +151,41 @@
 
 
 <!-- BEGINNING OF BODY -->
-<div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_4_01_polynomial_reductions.html"><span class="link" style="width:40%"> &larr; 4.1 Polynomial Reductions</span></a><a href="../compiled/csci341_notes_4_03_hard_problems.html"><span class="link" style="width:40%">4.3 Hard Problems &rarr;</span></a></div><h1>Nondeterminism and Complexity</h1><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_4_01_polynomial_reductions.html"><span class="link" style="width:40%"> &larr; 4.1 Polynomial Reductions</span></a><a href="../compiled/csci341_notes_4_03_hard_problems.html"><span class="link" style="width:40%">4.3 Hard Problems &rarr;</span></a></div>
+<div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_4_01_polynomial_reductions.html"><span class="link" style="width:40%"> &larr; 4.1 Polynomial Reductions</span></a><a href="../compiled/csci341_notes_4_03_hard_problems.html"><span class="link" style="width:40%">4.3 Hard Problems &rarr;</span></a></div><h1>Nondeterminism and Complexity</h1>
+
+<p>
+    Recall that for <a href="../compiled/csci341_notes_1_02_reading_words.html" target="_blank">finite automata</a> (and <a href="../compiled/csci341_notes_2_04_stack_automata.html" target="_blank">stack automata</a>, too) that nondeterminism occurs when a state has more than one defined behaviour for a given input.
+    In Turing machines, nondeterminism occurs when a program can branch into two possible  state of the tape head can lead to two possible outcomes.
+    <div class="code">
+        <img src="../imgs/nondeterminism_quick.svg" />
+        if a : <br>
+        &NonBreakingSpace;&NonBreakingSpace;&boxvr; p.goto y<br>
+        &NonBreakingSpace;&NonBreakingSpace;&boxur; q.goto z
+    </div>
+    The semantics of nondeterminism in these settings was that a word was <i>accepted</i> by the automaton if <i>at least one path</i> from a given starting input and state lead to a positive end. 
+    The semantics of nondeterminism in Turing machines will be exactly the same, although we are going to change the terminology from "decider" to "verifier" to get a clean formalism.
+</p>
+
+<p>
+    The word "verifier" comes from what one might stretch to consider a physical interpretation of nondeterministic Turing machines.
+    One way to interpret nondeterminism is as a kind of search procedure, more specifically "search-for-an-answer".
+    Each time a path through a Turing machine proceeds down one branch unpon arriving at a nondeterministic state instead of another, the machine is "taking a guess" at which path ends in the correct result. 
+    A halting path is then interpreted as a "check", in the sense that it checks the resulting string on the tape to see if the guesses it made along the way resulted in the desied output.
+</p>
+
+<p style="color: purple;">
+    From here on out, when we want to allow a Turing machine to be nondeterministic (not require, but allow), we will call it a <i>general Turing machine</i>.
+</p>
+
+<div class="definition">
+    <b>(Verifier)</b>
+    Let \(\mathcal T = (Q, A, \delta)\) be a general Turing machine, and let \(L \subseteq A^*\) be a language. 
+    We say that a state \(x \in Q\) is a <i>verifier for \(L\)</i> if
+    <ol>
+        <li>every run of \(\mathcal T\) starting from \(x\) is finite, and</li>
+        <li>for any \(w \in A^*\), \(w \in L\) if and only if there is a halting run starting from \(x\) on input \(w\) that returns the string \(1\).</li>
+    </ol>
+</div><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_4_01_polynomial_reductions.html"><span class="link" style="width:40%"> &larr; 4.1 Polynomial Reductions</span></a><a href="../compiled/csci341_notes_4_03_hard_problems.html"><span class="link" style="width:40%">4.3 Hard Problems &rarr;</span></a></div>
 
 
 <!-- END OF BODY -->
