@@ -199,3 +199,30 @@
     Let \(L_1 \in \mathsf{NP}\) be a language verifiable in polynomial time, and let \(r \colon L_1 \preceq L_2\) for a given language \(L_2\subseteq A^*\).
     Then \(L_2 \in \mathsf{NP}\).
 </div>
+
+<div class="exercise">
+    <b>(Graph Reachability Problem)</b>
+    Recall that a <i>directed graph</i> is a pair \(\mathcal G = (X, \to)\) consisting of a set \(X\) of <i>nodes</i> and a relation \({\to} \subseteq X \times X\) of <i>edges</i>.
+    Given nodes \(x,y \in X\), \(y\) is <i>reachable from \(x\)</i> if there are \(x_1,\dots, x_n \in X\) such that 
+    \[
+        x \to x_1 \to x_2 \to \cdots \to x_n \to y
+    \]
+    Define \[
+        \mathbf{DGr} = \{(\mathcal G, x, y) \mid \text{\(\mathcal G = (X, \to)\) is a directed graph and \(x,y \in X\)} \}
+    \]
+    Then the <i>reachability problem</i> is 
+    \[
+        \mathit{Rch} = \{(\mathcal G, x, y) \in \mathbf{DGrph} \mid \text{\(y\) is reachable from \(x\) in \(\mathcal G\)} \}
+    \]
+    <ol>
+        <li>Draw an instance of the reachability problem.</li>
+        <li>Come up with a faithful string representation of the reachability problem.</li>
+        <li>Show that the reachability problem is in \(\mathsf{NP}\).</li>
+    </ol>
+</div>
+
+<div class="problem">
+    <b>(Empty Language Problem for Automata)</b>
+    Recall that a state \(x \in Q\) of an automaton \(\mathcal A = (Q, A, \delta, F)\) accepts a word \(w = a_1 \cdots a_n\) if there is a path \(x \xrightarrow{a_1} x_1 \xrightarrow{a_2} \cdots \xrightarrow{a_n} x_n\) and \(x_n \in F\), and that \(\mathcal L(\mathcal A, x)\) is the set of all words accepted by the state \(x\) in \(\mathcal A\). 
+    Show that deciding whether a state accepts the empty language, i.e., \(\mathcal L(\mathcal A, x) = \{\}\), is in \(\mathsf{NP}\) by finding a polynomial time reduction to \(\mathit{Rch}\) above.
+</div>
