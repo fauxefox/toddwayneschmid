@@ -23,13 +23,13 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.5946522"
-     inkscape:cx="223.66015"
-     inkscape:cy="231.2276"
+     inkscape:zoom="1.1185693"
+     inkscape:cx="205.6198"
+     inkscape:cy="383.07863"
      inkscape:window-width="1472"
      inkscape:window-height="864"
-     inkscape:window-x="0"
-     inkscape:window-y="36"
+     inkscape:window-x="3840"
+     inkscape:window-y="753"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1" />
   <defs
@@ -56,13 +56,6 @@
        ry="70.156456"
        transform="matrix(0.87820856,0.47827788,-0.46303188,0.88634162,0,0)" />
     <ellipse
-       style="fill:#3680da;fill-opacity:0.435393;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:0.2;paint-order:fill markers stroke"
-       id="path1"
-       cx="88.987595"
-       cy="200.44453"
-       rx="30.255777"
-       ry="29.143436" />
-    <ellipse
        style="fill:#3680da;fill-opacity:0.435393;stroke:#000000;stroke-width:0.847949;stroke-linejoin:round;stroke-miterlimit:0.2;stroke-dasharray:3.3918, 0.847949;stroke-dashoffset:0;paint-order:fill markers stroke"
        id="path2"
        cx="169.77512"
@@ -70,6 +63,13 @@
        rx="47.906853"
        ry="55.693272"
        transform="rotate(28.075087)" />
+    <ellipse
+       style="fill:#3680da;fill-opacity:0.435393;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:0.2;paint-order:fill markers stroke"
+       id="path1"
+       cx="88.987595"
+       cy="200.44453"
+       rx="30.255777"
+       ry="29.143436" />
     <g
        inkscape:label=""
        transform="matrix(1.8057266,0,0,1.8057266,85.872989,198.5961)"

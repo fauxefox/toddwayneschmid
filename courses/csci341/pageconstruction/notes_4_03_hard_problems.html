@@ -1,5 +1,77 @@
 <h1>Hard Problems</h1>
 
 <p>
-    
+    Finding a resource-intensive solution so a problem is not evidence that the problem is difficult. 
+    For example, the problem of sorting an array can be solved in various dumb ways: <a href="https://en.wikipedia.org/wiki/Bogosort" target="_blank">bogosort</a>, at one end, runs in \(\mathcal O(n!)\)-time, and merge sort at the other runs in \(\mathcal O(n\log(n))\)-time.
+    Sorting ain't that bad!
+</p>
+
+<p>
+    Big-O analysis of worst-case runtime is a sort of upp-bound on the difficulty of an algorithmic problem.
+    Once we find an algorithm for solving a problem in \(\mathcal O(f)\)-time, we know that it is "at most \(\mathcal O(f)\)-difficult".
+    This opens up the possibility of beating that time, thereby showing that the problem is not as hard as we thought.
+</p>
+
+<p>
+    On the other hand, Big-\(\Omega\) analysis gives a lower bound on the (typically worst-case) running time of an algorithm. 
+    But with Turing machines, complexity is a bit fuzzier: translating between a Turing machine and a physical computer is not precisely linear, and the Churcj-Turing thesis in particular does not directly make any observation about the complexity of translating between different versions of the deterministic Turing machine (like multi-tape and multiple-to-one-symbols) typically takes \(\mathcal O(n^2)\)-time.
+    This fuzziness was our motivation to consider the families \(\mathsf{P}\), \(\mathsf{NP}\), \(\mathsf{EXP}\), and so on.
+    In this lecture, our goal is to give a useful lower-bound on the complexity of an algorithm in this fuzzy paradigm of complexity classes.
+</p>
+
+<!--  -->
+<h2>Hardness</h2>
+
+<p>
+    The intuitive notion of "one problem is harder than another", as many of you have probably discovered by now, has to do with reductions. 
+    What we learn from a reduction \(L_1 \preceq L_2\) (i.e., there exists a reduction \(r \colon L_1 \preceq L_2\)) is that \(L_2\) was the "harder" problem: any solution to \(L_2\) is enough to solve the "easier" problem \(L_1\).
+    This relation \(\preceq \subseteq 2^{A^*}\) is a kind of "relative hardness" measure for problems. 
+    This is where the following terminology comes from.
+</p>
+
+<div class="definition">
+    <b>(\(\mathsf{Fam}\)-Hardness)</b>
+    Let \(\mathsf{Fam} \subseteq 2^{A^*}\) be any family of languages, and let \(L \subseteq A^*\) be a language. 
+    We say that \(L\) is <i>\(\mathsf{Fam}\)-hard</i> if for any \(U \in \mathsf{Fam}\), there is a polynomial time reduction \(r \colon U \preceq L\).
+</div>
+
+<p>
+    So, for example, a decision problem is <i>\(\mathsf{P}\)-hard</i> if it has a polynomial time reduction from every tractible problem.
+    The broader class of \(\mathsf{NP}\)-hard problems get a special name because they are the prime focus of the \(\mathsf{P}=\mathsf{NP}\) problem mentioned last time.
+</p>
+
+<div class="definition">
+    <b>(Hard Problems)</b>
+    A decision problem (i.e., language) \(L \subseteq A^*\) is generally called <i>hard</i> if \(L\) is \(\mathsf{NP}\)-hard.
+</div>
+
+<p>
+    A lot of your favourite problems are hard, unfortunately.
+    Many puzzle and videogames have been shown to be \(\mathsf{NP}\)-hard, including 
+    <ul>
+        <li>Sudoku</li>
+        <li><a href="../compiled/csci341_notes_1_00_games_and_state_diagrams.html" target="_blank">Sokoban</a></li>
+        <li>Rush Hour</li>
+        <li>Battleship</li>
+        <li>Majhong</li>
+        <li>...(and many others)</li>
+    </ul>
+    Of course, \(\)
+</p>
+
+<!--  -->
+<h2>Completeness</h2>
+
+<p>
+    A slightly more confusing property of a problem with respect to a complexity class is <i>completeness</i>.
+</p>
+
+<div class="definition">
+    <b>(\(\mathsf{Fam}\)-completeness)</b>
+    Let \(\mathsf{Fam} \subseteq 2^{A^*}\) be a family of languages. 
+    A language \(L \subseteq A^*\) is said to be <i>\(\mathsf{Fam}\)-complete</i> if \(L \in \mathsf{Fam}\) and \(L\) is \(\mathsf{Fam}\)-hard.
+</div>
+
+<p>
+    A long list of \(\mathsf{NP}\)-complete problems <a href="https://en.wikipedia.org/wiki/List_of_NP-complete_problems" target="_blank">can be found on Wikipedia</a>.
 </p>
