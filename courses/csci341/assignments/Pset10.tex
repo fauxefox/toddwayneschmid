@@ -175,51 +175,16 @@
 Don't forget to check the webspace for hints and additional context for each problem!
 
 \begin{problem}
-    [Virtual Writing]
-    In the {\ttfamily bucklang\_public} repo in the {\ttfamily /examples} folder, you will see a BuckLang program called ``{\ttfamily tape\_program\_interpreter.buck}''. 
-    Currently, this program simulates tape machine programs that only include the \(\mathtt{move~right}\) command.
-    After line 265 in the program, you will find a few state names and some pseudocode for adding the virtual \(\mathtt{write}\) tape command. 
-    Complete the \(\mathtt{virt\_write}\) program in ``{\ttfamily tape\_program\_interpreter}''.buck.
+    [Composing Tractible Problems]
+    Let \(f \colon S_1 \to S_2\) and \(g \colon S_2 \to S_3\) be functions between sets \(S_1,S_2,S_3\).
+    Prove that if the problems of computing \(f\) and \(g\) are both tractible, then the problem of computing \(g \circ f\) is tractible.
 \end{problem}
 
 \begin{proof}[Solution.]
     (Submit your completed {tape\_program\_interpreter.buck} to the Gradescope \href{https://www.gradescope.com/courses/1094390/assignments/7103711}{code submission box for Problem Set 9}, along with three output files: one for the string {\ttfamily 0}, one for the string {\ttfamily 11}, and one for the string {\ttfamily 1000}.)
 \end{proof}
 
-\begin{problem}
-    [Equivalence Problem]
-    The language below consists of all pairs of encodings of Turing machines (and states) that recognize exactly the same words.
-    \[
-        L_= = \big\{\lfloor \mathcal T_1\rfloor \mathtt{*}x_1\mathtt{*}\lfloor \mathcal T_2\rfloor \mathtt{*}x_2 \mid \mathcal R(\mathcal T_1, x_1) = \mathcal R(\mathcal T_2, x_2)\big\}
-    \]
-    \begin{enumerate}
-        \item Show that \(L_=\) is undecidable (I encourage you to use Rice's theorem somehow).
-        \item Write a short reflection on what the impact of this undecidability result is. 
-        For example, is it possible to write an algorithm to decide if two blocks of code accomplish the same task?
-    \end{enumerate}
-\end{problem}
-
-\begin{proof}[Solution.]
-    
-\end{proof}
-
-\begin{problem}
-    [C + R = D]
-    Prove that if \(L \subseteq A^*\) is both recognizable and co-recognizable, then \(L\) is decidable.
-    Explain why this implies that \(A^*\setminus L_{Halt}\) is not recognizable.
-\end{problem}
-
-\begin{proof}[Solution.]
-    
-\end{proof}
-
+\
 
 
 \end{document}
-
-% If you want to give it a go!
-
-\begin{problem}
-    [(BONUS) Virtually Moving Left]
-    Complete the \(\mathtt{virt\_move\_left}\) program in "{\ttfamily tape\_program\_interpreter.buck}" (see line 254).
-\end{problem}

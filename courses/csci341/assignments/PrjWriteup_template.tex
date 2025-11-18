@@ -1,0 +1,187 @@
+\documentclass[12pt]{article}
+
+% Page Setup
+\usepackage{geometry}
+\geometry{
+    letterpaper,
+    margin={2.5cm}
+}
+
+% Basic Packages
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathpartir}
+\usepackage{enumitem}
+\usepackage{mathabx}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Feel free to use any of these fonts, or another (reasonable)
+% font of your choosing. I swear to god if you write this in
+% comic sans...
+\usepackage{charter}
+% \usepackage{palatino}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+\usepackage[backend=biber, style=numeric]{biblatex}
+\addbibresource{refs.bib}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{makeidx}
+\makeindex
+
+% Colors and Graphics
+\usepackage[dvipsnames, x11names]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{
+    cd,
+    fit,
+    calc,
+    positioning,
+    arrows,
+    automata,
+    shapes
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This is a styleset for using the automaton
+% drawing package in tikz. 
+\tikzset{
+    baseline = (current bounding box.center),
+    every state/.append style = {
+        rectangle,
+        rounded corners=5pt,
+		inner sep = 3pt,
+		minimum size = 18pt,
+		initial text = {},
+        fill=Azure1
+	},
+	every edge/.append style = {
+		->,
+		>=stealth,
+		bend angle=10,
+		thick
+	}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{musicography}
+\usepackage{graphicx}
+\usepackage{svg}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% If you want to include images with the 
+% graphicx package, you can use \includegraphics{location}
+% This supports SVGs, but not GIFs :(
+\graphicspath{../imgs/}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hyperlink styling set. You can find the colour options
+% on Overleaf's documentation site. Go nuts!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    linkcolor   = black,
+    filecolor   = RubineRed,
+    urlcolor    = RubineRed,
+    citecolor   = RubineRed,
+    pdftitle    = {Notes on Behavioural PDEs}
+}
+\usepackage[capitalize]{cleveref}
+
+\usepackage[backend=biber]{biblatex}
+
+% Environments
+\theoremstyle{theorem} % In Italics
+\newtheorem{theorem}                    {{\color{Purple}Theorem}}[section]
+\newtheorem{lemma}          [theorem]   {{\color{Magenta}Lemma}}
+\newtheorem{proposition}    [theorem]   {Proposition}
+\newtheorem{corollary}      [theorem]   {Corollary}
+\newtheorem{question}                   {{\color{red}Question}}
+
+\theoremstyle{definition} % Not in italics
+\newtheorem{definition}     [theorem]   {{\color{NavyBlue}Definition}}
+\newtheorem{example}        [theorem]   {{\color{ForestGreen}Example}}
+\newtheorem{problem}                    {{\color{BurntOrange}Problem}}
+
+\theoremstyle{remark} % Subdued label
+\newtheorem{remark}[theorem]        {{\color{Gray}Remark}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This makes the enumeration style
+% (1), (2), ...
+% as opposed to 1., 2., ... Change or delete if you like.
+\renewcommand\labelenumi{(\theenumi)}
+
+% Go nuts with line breaks 
+\allowdisplaybreaks
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% These are custom commands in LaTeX called "macros". They allow you to write 
+% shorter code. For example, to get the natural numbers "N", the code below
+% allows you to write \NN instead of \mathbb{N}. Think about these as being 
+% "global variables" like in python or Java. Add or remove macros at will.
+\newcommand{\NN}{\mathbb{N}}                % 0, 1, 2, 3, 4, ...
+\newcommand{\ZZ}{\mathbb{Z}}                % ..., -2, -1, 0, 1, 2, ...
+\newcommand{\QQ}{\mathbb{Q}}                % n/m for n and m in \NN and m > 0
+\newcommand{\RR}{\mathbb{R}}                % real numbers
+
+% This macro I have written looks better than the \xrightarrow{label} code that
+% gets used in the notes. You just need to use the code \tr{label} to get that 
+% nice compact transition notation.
+\newcommand{\tr}[1]{
+    \mathrel{
+        \raisebox{-1pt}{
+            \(\xrightarrow{#1}\)
+            }
+        }
+    }        
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Top level information. Change this!
+\title{
+    % Remove the \color{red} part when you're ready
+    {\color{red} Topic Title}
+    \\
+    {\Large
+        CSCI 341 Theory of Computation Project Writeup
+    }
+}
+\author{{\color{red} Your Name}}
+\date{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Here is an example of a citation~\cite{maclane1992sheaves}.
+
+\section{Overview}
+
+\section{First topic section}
+
+\section{Second topic section}
+
+\section{Similar Projects}
+
+\section{Future Work}
+
+\section{Reflection}
+
+\printbibliography
+
+
+
+\end{document}
