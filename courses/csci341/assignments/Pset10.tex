@@ -7,7 +7,7 @@
     Computability
 }
 \newcommand{\duedate}{
-    Tuesday, November 17
+    Tuesday, December 2
 }
 
 % Page Setup
@@ -181,10 +181,35 @@ Don't forget to check the webspace for hints and additional context for each pro
 \end{problem}
 
 \begin{proof}[Solution.]
-    (Submit your completed {tape\_program\_interpreter.buck} to the Gradescope \href{https://www.gradescope.com/courses/1094390/assignments/7103711}{code submission box for Problem Set 9}, along with three output files: one for the string {\ttfamily 0}, one for the string {\ttfamily 11}, and one for the string {\ttfamily 1000}.)
+    
 \end{proof}
 
-\
+\begin{problem}
+    [Composing Reductions Again]
+    Let \(L_1,L_2, L_3 \subseteq A^*\) be languages.
+    Let \(r_1 \colon L_1 \preceq L_2\) and \(r_2 \colon L_2 \preceq L_3\).
+    Prove that if \(r_1\) and \(r_2\) are computable in polynomial time, then \(r_2 \circ r_1 \colon L_1 \preceq L_3\) is a polynomial time reduction.
+    Conclude that if \(L_3 \in \mathsf{P}\), then \(L_1 \in \mathsf{P}\).
+\end{problem}
+
+\begin{proof}[Solution.]
+    
+\end{proof}
+
+\begin{problem}
+    [Empty Language Problem for Automata]
+    Recall that a state \(x \in Q\) of an automaton \(\mathcal A = (Q, A, \delta, F)\) accepts a word \(w = a_1 \cdots a_n\) if there is a path \(x \xrightarrow{a_1} x_1 \xrightarrow{a_2} \cdots \xrightarrow{a_n} x_n\) and \(x_n \in F\), and that \(\mathcal L(\mathcal A, x)\) is the set of all words accepted by the state \(x\) in \(\mathcal A\). 
+    Show that deciding whether a state accepts the empty language, i.e., \(\mathcal L(\mathcal A, x) = \{\}\), is in \(\mathsf{NP}\) by finding a polynomial time reduction to \(\mathit{Rch}\).
+\end{problem}
+
+\begin{proof}[Solution.]
+    
+\end{proof}
+
+\begin{problem}
+    [Hardness by Reduction]
+    Prove the Hardness by Reduction theorem.
+\end{problem}
 
 
 \end{document}

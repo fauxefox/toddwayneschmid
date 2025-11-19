@@ -1,5 +1,5 @@
 <!-- THIS IS A COMPILED FILE 
- Compiled on 2025-11-18 -->
+ Compiled on 2025-11-19 -->
 
 
 
@@ -160,14 +160,14 @@
 </p>
 
 <p>
-    Big-O analysis of worst-case runtime is a sort of upp-bound on the difficulty of an algorithmic problem.
+    Big-O analysis of worst-case runtime is a sort of upper-bound on the difficulty of an algorithmic problem.
     Once we find an algorithm for solving a problem in \(\mathcal O(f)\)-time, we know that it is "at most \(\mathcal O(f)\)-difficult".
     This opens up the possibility of beating that time, thereby showing that the problem is not as hard as we thought.
 </p>
 
 <p>
     On the other hand, Big-\(\Omega\) analysis gives a lower bound on the (typically worst-case) running time of an algorithm. 
-    But with Turing machines, complexity is a bit fuzzier: translating between a Turing machine and a physical computer is not precisely linear, and the Churcj-Turing thesis in particular does not directly make any observation about the complexity of translating between different versions of the deterministic Turing machine (like multi-tape and multiple-to-one-symbols) typically takes \(\mathcal O(n^2)\)-time.
+    But with Turing machines, complexity is a bit fuzzier: translating between a Turing machine and a physical computer is not always linear, and the Church-Turing thesis in particular does not directly make any observation about the complexity of translating between different versions of the deterministic Turing machine (like multi-tape and multiple-to-one-symbols; both of which take \(\mathcal O(n^2)\)-time).
     This fuzziness was our motivation to consider the families \(\mathsf{P}\), \(\mathsf{NP}\), \(\mathsf{EXP}\), and so on.
     In this lecture, our goal is to give a useful lower-bound on the complexity of an algorithm in this fuzzy paradigm of complexity classes.
 </p>
@@ -209,8 +209,25 @@
         <li>Majhong</li>
         <li>...(and many others)</li>
     </ul>
-    Of course, \(\)
+    What this means is that any algorithm for deciding whether a particular configuration of the puzzle (of arbitrary size---these results often generalize the game so that the game board can be arbitrarily large) has a solution <i>at all</i> can be used to solve any other computational problem in \(\mathsf{NP}\) with only a polynomial amount of added runtime.
 </p>
+
+<p>
+    Directly showing that a decision problem is \(\mathsf{NP}\)-hard is so difficult that some of the most fundamental results of the field are proofs of this form.
+    What is more typical is to show that a problem is \(\mathsf{NP}\)-hard by exhibiting a polynomial time reduction to another problem that is \(\mathsf{NP}\)-hard.
+</p>
+
+<div class="theorem">
+    <b>(Hardness by Reduction)</b>
+    Let \(\mathsf{Fam} \subseteq 2^{A^*}\) be a family of languages, and let \(L \subseteq A^*\) be \(\mathsf{Fam}\)-hard. 
+    Suppose that we had another language \(W \subseteq A^*\) and a polynomial time reduction \(r \colon L \preceq W\).
+    Show that \(W\) is also \(\mathsf{Fam}\)-hard.
+</div>
+
+<div class="problem">
+    <b>(Proving Hardness by Reduction)</b>
+    Prove the Hardness by Reduction theorem.
+</div>
 
 <!--  -->
 <h2>Completeness</h2>
@@ -226,7 +243,79 @@
 </div>
 
 <p>
+    Many of the puzzle games mentioned at the top are in fact \(\mathsf{NP}\)-complete, in addition to be \(\mathsf{NP}\)-hard.
+    In a moment, we will discuss (probably) the most influential example of an \(\mathsf{NP}\)-complete problem.
     A long list of \(\mathsf{NP}\)-complete problems <a href="https://en.wikipedia.org/wiki/List_of_NP-complete_problems" target="_blank">can be found on Wikipedia</a>.
+</p>
+
+<div class="remark">
+    One common misconception about \(\mathsf{NP}\)-complete problems is that they must have the most complex solutions imaginable: "if \(L \subseteq A^*\) is an \(\mathsf{NP}\)-complete decision problem that can be verified in \(\mathcal O(n^{5})\)-time, does that mean that there are no decision problems in \(\mathsf{NP}\) that require slower than \(\mathcal O(n^5)\)-time solutions?"
+    The answer to this question is, of course, no.
+    Completeness speaks of there being a polynomial-time reduction, and does not mention the runtime of that reduction: perhaps every reduction \(\mathcal S_y \colon U \preceq L\) from a given language \(U \subseteq A^*\) runs in \(\mathcal O(n^{17})\)-time. 
+    Then the algorithm you obtain by composing the reduction with your verifier for \(L\) will run in \(\mathcal O(n^{17} + n^5) = \mathcal O(n^{17})\)-time as well.
+</div>
+
+<h2>Hard/Complete Problems</h2>
+
+<p>
+    We are now going to consider a few hard/complete problems.
+</p>
+
+<!--  -->
+<h3>The Travelling Salesman Problem</h3>
+
+<p>
+    A <i>weighted directed graph</i> is a pair \(\mathcal G = (X, \to)\) consisting of a set \(X\) of \emph{nodes} and a relation \({\to} \subseteq X \times \mathbb N \times X\) of \emph{weighted edges}.
+    Given nodes \(x,y \in X\), the <i>cost of travel along a path</i> 
+    \[
+        P = (x \xrightarrow{c_1} x_1 \xrightarrow{c_2} \cdots \xrightarrow{c_n} x_n = y)
+    \] 
+    is the sum \(\mathsf{cost}(P) = \sum_{i = 1}^n c_i\).
+    A <i>tour</i> of a (weighted) directed graph is a path 
+    \[
+        T = (x_0 \xrightarrow{c_1} x_1 \xrightarrow{c_2} x_2 \xrightarrow{c_3} \cdots \xrightarrow{c_n})
+    \]
+    such that \(X = \{x_0, x_1, \dots, x_n\}\).
+</p>
+
+<div class="definition">
+    <b>(Travelling Salesman Decision Problem)</b>
+    The <i>travelling salesman decision problem</i> is the decision problem 
+    \[
+        \mathit{TSDP} = \{(\mathcal G, k) \mid \text{there exists a tour \(T\) of \(\mathcal G\) with \(\mathsf{cost}(T) \le k\)}\}
+    \]
+</div>
+
+<p>
+    The travelling salesman decision problem is known to be \(\mathsf{NP}\)-complete.
+</p>
+
+<div class="theorem">
+    <b>(TSDP is NP-complete)</b>
+    The travelling salesman decision problem is \(\mathsf{NP}\)-complete.
+</div>
+
+<p>
+    The proof of hardness is somewhat beyond us for now, but I'm sure you can figure out the completeness.
+</p>
+
+<div class="exercise">
+    <b>(TSDP is NP)</b>
+    Show that the travelling salesman decision problem is in \(\mathsf{NP}\).
+</div>
+
+<!--  -->
+<h3>The Cook-Levin Theorem</h3>
+
+<p>
+    Here is the 
+</p>
+
+<!--  -->
+<h2>Examples of \(\mathsf{NP}\)-complete Problems</h2>
+
+<p>
+    
 </p><div style="border: none; margin-bottom: -20px; padding: 0px; text-align: center;"><a href="../compiled/csci341_notes_4_02_nondeterminism_and_complexity.html"><span class="link" style="width:40%"> &larr; 4.2 Nondeterminism And Complexity</span></a></div>
 
 
