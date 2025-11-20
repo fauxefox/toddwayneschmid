@@ -1,3 +1,8 @@
+#content {
+	font-family: Georgia, sans-serif;
+	/* font-size: large; */
+}
+
 #course_head{
 	vertical-align: bottom;
 	display: block;

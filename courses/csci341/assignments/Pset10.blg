@@ -1,9 +1,9 @@
-[0] Config.pm:307> INFO - This is Biber 2.19
-[0] Config.pm:310> INFO - Logfile is 'Pset10.blg'
-[32] biber-darwin:340> INFO - === Wed Nov 19, 2025, 10:49:36
-[40] Biber.pm:419> INFO - Reading 'Pset10.bcf'
-[74] Biber.pm:979> INFO - Found 0 citekeys in bib section 0
-[80] bbl.pm:660> INFO - Writing 'Pset10.bbl' with encoding 'UTF-8'
-[80] bbl.pm:763> INFO - Output to Pset10.bbl
-[80] Biber.pm:131> WARN - The file 'Pset10.bcf' does not contain any citations!
-[80] Biber.pm:133> INFO - WARNINGS: 1
+[0] Config.pm:308> INFO - This is Biber 2.20
+[0] Config.pm:311> INFO - Logfile is 'Pset10.blg'
+[170] biber-MSWIN64:340> INFO - === 
+[240] Biber.pm:420> INFO - Reading 'Pset10.bcf'
+[308] Biber.pm:994> INFO - Found 0 citekeys in bib section 0
+[318] bbl.pm:676> INFO - Writing 'Pset10.bbl' with encoding 'UTF-8'
+[318] bbl.pm:779> INFO - Output to Pset10.bbl
+[319] Biber.pm:131> WARN - The file 'Pset10.bcf' does not contain any citations!
+[319] Biber.pm:133> INFO - WARNINGS: 1
