@@ -605,9 +605,16 @@
         We need to come up with a way of transforming a 3-CNF formula \(\varphi\) into an undirected graph \(\mathcal G\) and a natural number \(k\) such that \(\mathcal G\) has a vertex cover of size \(\le k\) if and only if \(\varphi\) is satisfiable. 
         Here is the transformation (based on <a href="https://www.cs.umd.edu/class/spring2025/cmsc451-0101/Lects/lect17-np-3sat-is.pdf" target="_blank">this set of notes</a>): 
         <div>
-            <b>(3-CNF to Graph Transformation)</b>
+            <b>(3-CNF to Graph Transformation)</b><br>
+            Start with a 3-CNF formula 
+            \[
+                \varphi = 
+                (\ell_{11} \vee \ell_{12} \vee \ell_{13}) \wedge 
+                \cdots 
+                \wedge (\ell_{m1} \vee \ell_{m2} \vee \ell_{m3}) 
+            \]
             <ol>
-                <li>Let \(V = \{p_i \in \mathbb P\mid \text{\(pi_i\) appears in \(\varphi\)}\}\)</li>
+                <li>Let \(V = \{(j, \ell_i) \in \mathbb P\mid 1 \le j \le m, 1 \le i \le 3\}\)</li>
             </ol>
 
         </div>
