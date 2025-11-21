@@ -490,8 +490,8 @@
         \]
     </p>
     <div class="exercise">
-        <b>(3SAT Transform Example Correct)</b>
-        Suppose that \(\varphi'\) is satisfiable.
+        <b>(Simple 3SAT Transform)</b>
+        Show that \(\varphi'\) is satisfiable.
     </div>
     <p>
         Let's consider a slightly more complicated example:
@@ -507,6 +507,53 @@
             \wedge ({\color{blue} \neg q_2} \vee p_3 \vee \neg p_4)
             \wedge (\neg p_1 \vee p_2 \vee \neg p_4)
         \]
+    </p>
+    <div class="exercise">
+        <b>(Compund 3SAT Transform)</b>
+        Consider the formula 
+        \[
+            \varphi = (p_1 \vee \neg p_2) \wedge (\neg p_1 \vee p_2 \vee \neg p_3 \vee p_4) \wedge \neg p_4 \wedge p_3
+        \]
+        <ol>
+            <li>Is \(\varphi\) in 3-CNF? If not, use the technique above to find a formula \(\varphi'\) such that \(\varphi\) is satisfiable if and only if \(\varphi'\) is satisfiable.</li>
+            <li>Is \(\varphi\) satisfiable?</li>
+        </ol>
+    </div>
+
+    <p>
+        In general, suppose 
+        \[
+            \varphi = \varphi_1 \wedge \varphi_2 \wedge \cdots \wedge \varphi_n
+        \]
+        where each \(\varphi_i\) is a disjunction of literals. 
+        The polynomial time reducer moves from left to right, and finding a formula \(\varphi_i'\) in 3-CNF for each \(i \le n\) such that \(\varphi_i\) is satisfiable if and only if \(\varphi_i'\) is satisfiable. 
+        The formula \(\varphi_i'\) is constructed as follows: if \(\varphi_i\) is a disjunction of at most 3 literals, \(\varphi_i' = \varphi_i\). 
+        Otherwise, if
+        \[
+            \varphi_i = \ell_1 \vee \ell_2 \vee \cdots \vee \ell_k
+        \]
+        where \(\ell_j \in \{p_j, \neg p_j\}\) is a literal for each \(j \le k\) and \(k > 3\), we find basic propositions \({\color{blue} q_1},\dots, {\color{blue} q_{k-2}} \in \mathbb P\) that do not appear in \(\varphi\) or any of \(\varphi_1', \dots, \varphi_{i-1}'\) and define 
+        \[
+            \varphi_i' = 
+            ({\color{blue} q_1} \vee \ell_1 \vee \ell_2)
+            \wedge ({\color{blue} \neg q_1} \vee {\color{blue} q_2} \vee \ell_3)
+            % \wedge ({\color{blue} \neg q_2} \vee {\color{blue} q_3} \vee \ell_4)
+            \wedge \cdots 
+            \wedge ({\color{blue} \neg q_{k-3}} \vee {\color{blue} q_{k-2}} \vee \ell_{k-2})
+            \wedge ({\color{blue} \neg q_{k-2}} \vee \ell_{k-1} \vee \ell_{k})
+        \]
+        Notice that \(\varphi_i'\) is in 3-CNF, and therefore that \(\varphi'\) also is in 3-CNF.
+    </p>
+
+    <div class="individual-exercise">
+        <b>(Complex 3-CNF Transform Correctness)</b>
+        Show that \(\varphi\) is satisfiable if and only if \(\varphi'\) is satisfiable.
+    </div>
+
+    <p>
+        The length of the formula \(\varphi'\) is \(\le 3 \mathsf{len}(\varphi)\), and the algorithm just needs to back track to figure out which propositions have already appeared, so the reducer \(r(\varphi) = \varphi'\) can be designed to run in \(\mathcal O(n^2)\) time. 
+        Since \(\varphi\) is satisfiable if and only if \(r(\varphi) = \varphi'\) is satisfiable, \(r \colon \mathit{SAT} \preceq \mathit{3SAT}\).
+        Hence, \(\mathit{3SAT}\) is \(\mathsf{NP}\)-hard.
     </p>
 </div>
 
