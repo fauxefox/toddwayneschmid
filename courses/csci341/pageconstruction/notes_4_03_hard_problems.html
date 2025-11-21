@@ -486,6 +486,18 @@
             \wedge (\neg p_1 \vee p_2 \vee \neg p_4)\)</li>
                 </ol>
             </div>
+            <p>
+                An independent set of size \(k = m\) is exactly the same data as an assignment of truth values to propositions that satisfies the formula. 
+                Hence, \(\varphi\) is satisfiable if and only if \(r(\varphi)\) has an independent set of size \(m\).
+                The graph \(r(\varphi)\) can be computed in \(\mathcal O(n^2)\) time by traversing the formula \(\varphi\) once for each connection formed.
+            </p>
+            <p>
+                This shows that \(r \colon \mathit{3SAT} \preceq \mathit{ISet}\) in polynomial time. 
+            </p>
+            <div class="exercise">
+                <b>(Completeness, Now)</b>
+                Show that \(\mathit{ISet} \in \mathsf{NP}\).
+            </div>
         </div>
     </p>
 </div>
