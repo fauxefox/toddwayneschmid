@@ -1,5 +1,5 @@
 <!-- THIS IS A COMPILED FILE 
- Compiled on 2025-11-19 -->
+ Compiled on 2025-11-21 -->
 
 
 
@@ -302,7 +302,7 @@
     \[
         F \to p \mid (F \wedge F) \mid (F \vee F) \mid (\neg F)
     \]
-    where \(p \in \mathbb P\) can vary.
+    where \(p \in \mathbb P\).
 
     <p></p>
     A <i>truth assignment</i> is a function \(\alpha \colon \mathbb P \to \{0,1\}\), indicating which basic propositions are to be taken as "false" or "true".
@@ -347,7 +347,7 @@
 <div class="definition">
     <b>(Conjunctive Normal Form)</b>
     A formula \(\varphi\) is a <i>literal</i> if \(\varphi = p\) or \(\varphi = \neg p\) for some \(p \in \mathbb P\).
-    A <i>conjunction of literals</i> is a formula of the form 
+    A <i>disjunction of literals</i> is a formula of the form 
     \[
         \varphi_1 \vee \varphi_2 \vee \cdots \vee \varphi_n
     \]
@@ -356,7 +356,7 @@
     \[
         \varphi_1 \wedge \varphi_2 \wedge \cdots \wedge \varphi_n
     \]
-    where this time, every \(\varphi_i\) is a conjunction of literals.
+    where this time, every \(\varphi_i\) is a disjunction of literals.
 </div>
 
 <p>
@@ -383,7 +383,7 @@
     Note that \(\varphi\) is by definition a string of symbols, so no string representation is needed here.
     Briefly, here is such a procedure: 
     <ol>
-        <li>Scan \(\varphi\) from left to right and replace each instance of \(p\) with \(\alpha(p)\)</li>
+        <li>Scan \(\varphi\) from left to right and replace each instance of \(p\) with \(\alpha(p)\). Now rewind the tape and move on to step 2.</li>
         <li>
             Now scan from left to right and carry out the following replacements: 
             \[\begin{aligned}
@@ -429,8 +429,7 @@
 <p>
     The original proof can be found on page 2 of this paper: <a href="https://dl.acm.org/doi/pdf/10.1145/800157.805047" target="_blank">(Cook, 1971)</a>.
     Wikipedia has a <a href="https://en.wikipedia.org/wiki/Cook%E2%80%93Levin_theorem" target="_blank">great rendition of the proof</a>, reproducing an argument found in section 2.6 of <a href="https://archive.org/details/computersintract0000gare/page/n15/mode/2up" target="_blank">Computers and Intractability, Gary and Johnson</a>.
-    The gist of the proof is that, given any general Turing machine that verifies a given language \(L\) in nondeterministic polynomial time, one can form conjunctions of literals formulas in CNF that describe different aspects of the runtime of the Turing machine. 
-    Then the halting behaviour of the Turing machine can be deduced from the satisfiability of the disjunction of these formulas.
+    The gist of the proof is that, given any general Turing machine that verifies a given language \(L\) in nondeterministic polynomial time, one can form disjunctions of literals that describe different aspects of the runtime of the Turing machine, and then satisfiability of the conjunction of those literals determines whether the Turing machine has an accepting run (the halting behaviour of the Turing machine can be deduced from the satisfiability of the conjunction of these formulas).
     All of this leads to a very important technique for proving that a given decision problem is \(\mathsf{NP}\)-hard.
 </p>
 
@@ -442,11 +441,12 @@
 
 <p>
     In the same paper, Cook proves something even more remarkable: a much simpler version of \(\mathit{SAT}\) is also \(\mathsf{NP}\)-complete.
+    This one we are actually going to prove by hand.
 </p>
 
 <div class="definition">
     <b>(3-Bounded Conjunctive Normal Form)</b>
-    A <i>3-conjunct of literals</i> is a formula of the form 
+    A <i>3-disjunct of literals</i> is a formula of the form 
     \[
         \varphi_1 \vee \varphi_2 \vee \varphi_3
     \]
@@ -455,7 +455,7 @@
     \[
         \varphi_1 \wedge \varphi_2 \wedge \cdots \wedge \varphi_n
     \]
-    where this time, every \(\varphi_i\) is a 3-conjunct of literals.
+    where this time, every \(\varphi_i\) is a 3-disjunct of literals.
 </div>
 
 <div class="theorem">
@@ -464,6 +464,20 @@
     \[
         \mathit{3SAT} = \{\varphi \in \mathit{Form} \mid \text{\(\varphi\) is satisfiable and in 3-CNF}\}
     \]
+</div>
+
+<div class="proof">
+    Let us start by showing that \(\mathit{3SAT}\) is \(\mathsf{NP}\)-hard.
+    First of all \(\mathit{3SAT}\) is in \(\mathsf{NP}\) for the same reason that \(\mathit{SAT}\) is (the same algorithm works).
+    For hardness, we are going to construct a polynomial time reduction \(r \colon \mathit{SAT} \preceq \mathit{3SAT}\).
+    Then the Reduction to SAT theorem tells us that \(\mathit{3SAT}\) is \(\mathsf{NP}\).
+
+    <p>
+        The construction is rather simple, and runs in \(\mathcal O(n^2)\)-time.
+        Recall that we need to show that every formula in CNF is equivalent to one in 3-CNF.
+        We start with the following example to illustrate the process.
+        
+    </p>
 </div>
 
 <p>

@@ -1,18 +1,18 @@
 # Fdb version 4
-["biber WShop8-NP"] 1763559308.11854 "WShop8-NP.bcf" "WShop8-NP.bbl" "WShop8-NP" 1763566142.12622 0
-  "WShop8-NP.bcf" 1763566142.02257 107345 cd62385ae4c61c980fd381729173b994 "pdflatex"
+["biber WShop8-NP"] 1763559308.11854 "WShop8-NP.bcf" "WShop8-NP.bbl" "WShop8-NP" 1763729634.32775 0
+  "WShop8-NP.bcf" 1763729634.22861 107345 cd62385ae4c61c980fd381729173b994 "pdflatex"
   (generated)
   "WShop8-NP.bbl"
   "WShop8-NP.blg"
   (rewritten before read)
-["makeindex WShop8-NP.idx"] 1763559307.66545 "WShop8-NP.idx" "WShop8-NP.ind" "WShop8-NP" 1763566142.1261 0
-  "WShop8-NP.idx" 1763566141.3109 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+["makeindex WShop8-NP.idx"] 1763559307.66545 "WShop8-NP.idx" "WShop8-NP.ind" "WShop8-NP" 1763729634.32765 0
+  "WShop8-NP.idx" 1763729633.55435 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   (generated)
   "WShop8-NP.ilg"
   "WShop8-NP.ind"
   (rewritten before read)
-["pdflatex"] 1763566140.7307 "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/WShop8-NP.tex" "WShop8-NP.pdf" "WShop8-NP" 1763566142.12644 0
-  "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/WShop8-NP.tex" 1763566140.44276 11483 1e2e789fa4368cf9c8439e375cd07b01 ""
+["pdflatex"] 1763729633.00117 "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/WShop8-NP.tex" "WShop8-NP.pdf" "WShop8-NP" 1763729634.32797 0
+  "/Users/tjws001/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/WShop8-NP.tex" 1763729632.74846 11491 95019588b9c12e80c3c604f582700b13 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/bitstrea/charter/bchb7t.tfm" 1136768653 2732 006d846b4d54f9b40899c7c3eecd771a ""
@@ -80,6 +80,7 @@
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb" 1248133631 24457 5cbb7bdf209d5d1ce9892a9b80a307cc ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb" 1248133631 37944 359e864bd06cde3b1cf57bb20757fb06 ""
+  "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1248133631 34694 ad62b13721ee8eda1dcc8993c8bd7041 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/mathabx-type1/matha10.pfb" 1295482684 90043 a01ee69dbd537ea8a0835a2b4841a64e ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/mathabx-type1/mathb10.pfb" 1295482684 89251 441f72450b980a987c1a89892f305fb3 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/vf/bitstrea/charter/bchb7t.vf" 1136768653 1372 e6cfde23c168b1d1864ce6aa6dffa18b ""
@@ -277,12 +278,12 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1721257481.80017 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1721257440 8221420 55780793342b43867148509ad7bdd958 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "WShop8-NP.aux" 1763566142.02123 465 93dc7ad8ae530c33c8ee97ade70a74e0 "pdflatex"
+  "WShop8-NP.aux" 1763729634.22741 465 93dc7ad8ae530c33c8ee97ade70a74e0 "pdflatex"
   "WShop8-NP.bbl" 1763559311.60601 466 ee04f40f768daeed26442158e95aba61 "biber WShop8-NP"
   "WShop8-NP.ind" 1763559308.11728 0 d41d8cd98f00b204e9800998ecf8427e "makeindex WShop8-NP.idx"
-  "WShop8-NP.out" 1763566141.81668 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "WShop8-NP.run.xml" 1763566142.02345 2334 4dcb3bee120003de3f820cabaf6a5100 "pdflatex"
-  "WShop8-NP.tex" 1763566140.44276 11483 1e2e789fa4368cf9c8439e375cd07b01 ""
+  "WShop8-NP.out" 1763729634.04177 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "WShop8-NP.run.xml" 1763729634.22923 2334 4dcb3bee120003de3f820cabaf6a5100 "pdflatex"
+  "WShop8-NP.tex" 1763729632.74846 11491 95019588b9c12e80c3c604f582700b13 ""
   "digraph_1.pdf" 1763559874.44057 4771 079130e8e0d90266c0230dd49d98d480 ""
   (generated)
   "WShop8-NP.aux"
