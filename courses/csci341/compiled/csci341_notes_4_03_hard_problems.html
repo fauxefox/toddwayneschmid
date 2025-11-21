@@ -383,7 +383,7 @@
     Note that \(\varphi\) is by definition a string of symbols, so no string representation is needed here.
     Briefly, here is such a procedure: 
 
-    <div><b>\(\alpha\)-SAT Checker Algorithm</b></div>
+    <div><b>\(\alpha\)-SAT Checker Algorithm</b>
     <ol>
         <li>Scan \(\varphi\) from left to right and replace each instance of \(p\) with \(\alpha(p)\). Now rewind the tape and move on to step 2.</li>
         <li>
@@ -405,6 +405,7 @@
         </li>
         <li>If the string on the tape consists of either \(0\) or \(1\), then halt. Else, go to 2.</li>
     </ol>
+    </div>
     The length of the string decreases with every repetition of step 2, so this algorithm runs in \(\mathcal O(n^2)\)-time. 
     Observe, then, that the nondeterministic Turing machine that runs the above procedure on all possible truth assignments (for the basic propositions appearing in \(\varphi\)) runs in nondeterministic \(\mathcal O(n^2)\)-time.
 </p>
