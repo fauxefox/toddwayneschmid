@@ -587,7 +587,18 @@
             <li>For any \(x,y \in C\), \(x \not\smile y\)</li>
             <li>For any \(x \in V\), there exists a \(y \in C\) and an edge \(x \smile y\).</li>
         </ol>
+        A <i>vertex cover of size \(k\)</i> is just a vertex cover \(C\) with size \(|C| \le k\).
+
+        <p>
+            Let \(\mathbf G\) be the set of all undirected finite graphs.
+            The <i>vertex cover problem (for size \(k\))</i> is the decision problem 
+            \[
+                \mathit{Cov} = \{(\mathcal G, k) \in \mathbf{G} \times \mathbb N \mid \text{\(\mathcal G\) has a vertex cover of size \(\le k\)}\}
+            \]
+        </p>
     </div>
+
+    It turns out that the vertex cover problem is \(\mathsf{NP}\)-complete, which we can verify with a polynomial time reduction \(r \colon \mathit{3SAT} \preceq \mathit{Cov}\).
 </div>
 
 <!--  -->
