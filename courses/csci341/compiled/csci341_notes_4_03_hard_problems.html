@@ -494,7 +494,19 @@
         Suppose that \(\varphi'\) is satisfiable.
     </div>
     <p>
-
+        Let's consider a slightly more complicated example:
+        \[
+            \varphi = (p_1 \vee \neg p_2 \vee p_3 \vee \neg p_4) \wedge (\neg p_1 \vee p_2 \vee \neg p_4)
+        \]
+        This formula is in CNF but not in 3-CNF.
+        The latter half of the formula is a disjunction of 3 literals, so it need not be changed. 
+        The reducer we have in mind would transform (what is now) \(\varphi\) into 
+        \[
+            \varphi' = ({\color{blue} q_1} \vee p_1 \vee \neg p_2)
+            \wedge ({\color{blue} q_2} \vee {\color{blue} \neg q_1} \vee p_3)
+            \wedge ({\color{blue} \neg q_2} \vee p_3 \vee \neg p_4)
+            \wedge (\neg p_1 \vee p_2 \vee \neg p_4)
+        \]
     </p>
 </div>
 
