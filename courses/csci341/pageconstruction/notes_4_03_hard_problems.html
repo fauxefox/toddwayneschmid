@@ -324,10 +324,12 @@
         Recall that we need to show that every formula in CNF is equivalent to one in 3-CNF.
         We start with the following case to illustrate the process: consider the propositional formula 
         \[
-            (p_1 \vee p_2 \vee p_3 \vee p_4) \vee \varphi
+            \varphi = p_1 \vee \neg p_2 \vee p_3 \vee \neg p_4
         \]
-        where \(\varphi\) is any formula in CNF.
-        Then \(p_1 \vee p_2 \vee p_3 \vee p_4\) is satisfiable if and only if the following formula is satisfiable: 
+        for some \(p_1, \dots, p_4 \in \mathbb P\).
+        Note that \(\varphi\) is satisfiable iff \(p_1 \neq p_2\) or \(p_4\) and \(p_3 \neq p_2\) or \(p_4\).
+        This formula is a disjunction of more than 3 literals, so is not in 3-CNF.
+        But, since we have as many propositions as we want, we can find \(q_1,q_2 \in \mathbb P\) that do not already appear in the formula, from which we can build the following formula that IS in CNF: 
         \[
             (q_1 \vee p_1 \vee p_2)
             \wedge (q_2 \vee \neg q_1 \vee p_3)
