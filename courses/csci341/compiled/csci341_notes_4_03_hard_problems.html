@@ -536,15 +536,15 @@
         \[
             \varphi_i = \ell_1 \vee \ell_2 \vee \cdots \vee \ell_k
         \]
-        where \(\ell_j \in \{p_j, \neg p_j\}\) is a literal for each \(j \le k\) and \(k > 3\), we find basic propositions \({\color{blue} q_1},\dots, {\color{blue} q_{k-2}} \in \mathbb P\) that do not appear in \(\varphi\) or any of \(\varphi_1', \dots, \varphi_{i-1}'\) and define 
+        where \(\ell_j \in \{p_j, \neg p_j\}\) is a literal for each \(j \le k\) and \(k > 3\), we find basic propositions \({\color{blue} q_1},\dots, {\color{blue} q_{k-3}} \in \mathbb P\) that do not appear in \(\varphi\) or any of \(\varphi_1', \dots, \varphi_{i-1}'\) and define 
         \[
             \varphi_i' = 
             ({\color{blue} q_1} \vee \ell_1 \vee \ell_2)
             \wedge ({\color{blue} \neg q_1} \vee {\color{blue} q_2} \vee \ell_3)
             % \wedge ({\color{blue} \neg q_2} \vee {\color{blue} q_3} \vee \ell_4)
             \wedge \cdots 
-            \wedge ({\color{blue} \neg q_{k-3}} \vee {\color{blue} q_{k-2}} \vee \ell_{k-2})
-            \wedge ({\color{blue} \neg q_{k-2}} \vee \ell_{k-1} \vee \ell_{k})
+            \wedge ({\color{blue} \neg q_{k-4}} \vee {\color{blue} q_{k-3}} \vee \ell_{k-2})
+            \wedge ({\color{blue} \neg q_{k-3}} \vee \ell_{k-1} \vee \ell_{k})
         \]
         Notice that \(\varphi_i'\) is in 3-CNF, and therefore that \(\varphi'\) also is in 3-CNF.
     </p>
