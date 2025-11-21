@@ -582,11 +582,7 @@
 
     <div class="definition">
         <b>(Vertex Cover)</b>
-        A <i>vertex cover</i> of a graph \(\mathcal G = (V, E)\) is a subset \(C \subseteq V\) such that 
-        <ol>
-            <li>For any \(x,y \in C\), \(x \not\smile y\)</li>
-            <li>For any \(x \in V\), there exists a \(y \in C\) and an edge \(x \smile y\).</li>
-        </ol>
+        A <i>vertex cover</i> of a graph \(\mathcal G = (V, E)\) is a subset \(C \subseteq V\) such that for any \(x \in V\), there exists a \(y \in C\) and an edge \(x \smile y\).
         A <i>vertex cover of size \(k\)</i> is just a vertex cover \(C\) with size \(|C| \le k\).
 
         <p>
@@ -626,7 +622,7 @@
                         E &= \{(j, \ell_1) \smile (j, \ell_2) \smile (j, \ell_3) \smile (j, \ell_1) \mid 1 \le j \le m\}\\
                         &\qquad \cup \{(j, \ell_i) \smile (l, \ell_k) \mid j \neq l, \ell_i = \neg \ell_k\}
                     \end{aligned}\]
-                    In other words, the disjunctions of literals are 
+                    In other words, the disjunctions of literals are all connected as triangles, and accross these triangles and two literals that are each other's negation are connected.
                 </li>
             </ol>
 
