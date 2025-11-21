@@ -322,8 +322,17 @@
     <p>
         The construction is rather simple, and runs in \(\mathcal O(n^2)\)-time.
         Recall that we need to show that every formula in CNF is equivalent to one in 3-CNF.
-        We start with the following example to illustrate the process.
-        
+        We start with the following case to illustrate the process: consider the propositional formula 
+        \[
+            (p_1 \vee p_2 \vee p_3 \vee p_4) \vee \varphi
+        \]
+        where \(\varphi\) is any formula in CNF.
+        Then \(p_1 \vee p_2 \vee p_3 \vee p_4\) is satisfiable if and only if the following formula is satisfiable: 
+        \[
+            (q_1 \vee p_1 \vee p_2)
+            \wedge (q_2 \vee \neg q_1 \vee p_3)
+            \wedge (\neg q_2 \vee p_3 \vee \neg p_4)
+        \]
     </p>
 </div>
 
