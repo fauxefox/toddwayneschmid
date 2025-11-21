@@ -382,6 +382,8 @@
     Note that given a formula in CNF, \(\varphi\), and given a truth assigment \(\alpha \colon \mathbb P \to \{0,1\}\), it can be determined in polynomial time whether \(\alpha\) satisfies \(\varphi\).
     Note that \(\varphi\) is by definition a string of symbols, so no string representation is needed here.
     Briefly, here is such a procedure: 
+
+    <div><b>\(\alpha\)-SAT Checker Algorithm</b></div>
     <ol>
         <li>Scan \(\varphi\) from left to right and replace each instance of \(p\) with \(\alpha(p)\). Now rewind the tape and move on to step 2.</li>
         <li>
@@ -414,7 +416,7 @@
 
 <div class="exercise">
     <b>(Satisfying Formulas Algorithmically)</b>
-    Run the satisfaction checking algorithm above on the input string \((((\neg p) \vee q) \wedge ((\neg q) \wedge (\neg r)))\) and the truth assignment \(\alpha(p) = 1\), \(\alpha(q) = 0\), and \(\alpha(r) = 1\).
+    Run the \(\alpha\)-SAT Checker algorithm above on the input string \((((\neg p) \vee q) \wedge ((\neg q) \wedge (\neg r)))\) and the truth assignment \(\alpha(p) = 1\), \(\alpha(q) = 0\), and \(\alpha(r) = 1\).
 </div>
 
 <p>
