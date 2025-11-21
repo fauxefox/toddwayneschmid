@@ -577,7 +577,17 @@
 
 <div class="example">
     <b>(Vertex Cover Problem)</b>
-    Recall that a <i>(undirected) graph</i> is a pair \(\mathcal G = (V, E)\) consisting of a set \(V\) of <i>vertices</i> and a set \(E \subseteq \big\{ \{x,y\} \mid \text{\(x,y \in V\) and \(x \neq y\)}\big\}\)
+    Recall that a <i>(undirected) graph</i> is a pair \(\mathcal G = (V, E)\) consisting of a set \(V\) of <i>vertices</i> and a set \(E \subseteq \big\{ \{x,y\} \mid \text{\(x,y \in V\) and \(x \neq y\)}\big\}\) of <i>edges</i>.
+    We write \(x \smile y\) when \(\{x,y\} \in E\) and say that \(x\) and \(y\) are <i>related</i>, and otherwise write \(x \not\smile y\).
+
+    <div class="definition">
+        <b>(Vertex Cover)</b>
+        A <i>vertex cover</i> of a graph \(\mathcal G = (V, E)\) is a subset \(C \subseteq V\) such that 
+        <ol>
+            <li>For any \(x,y \in C\), \(x \not\smile y\)</li>
+            <li>For any \(x \in V\), there exists a \(y \in C\) and an edge \(x \smile y\).</li>
+        </ol>
+    </div>
 </div>
 
 <!--  -->
