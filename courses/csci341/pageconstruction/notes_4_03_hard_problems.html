@@ -423,29 +423,29 @@
 </p>
 
 <div class="example">
-    <b>(Vertex Cover Problem)</b>
+    <b>(independent set Problem)</b>
     Recall that a <i>(undirected) graph</i> is a pair \(\mathcal G = (V, E)\) consisting of a set \(V\) of <i>vertices</i> and a set \(E \subseteq \big\{ \{x,y\} \mid \text{\(x,y \in V\) and \(x \neq y\)}\big\}\) of <i>edges</i>.
     We write \(x \smile y\) when \(\{x,y\} \in E\) and say that \(x\) and \(y\) are <i>related</i>, and otherwise write \(x \not\smile y\).
 
     <div class="definition">
-        <b>(Vertex Cover)</b>
-        A <i>vertex cover</i> of a graph \(\mathcal G = (V, E)\) is a subset \(C \subseteq V\) such that for any \(x \in V\), there exists a \(y \in C\) and an edge \(x \smile y\).
-        A <i>vertex cover of size \(k\)</i> is just a vertex cover \(C\) with size \(|C| \le k\).
+        <b>(Independent Set)</b>
+        A <i>independent set</i> of a graph \(\mathcal G = (V, E)\) is a subset \(C \subseteq V\) such that for every \(x,y \in C\), \(x \not\smile y\).
+        A <i>independent set of size \(k\)</i> is just a independent set \(C\) with size \(|C| = k\).
 
         <p>
             Let \(\mathbf G\) be the set of all undirected finite graphs.
-            The <i>vertex cover problem (for size \(k\))</i> is the decision problem 
+            The <i>independent set problem (for size \(k\))</i> is the decision problem 
             \[
-                \mathit{Cov} = \{(\mathcal G, k) \in \mathbf{G} \times \mathbb N \mid \text{\(\mathcal G\) has a vertex cover of size \(\le k\)}\}
+                \mathit{ISet} = \{(\mathcal G, k) \in \mathbf{G} \times \mathbb N \mid \text{\(\mathcal G\) has a independent set of size \(k\)}\}
             \]
         </p>
     </div>
 
-    It turns out that the vertex cover problem is \(\mathsf{NP}\)-complete, which we can verify with a polynomial time reduction \(r \colon \mathit{3SAT} \preceq \mathit{Cov}\).
+    It turns out that the independent set problem is \(\mathsf{NP}\)-complete, which we can verify with a polynomial time reduction \(r \colon \mathit{3SAT} \preceq \mathit{ISet}\).
 
     <p>
         OK, so what do we need to do? 
-        We need to come up with a way of transforming a 3-CNF formula \(\varphi\) into an undirected graph \(\mathcal G\) and a natural number \(k\) such that \(\mathcal G\) has a vertex cover of size \(\le k\) if and only if \(\varphi\) is satisfiable. 
+        We need to come up with a way of transforming a 3-CNF formula \(\varphi\) into an undirected graph \(\mathcal G\) and a natural number \(k\) such that \(\mathcal G\) has a independent set of size \(k\) if and only if \(\varphi\) is satisfiable. 
         Here is the transformation (based on <a href="https://www.cs.umd.edu/class/spring2025/cmsc451-0101/Lects/lect17-np-3sat-is.pdf" target="_blank">this set of notes</a>): 
         <div>
             <b>(3-CNF to Graph Transformation)</b><br>
