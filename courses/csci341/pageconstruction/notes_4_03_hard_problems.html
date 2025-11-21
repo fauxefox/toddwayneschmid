@@ -446,6 +446,19 @@
     </div>
 
     It turns out that the vertex cover problem is \(\mathsf{NP}\)-complete, which we can verify with a polynomial time reduction \(r \colon \mathit{3SAT} \preceq \mathit{Cov}\).
+
+    <p>
+        OK, so what do we need to do? 
+        We need to come up with a way of transforming a 3-CNF formula \(\varphi\) into an undirected graph \(\mathcal G\) and a natural number \(k\) such that \(\mathcal G\) has a vertex cover of size \(\le k\) if and only if \(\varphi\) is satisfiable. 
+        Here is the transformation (based on <a href="https://www.cs.umd.edu/class/spring2025/cmsc451-0101/Lects/lect17-np-3sat-is.pdf" target="_blank">this set of notes</a>): 
+        <div>
+            <b>(3-CNF to Graph Transformation)</b>
+            <ol>
+                <li>Let \(V = \{p_i \in \mathbb P\mid \text{\(pi_i\) appears in \(\varphi\)}\}\)</li>
+            </ol>
+
+        </div>
+    </p>
 </div>
 
 <!--  -->
