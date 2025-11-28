@@ -508,7 +508,7 @@
                     The edges are of two kinds: 
                     \[\begin{aligned}
                         E &= \{(j, \ell_1) \smile (j, \ell_2) \smile (j, \ell_3) \smile (j, \ell_1) \mid 1 \le j \le m\}\\
-                        &\qquad \cup \{(j, \ell_i) \smile (l, \ell_k) \mid j \neq l, \ell_i = \neg \ell_k\}
+                        &\qquad\ \cup \{(j, \ell_i) \smile (l, \ell_k) \mid j \neq l, \ell_i = \neg \ell_k\}
                     \end{aligned}\]
                     In other words, the disjunctions of literals are all connected as triangles, and accross these triangles and two literals that are each other's negation are connected.
                 </li>
@@ -522,9 +522,9 @@
                 <ol>
                     <li>\(({\color{blue} q} \vee p_1 \vee \neg p_2) \wedge ({\color{blue} \neg q} \vee p_3 \vee \neg p_4)\)</li>
                     <li>\(({\color{blue} q_1} \vee p_1 \vee \neg p_2)
-            \wedge ({\color{blue} q_2} \vee {\color{blue} \neg q_1} \vee p_3)
-            \wedge ({\color{blue} \neg q_2} \vee p_4 \vee \neg p_5)
-            \wedge (\neg p_1 \vee p_2 \vee \neg p_4)\)</li>
+                        \wedge ({\color{blue} q_2} \vee {\color{blue} \neg q_1} \vee p_3)
+                        \wedge ({\color{blue} \neg q_2} \vee p_4 \vee \neg p_5)
+                        \wedge (\neg p_1 \vee p_2 \vee \neg p_4)\)</li>
                 </ol>
             </div>
             <p>
