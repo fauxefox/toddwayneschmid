@@ -1,24 +1,24 @@
 # Fdb version 4
-["biber Pset10"] 1763599045.37423 "Pset10.bcf" "Pset10.bbl" "Pset10" 1763599053.97361 0
-  "Pset10.bcf" 1763599053 108081 ef9255d88e5b92738414083911d73428 "pdflatex"
+["biber Pset10"] 1763599045.37423 "Pset10.bcf" "Pset10.bbl" "Pset10" 1764363096.52834 0
+  "Pset10.bcf" 1764363096 108081 ef9255d88e5b92738414083911d73428 "pdflatex"
   (generated)
   "Pset10.bbl"
   "Pset10.blg"
   (rewritten before read)
-["makeindex Pset10.idx"] 1763567373.2858 "Pset10.idx" "Pset10.ind" "Pset10" 1763599053.97323 0
-  "Pset10.idx" 1763599053 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+["makeindex Pset10.idx"] 1763567373.2858 "Pset10.idx" "Pset10.ind" "Pset10" 1764363096.52799 0
+  "Pset10.idx" 1764363095 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   (generated)
   "Pset10.ilg"
   "Pset10.ind"
   (rewritten before read)
-["pdflatex"] 1763599052.34266 "c:/Users/toddw/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/Pset10.tex" "Pset10.pdf" "Pset10" 1763599053.97402 0
-  "Pset10.aux" 1763599053 372 6d06be749a407ca3ff99f9c1855f33ac "pdflatex"
+["pdflatex"] 1764363095.21232 "c:/Users/toddw/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/Pset10.tex" "Pset10.pdf" "Pset10" 1764363096.52876 0
+  "Pset10.aux" 1764363096 372 6d06be749a407ca3ff99f9c1855f33ac "pdflatex"
   "Pset10.bbl" 1763599049 486 76d65a242ec496c9b4361af646ff12cb "biber Pset10"
   "Pset10.ind" 1763230452 0 d41d8cd98f00b204e9800998ecf8427e "makeindex Pset10.idx"
-  "Pset10.out" 1763599053 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "Pset10.run.xml" 1763599053 2313 28f2bd5e96d13319d2ab1eb92f0b6ad6 "pdflatex"
-  "Pset10.tex" 1763599035 5934 2344b364f6fe3c559ea0f4f1ea5e1f89 ""
-  "c:/Users/toddw/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/Pset10.tex" 1763599035 5934 2344b364f6fe3c559ea0f4f1ea5e1f89 ""
+  "Pset10.out" 1764363096 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "Pset10.run.xml" 1764363096 2313 28f2bd5e96d13319d2ab1eb92f0b6ad6 "pdflatex"
+  "Pset10.tex" 1764363094 6213 2ce5f1ecc92f8c2a596704195df19a92 ""
+  "c:/Users/toddw/Documents/GitHub/toddwayneschmid/courses/csci341/assignments/Pset10.tex" 1764363094 6213 2ce5f1ecc92f8c2a596704195df19a92 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc" 1720999457 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1720999971 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/bitstrea/charter/bchb7t.tfm" 1720998754 2732 006d846b4d54f9b40899c7c3eecd771a ""
@@ -78,6 +78,7 @@
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1720997948 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb" 1720997948 37944 359e864bd06cde3b1cf57bb20757fb06 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/mathabx-type1/matha10.pfb" 1721001450 90043 2bda701743526ed6f01ce1beda7e4064 ""
+  "c:/texlive/2024/texmf-dist/fonts/type1/public/mathabx-type1/matha6.pfb" 1721001450 93176 d7fe6ac5d007fd7538b9312c53ca3f16 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/mathabx-type1/matha8.pfb" 1721001450 92536 59bbce08c17dea073398ee5053f31619 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/mathabx-type1/mathb10.pfb" 1721001450 89251 3e302a50ca887f4c017599c3bfa790d6 ""
   "c:/texlive/2024/texmf-dist/fonts/vf/bitstrea/charter/bchb7t.vf" 1720998754 1372 ea6b112e4d27477183c2c2a90a3b7b01 ""
