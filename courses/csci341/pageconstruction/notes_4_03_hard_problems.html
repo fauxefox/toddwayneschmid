@@ -465,7 +465,7 @@
 </p>
 
 <div class="example">
-    <b>(independent set Problem)</b>
+    <b>(Independent set Problem)</b>
     Recall that a <i>(undirected) graph</i> is a pair \(\mathcal G = (V, E)\) consisting of a set \(V\) of <i>vertices</i> and a set \(E \subseteq \big\{ \{x,y\} \mid \text{\(x,y \in V\) and \(x \neq y\)}\big\}\) of <i>edges</i>.
     We write \(x \smile y\) when \(\{x,y\} \in E\) and say that \(x\) and \(y\) are <i>related</i>, and otherwise write \(x \not\smile y\).
 
@@ -489,7 +489,7 @@
         OK, so what do we need to do? 
         We need to come up with a way of transforming a 3-CNF formula \(\varphi\) into an undirected graph \(\mathcal G\) and a natural number \(k\) such that \(\mathcal G\) has a independent set of size \(k\) if and only if \(\varphi\) is satisfiable. 
         Here is the transformation (based on <a href="https://www.cs.umd.edu/class/spring2025/cmsc451-0101/Lects/lect17-np-3sat-is.pdf" target="_blank">this set of notes</a>): 
-        <div>
+        <div class="algorithm">
             <b>(3-CNF to Graph Transformation)</b><br>
             Start with a 3-CNF formula 
             \[
@@ -527,78 +527,78 @@
                     The number \(k\) of independent vertices will be \(k = m\), to force one vertex to be in every triangle in any independent set.
                 </li>
             </ol>
+        </div>
 
-            <p>
-                For example, the formula 
-                \[
-                    \varphi = (\neg p \vee \neg q \vee r) \wedge (q \vee \neg r \vee s) \wedge (p \vee \neg s)
-                \]
-                gets put together as the graph below:
-                <img src="../imgs/drawing_formulas.svg" />
-            </p>
+        <p>
+            For example, the formula 
+            \[
+                \varphi = (\neg p \vee \neg q \vee r) \wedge (q \vee \neg r \vee s) \wedge (p \vee \neg s)
+            \]
+            gets put together as the graph below:
+            <img src="../imgs/drawing_formulas.svg" />
+        </p>
 
-            <div class="exercise">
-                <b>(Drawing Formulas)</b>
-                Draw \(r(\varphi)\) for each of
-                <ol>
-                    <li>\(({\color{blue} q} \vee p_1 \vee \neg p_2) \wedge ({\color{blue} \neg q} \vee p_3 \vee \neg p_4)\)</li>
-                    <li>\(({\color{blue} q_1} \vee p_1 \vee \neg p_2)
-                        \wedge ({\color{blue} q_2} \vee {\color{blue} \neg q_1} \vee p_3)
-                        \wedge ({\color{blue} \neg q_2} \vee p_4 \vee \neg p_5)
-                        \wedge (\neg p_1 \vee p_2 \vee \neg p_4)\)</li>
-                </ol>
-            </div>
+        <div class="exercise">
+            <b>(Drawing Formulas)</b>
+            Draw \(r(\varphi)\) for each of
+            <ol>
+                <li>\(({\color{blue} q} \vee p_1 \vee \neg p_2) \wedge ({\color{blue} \neg q} \vee p_3 \vee \neg p_4)\)</li>
+                <li>\(({\color{blue} q_1} \vee p_1 \vee \neg p_2)
+                    \wedge ({\color{blue} q_2} \vee {\color{blue} \neg q_1} \vee p_3)
+                    \wedge ({\color{blue} \neg q_2} \vee p_4 \vee \neg p_5)
+                    \wedge (\neg p_1 \vee p_2 \vee \neg p_4)\)</li>
+            </ol>
+        </div>
 
-            <p>
-                Let \(\varphi\) be the transformed formula, after Step 1 above has occurred.
-                Then the existence of an independent set of size \(k = m\) indicates an assignment of truth values to propositions that satisfies the formula.
-                For example, in the formula \(\varphi\) before the Drawing Formulas exercise above and its graph, the vertices \((1, \neg p), (2, \neg r), (3, \neg s)\) form an independent set. 
-                <img src="../imgs/drawing_formulas_sat.svg" />
-                We obtain a truth-assignment that satisfies \(\varphi\) from this by setting \(\alpha(p) = \alpha(r) = \alpha(s) = 0\).
-                
-            </p>
-            <p>
-                More generally, we have the following: let \(\varphi = (\ell_{11} \vee \ell_{12} \vee \ell_{13}) \wedge \cdots \wedge (\ell_{m1} \vee \ell_{m2} \vee \ell_{m3})\), assume that Step 1 of the algorithm above has already taken place, and let \(\mathcal G = (V, E)\) be the graph obtained from \(\varphi\).
-                <ul>
-                    <li>
-                        To obtain a truth assignment from an independent set, let \(S \subseteq V\) be an independent set of size \(m\). 
-                        Since \(S\) is an independent set, at most one element of \(S\) appears in each triangle.
-                        And furthermore, since \(S\) has \(m\) elements, there is exactly one element of \(S\) in each triangle.
-                        Moreover, for each \(p_{ij} \in \mathbb P\), 
-                        Define \(\alpha_S \colon \mathbb P \to \{0,1\}\) by 
-                        \[
-                            \alpha_S(p) = \begin{cases}
-                                1 & (p, j) \in S \text{ for some } j \le m\\
-                                0 & (\neg p, j) \in S \text{ for some } j \le m
-                            \end{cases}
-                        \]
-                        define \(\alpha_S(q) = 0\) for all other \(q\) appearing in \(\varphi\) that does not appear in any vertex in the indpendent set \(S\).
-                        This is a truth assignment that satisfies \(\varphi\) because every conjunct of \(\varphi\) contains a literal \(\ell\) such that \(\alpha(\ell) = 1\).
-                    </li>
-                    <li>
-                        To obtain an independent set from a truth assignment \(\alpha\) that satisfies \(\varphi\), for each conjunct \(\varphi_j\) of \(\varphi\), choose a vertex \((j, \ell_{ji}) \in V\)  such that \(\alpha(\ell_{ji}) = 1\) and form a set \(S\) from those choices. 
-                        There exists such a node in each conjunct because \(\alpha(\varphi_j) = 1\) for all \(j\). 
-                        This set is of size \(m\) by design.
-                        This set \(S\) is an independent set because we have chosen exactly one vertex from each triangle, and because only one of each pair of vertices of the form \((j, p)\) and \((l, \neg p)\) that can appear in \(S\) (because \(\alpha\) is a function).
-                    </li>
-                </ul>
-                Hence, \(\varphi\) is satisfiable if and only if \(r(\varphi) = \mathcal G = (V, E)\) has an independent set of size \(m\).
-            </p>
-
-            <p>
-                The string transformer \(r\) is computed according to the algorithm described above. 
-                Step 1 can be taken in \(\mathcal O(n^2)\)-time, since it involves traversing the formula at most \(n\) times. 
-                The graph \(r(\varphi)\) can be computed in \(\mathcal O(n^2)\) time by traversing the formula \(\varphi\) once for each connection formed.
-                This shows that \(r \colon \mathit{3SAT} \preceq \mathit{ISet}\) in polynomial time. 
-                By the Reduction to 3SAT theorem, \(\mathit{ISet}\) is \(\mathsf{NP}\)-hard.
-            </p>
+        <p>
+            Let \(\varphi\) be the transformed formula, after Step 1 above has occurred.
+            Then the existence of an independent set of size \(k = m\) indicates an assignment of truth values to propositions that satisfies the formula.
+            For example, in the formula \(\varphi\) before the Drawing Formulas exercise above and its graph, the vertices \((1, \neg p), (2, \neg r), (3, \neg s)\) form an independent set. 
+            <img src="../imgs/drawing_formulas_sat.svg" />
+            We obtain a truth-assignment that satisfies \(\varphi\) from this by setting \(\alpha(p) = \alpha(r) = \alpha(s) = 0\).
             
-            <div class="exercise">
-                <b>(Completeness, Now)</b>
-                Show that \(\mathit{ISet} \in \mathsf{NP}\).
-                <div class="hint">
-                    Guess all the sets!
-                </div>
+        </p>
+        <p>
+            More generally, we have the following: let \(\varphi = (\ell_{11} \vee \ell_{12} \vee \ell_{13}) \wedge \cdots \wedge (\ell_{m1} \vee \ell_{m2} \vee \ell_{m3})\), assume that Step 1 of the algorithm above has already taken place, and let \(\mathcal G = (V, E)\) be the graph obtained from \(\varphi\).
+            <ul>
+                <li>
+                    To obtain a truth assignment from an independent set, let \(S \subseteq V\) be an independent set of size \(m\). 
+                    Since \(S\) is an independent set, at most one element of \(S\) appears in each triangle.
+                    And furthermore, since \(S\) has \(m\) elements, there is exactly one element of \(S\) in each triangle.
+                    Moreover, for each \(p_{ij} \in \mathbb P\), 
+                    Define \(\alpha_S \colon \mathbb P \to \{0,1\}\) by 
+                    \[
+                        \alpha_S(p) = \begin{cases}
+                            1 & (p, j) \in S \text{ for some } j \le m\\
+                            0 & (\neg p, j) \in S \text{ for some } j \le m
+                        \end{cases}
+                    \]
+                    define \(\alpha_S(q) = 0\) for all other \(q\) appearing in \(\varphi\) that does not appear in any vertex in the indpendent set \(S\).
+                    This is a truth assignment that satisfies \(\varphi\) because every conjunct of \(\varphi\) contains a literal \(\ell\) such that \(\alpha(\ell) = 1\).
+                </li>
+                <li>
+                    To obtain an independent set from a truth assignment \(\alpha\) that satisfies \(\varphi\), for each conjunct \(\varphi_j\) of \(\varphi\), choose a vertex \((j, \ell_{ji}) \in V\)  such that \(\alpha(\ell_{ji}) = 1\) and form a set \(S\) from those choices. 
+                    There exists such a node in each conjunct because \(\alpha(\varphi_j) = 1\) for all \(j\). 
+                    This set is of size \(m\) by design.
+                    This set \(S\) is an independent set because we have chosen exactly one vertex from each triangle, and because only one of each pair of vertices of the form \((j, p)\) and \((l, \neg p)\) that can appear in \(S\) (because \(\alpha\) is a function).
+                </li>
+            </ul>
+            Hence, \(\varphi\) is satisfiable if and only if \(r(\varphi) = \mathcal G = (V, E)\) has an independent set of size \(m\).
+        </p>
+
+        <p>
+            The string transformer \(r\) is computed according to the algorithm described above. 
+            Step 1 can be taken in \(\mathcal O(n^2)\)-time, since it involves traversing the formula at most \(n\) times. 
+            The graph \(r(\varphi)\) can be computed in \(\mathcal O(n^2)\) time by traversing the formula \(\varphi\) once for each connection formed.
+            This shows that \(r \colon \mathit{3SAT} \preceq \mathit{ISet}\) in polynomial time. 
+            By the Reduction to 3SAT theorem, \(\mathit{ISet}\) is \(\mathsf{NP}\)-hard.
+        </p>
+        
+        <div class="exercise">
+            <b>(Completeness, Now)</b>
+            Show that \(\mathit{ISet} \in \mathsf{NP}\).
+            <div class="hint">
+                Guess all the sets!
             </div>
         </div>
     </p>
