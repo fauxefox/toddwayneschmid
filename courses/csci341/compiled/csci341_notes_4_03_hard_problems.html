@@ -574,18 +574,31 @@
         We obviously have \(m \le n\) and \(k \le n\), so \(m \times k \le n^2\), and therefore \(\mathsf{len}(\varphi') \in \mathcal O(n^2)\).
         Thus, whatever the run-time of the implementation of \(r\), it needs to extend the formula \(\varphi\) with at most \(\mathcal O(n^2)\)-many characters.
         We need to argue that the process of implementing this extension adds at most another factor of \(n\) to the runtime.
-        Here is the algorithm in more detail, running on \(\varphi\), and using three tapes:
+        Here is the algorithm in more detail, running on \(\varphi\) (using multiple tapes if needed):
         <ol>
-            <li>Scan thew string \(\varphi\) and 
+            <li>Scan the string \(\varphi\) and 
                 <ol type="i">
-                    <li></li>
+                    <li>keep track of the largest number of literals that appear in a conjunct, call it \(k\)</li>
+                    <li>if a conjunct \(\varphi_i\) has \( > 3\) literals, mark its first character</li>
+                    <li>keep track of the basic propositions that appear.</li>
                 </ol>
             </li>
+            <li>
+                If \(k > 3\), generate \(k-3\) fresh basic propositions, call them \(q_1, \dots, q_{k-3}\).
+            </li>
+            <li>
+                For each \(\varphi_i\) with a marked first character, expand it according to the process described above.
+            </li>
         </ol>
-        
-        The length of the formula \(\varphi'\) is \(\le 3 \times \mathsf{len}(\varphi)\), and the algorithm just needs to back track to figure out which propositions have already appeared, so the reducer \(r(\varphi) = \varphi'\) can be designed to run in \(\mathcal O(n^2)\)-time. 
+        Steps 1 and 2 take place in \(\mathcal O(n)\)-time.
+        Step 3 is the time-intensive step:
+        the expansion takes place \(\mathcal O(m)\) times, and splits a conjunct with \(k\) literals into \(\mathcal O(k^2)\) conjuncts. 
+        In total, this step takes \(\mathcal O(m \times k^2) \subseteq \mathcal O(n^3)\) steps.
+        Hence, in total, the algorithm to compute \(r\) takes \(\mathcal O(n + n + n^3) = \mathcal O(n^3)\)-time.
+    </p>
+    <p>
         Since \(\varphi\) is satisfiable if and only if \(r(\varphi) = \varphi'\) is satisfiable, \(r \colon \mathit{SAT} \preceq \mathit{3SAT}\).
-        Hence, \(\mathit{3SAT}\) is \(\mathsf{NP}\)-hard.
+        By the Reduction to SAT theorem, \(\mathit{3SAT}\) is \(\mathsf{NP}\)-hard.
     </p>
 </div>
 
