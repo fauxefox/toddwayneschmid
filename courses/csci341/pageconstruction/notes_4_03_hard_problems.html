@@ -318,13 +318,11 @@
 
 <div class="proof">
     First of all, \(\mathit{3SAT}\) is in \(\mathsf{NP}\) for the same reason that \(\mathit{SAT}\) is (the same algorithm works).
-    <!-- Let us start by showing that \(\mathit{3SAT}\) is \(\mathsf{NP}\)-hard. -->
     For hardness, we are going to construct a polynomial time reduction \(r \colon \mathit{SAT} \preceq \mathit{3SAT}\).
     Then the Reduction to SAT theorem tells us that \(\mathit{3SAT}\) is \(\mathsf{NP}\)-hard.
 
     <p>
-        The construction is rather simple, and runs in \(\mathcal O(n^2)\)-time.
-        Recall that we need to show that every formula in CNF is equivalent to one in 3-CNF.
+        The construction works by showing that every formula in CNF is equivalent to one in 3-CNF, and that the CNF-to-3-CNF conversion runs in polynomial time.
         We start with the following case to illustrate the process: consider the propositional formula 
         \[
             \varphi = p_1 \vee \neg p_2 \vee p_3 \vee \neg p_4
@@ -339,11 +337,13 @@
         \]
         The general idea is that \(\varphi'\) "partitions \(\varphi\) into possible ways of satisfying \(\varphi\)".
     </p>
+
     <div class="exercise">
         <b>(Simple 3SAT Transform)</b>
         Show that \(\varphi'\) is satisfiable.
         In fact, show that <i>any</i> truth assignment that satisfies \(\varphi\) also satisfies \(\varphi'\).
     </div>
+
     <p>
         Let's consider a slightly more complicated example:
         \[
@@ -359,6 +359,7 @@
             \wedge (\neg p_1 \vee p_2 \vee \neg p_4)
         \]
     </p>
+
     <div class="exercise">
         <b>(Compund 3SAT Transform)</b>
         Consider the formula 
@@ -374,24 +375,35 @@
     <p>
         In general, suppose 
         \[
-            \varphi = \varphi_1 \wedge \varphi_2 \wedge \cdots \wedge \varphi_n
+            \varphi = \varphi_1 \wedge \varphi_2 \wedge \cdots \wedge \varphi_m
         \]
         where each \(\varphi_i\) is a disjunction of literals. 
-        The polynomial time reducer moves from left to right, and finding a formula \(\varphi_i'\) in 3-CNF for each \(i \le n\) such that \(\varphi_i\) is satisfiable if and only if \(\varphi_i'\) is satisfiable. 
-        The formula \(\varphi_i'\) is constructed as follows: if \(\varphi_i\) is a disjunction of at most 3 literals, \(\varphi_i' = \varphi_i\). 
-        Otherwise, if
+        The polynomial time reducer moves from left to right, and finding a formula \(\varphi_i'\) in 3-CNF for each \(i \le m\) such that \(\varphi_i\) is satisfiable if and only if \(\varphi_i'\) is satisfiable. 
+        The formula \(\varphi_i'\) is constructed as follows: 
+        <ol>
+            <li>
+                if \(\varphi_i\) is a disjunction of at most 3 literals, \(\varphi_i' = \varphi_i\).
+            </li>
+            <li>
+                Otherwise, if
+                \[
+                    \varphi_i = \ell_1 \vee \ell_2 \vee \cdots \vee \ell_k
+                \]
+                where \(\ell_j \in \{p_j, \neg p_j\}\) is a literal for each \(j \le k\) and \(k > 3\), we find basic propositions \({\color{blue} q_1},\dots, {\color{blue} q_{k-3}} \in \mathbb P\) that do not appear in \(\varphi\) or any of \(\varphi_1', \dots, \varphi_{i-1}'\) and define 
+                \[
+                    \varphi_i' = 
+                    ({\color{blue} q_1} \vee \ell_1 \vee \ell_2)
+                    \wedge ({\color{blue} \neg q_1} \vee {\color{blue} q_2} \vee \ell_3)
+                    % \wedge ({\color{blue} \neg q_2} \vee {\color{blue} q_3} \vee \ell_4)
+                    \wedge \cdots 
+                    \wedge ({\color{blue} \neg q_{k-4}} \vee {\color{blue} q_{k-3}} \vee \ell_{k-2})
+                    \wedge ({\color{blue} \neg q_{k-3}} \vee \ell_{k-1} \vee \ell_{k})
+                \]
+            </li>
+        </ol>
+        The string transformer \(r\) is then defined by
         \[
-            \varphi_i = \ell_1 \vee \ell_2 \vee \cdots \vee \ell_k
-        \]
-        where \(\ell_j \in \{p_j, \neg p_j\}\) is a literal for each \(j \le k\) and \(k > 3\), we find basic propositions \({\color{blue} q_1},\dots, {\color{blue} q_{k-3}} \in \mathbb P\) that do not appear in \(\varphi\) or any of \(\varphi_1', \dots, \varphi_{i-1}'\) and define 
-        \[
-            \varphi_i' = 
-            ({\color{blue} q_1} \vee \ell_1 \vee \ell_2)
-            \wedge ({\color{blue} \neg q_1} \vee {\color{blue} q_2} \vee \ell_3)
-            % \wedge ({\color{blue} \neg q_2} \vee {\color{blue} q_3} \vee \ell_4)
-            \wedge \cdots 
-            \wedge ({\color{blue} \neg q_{k-4}} \vee {\color{blue} q_{k-3}} \vee \ell_{k-2})
-            \wedge ({\color{blue} \neg q_{k-3}} \vee \ell_{k-1} \vee \ell_{k})
+            r(\varphi) = \varphi' = \varphi_1' \wedge \varphi_2' \wedge \cdots \wedge \varphi_m'
         \]
         Notice that \(\varphi_i'\) is in 3-CNF, and therefore that \(\varphi'\) also is in 3-CNF.
     </p>
@@ -402,7 +414,23 @@
     </div>
 
     <p>
-        The length of the formula \(\varphi'\) is \(\le 3 \mathsf{len}(\varphi)\), and the algorithm just needs to back track to figure out which propositions have already appeared, so the reducer \(r(\varphi) = \varphi'\) can be designed to run in \(\mathcal O(n^2)\)-time. 
+        We are now going to argue that \(r\) can be implemented by a Turing program that runs in \(\mathcal O(n^3)\)-time, where \(\mathsf{len}(\varphi) = n\).
+        Let \(k = \max_{i \le n} \mathsf{len}(\varphi_i)\).
+        Then the number of fresh propositions \(q_j\) added to \(\varphi\) is \(k-3\) (assuming \(k \ge 3\)).
+        This tells us that \(\mathsf{len}(\varphi_i') \le (k-3) \times k\), and then \(\mathsf{len}(\varphi') \le m \times (k-3) \times k\). 
+        We obviously have \(m \le n\) and \(k \le n\), so \(m \times k \le n^2\), and therefore \(\mathsf{len}(\varphi') \in \mathcal O(n^2)\).
+        Thus, whatever the run-time of the implementation of \(r\), it needs to extend the formula \(\varphi\) with at most \(\mathcal O(n^2)\)-many characters.
+        We need to argue that the process of implementing this extension adds at most another factor of \(n\) to the runtime.
+        Here is the algorithm in more detail, running on \(\varphi\), and using three tapes:
+        <ol>
+            <li>Scan thew string \(\varphi\) and 
+                <ol type="i">
+                    <li></li>
+                </ol>
+            </li>
+        </ol>
+        
+        The length of the formula \(\varphi'\) is \(\le 3 \times \mathsf{len}(\varphi)\), and the algorithm just needs to back track to figure out which propositions have already appeared, so the reducer \(r(\varphi) = \varphi'\) can be designed to run in \(\mathcal O(n^2)\)-time. 
         Since \(\varphi\) is satisfiable if and only if \(r(\varphi) = \varphi'\) is satisfiable, \(r \colon \mathit{SAT} \preceq \mathit{3SAT}\).
         Hence, \(\mathit{3SAT}\) is \(\mathsf{NP}\)-hard.
     </p>
