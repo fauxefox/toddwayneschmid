@@ -533,28 +533,32 @@
         \]
         where each \(\varphi_i\) is a disjunction of literals. 
         The polynomial time reducer moves from left to right, and finding a formula \(\varphi_i'\) in 3-CNF for each \(i \le m\) such that \(\varphi_i\) is satisfiable if and only if \(\varphi_i'\) is satisfiable. 
-        The formula \(\varphi_i'\) is constructed as follows: 
-        <ol>
-            <li>
-                if \(\varphi_i\) is a disjunction of at most 3 literals, \(\varphi_i' = \varphi_i\).
-            </li>
-            <li>
-                Otherwise, if
-                \[
-                    \varphi_i = \ell_1 \vee \ell_2 \vee \cdots \vee \ell_k
-                \]
-                where \(\ell_j \in \{p_j, \neg p_j\}\) is a literal for each \(j \le k\) and \(k > 3\), we find basic propositions \({\color{blue} q_1},\dots, {\color{blue} q_{k-3}} \in \mathbb P\) that do not appear in \(\varphi\) or any of \(\varphi_1', \dots, \varphi_{i-1}'\) and define 
-                \[\begin{aligned}
-                    \varphi_i' &= 
-                    ({\color{blue} q_1} \vee \ell_1 \vee \ell_2)
-                    \wedge ({\color{blue} \neg q_1} \vee {\color{blue} q_2} \vee \ell_3)
-                    % \wedge ({\color{blue} \neg q_2} \vee {\color{blue} q_3} \vee \ell_4)
-                    \wedge \cdots \\
-                    &\hspace{4em}\wedge ({\color{blue} \neg q_{k-4}} \vee {\color{blue} q_{k-3}} \vee \ell_{k-2})
-                    \wedge ({\color{blue} \neg q_{k-3}} \vee \ell_{k-1} \vee \ell_{k})
-                \end{aligned}\]
-            </li>
-        </ol>
+        The formula \(\varphi_i'\) is constructed as follows.
+
+        <div class="algorithm">
+            <b>(Construction of \(\varphi'\) from \(\varphi\))</b>
+            <ol>
+                <li>
+                    if \(\varphi_i\) is a disjunction of at most 3 literals, \(\varphi_i' = \varphi_i\).
+                </li>
+                <li>
+                    Otherwise, if
+                    \[
+                        \varphi_i = \ell_1 \vee \ell_2 \vee \cdots \vee \ell_k
+                    \]
+                    where \(\ell_j \in \{p_j, \neg p_j\}\) is a literal for each \(j \le k\) and \(k > 3\), we find basic propositions \({\color{blue} q_1},\dots, {\color{blue} q_{k-3}} \in \mathbb P\) that do not appear in \(\varphi\) or any of \(\varphi_1', \dots, \varphi_{i-1}'\) and define 
+                    \[\begin{aligned}
+                        \varphi_i' &= 
+                        ({\color{blue} q_1} \vee \ell_1 \vee \ell_2)
+                        \wedge ({\color{blue} \neg q_1} \vee {\color{blue} q_2} \vee \ell_3)
+                        % \wedge ({\color{blue} \neg q_2} \vee {\color{blue} q_3} \vee \ell_4)
+                        \wedge \cdots \\
+                        &\hspace{4em}\wedge ({\color{blue} \neg q_{k-4}} \vee {\color{blue} q_{k-3}} \vee \ell_{k-2})
+                        \wedge ({\color{blue} \neg q_{k-3}} \vee \ell_{k-1} \vee \ell_{k})
+                    \end{aligned}\]
+                </li>
+            </ol>
+        </div>
         The string transformer \(r\) is then defined by
         \[
             r(\varphi) = \varphi' = \varphi_1' \wedge \varphi_2' \wedge \cdots \wedge \varphi_m'
