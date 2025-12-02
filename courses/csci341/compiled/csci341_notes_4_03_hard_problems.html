@@ -1,5 +1,5 @@
 <!-- THIS IS A COMPILED FILE 
- Compiled on 2025-12-01 -->
+ Compiled on 2025-12-02 -->
 
 
 
@@ -437,7 +437,7 @@
 </p>
 
 <div class="theorem">
-    <b>(Reduction to SAT)</b>
+    <b>(Reduction from SAT)</b>
     Let \(L \subseteq A^*\) be any language (decision problem).
     If there is a polynomial time reduction \(\mathit{SAT} \preceq L\), then \(L\) is \(\mathsf{NP}\)-hard.
 </div>
@@ -473,7 +473,7 @@
 <div class="proof">
     First of all, \(\mathit{3SAT}\) is in \(\mathsf{NP}\) for the same reason that \(\mathit{SAT}\) is (the same algorithm works).
     For hardness, we are going to construct a polynomial time reduction \(r \colon \mathit{SAT} \preceq \mathit{3SAT}\).
-    Then the Reduction to SAT theorem tells us that \(\mathit{3SAT}\) is \(\mathsf{NP}\)-hard.
+    Then the Reduction from SAT theorem tells us that \(\mathit{3SAT}\) is \(\mathsf{NP}\)-hard.
 
     <p>
         The construction works by showing that every formula in CNF is equivalent to one in 3-CNF, and that the CNF-to-3-CNF conversion runs in polynomial time.
@@ -603,7 +603,7 @@
     </p>
     <p>
         Since \(\varphi\) is satisfiable if and only if \(r(\varphi) = \varphi'\) is satisfiable, \(r \colon \mathit{SAT} \preceq \mathit{3SAT}\).
-        By the Reduction to SAT theorem, \(\mathit{3SAT}\) is \(\mathsf{NP}\)-hard.
+        By the Reduction from SAT theorem, \(\mathit{3SAT}\) is \(\mathsf{NP}\)-hard.
     </p>
 </div>
 
@@ -612,7 +612,7 @@
 </p>
 
 <div class="theorem">
-    <b>(Reduction to 3SAT)</b>
+    <b>(Reduction from 3SAT)</b>
     Let \(L \subseteq A^*\) be any language (decision problem).
     If there is a polynomial time reduction \(\mathit{3SAT} \preceq L\), then \(L\) is \(\mathsf{NP}\)-hard.
 </div>
@@ -750,7 +750,7 @@
         Step 1 can be taken in \(\mathcal O(n^2)\)-time, since it involves traversing the formula at most \(n\) times. 
         The graph \(r(\varphi)\) can be computed in \(\mathcal O(n^2)\) time by traversing the formula \(\varphi\) once for each connection formed.
         This shows that \(r \colon \mathit{3SAT} \preceq \mathit{ISet}\) in polynomial time. 
-        By the Reduction to 3SAT theorem, \(\mathit{ISet}\) is \(\mathsf{NP}\)-hard.
+        By the Reduction from 3SAT theorem, \(\mathit{ISet}\) is \(\mathsf{NP}\)-hard.
     </p>
     
     <div class="exercise">
