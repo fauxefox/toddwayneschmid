@@ -1,0 +1,9 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is 'WShop5-StackAutomata.blg'
+[33] biber-darwin:340> INFO - === Thu Dec 11, 2025, 15:42:10
+[41] Biber.pm:419> INFO - Reading 'WShop5-StackAutomata.bcf'
+[78] Biber.pm:979> INFO - Found 0 citekeys in bib section 0
+[86] bbl.pm:660> INFO - Writing 'WShop5-StackAutomata.bbl' with encoding 'UTF-8'
+[86] bbl.pm:763> INFO - Output to WShop5-StackAutomata.bbl
+[86] Biber.pm:131> WARN - The file 'WShop5-StackAutomata.bcf' does not contain any citations!
+[86] Biber.pm:133> INFO - WARNINGS: 1
